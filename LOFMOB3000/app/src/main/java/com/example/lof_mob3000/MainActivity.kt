@@ -10,4 +10,5 @@ class MainActivity : AppCompatActivity() {
     }
 
     val thisistest = "this is test"
+    val anotherchange = " this is change nr2"
 }
