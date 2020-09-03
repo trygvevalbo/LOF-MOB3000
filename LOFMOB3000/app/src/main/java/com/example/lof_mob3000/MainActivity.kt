@@ -5,10 +5,13 @@ import android.os.Bundle
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+
+
     }
 
-    val thisistest = "this is test"
-    val anotherchange = " this is change nr2"
+
 }
