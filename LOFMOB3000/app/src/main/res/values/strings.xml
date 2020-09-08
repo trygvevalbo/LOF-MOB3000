@@ -5,4 +5,5 @@
     <string name="color_of_item">Hvilken farge er det?</string>
     <string name="date_found">Når var den funnet?</string>
     <string name="contact_infromation">Kontaktinfromasjon</string>
+    <string name="post_button" />
 </resources>

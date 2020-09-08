@@ -7,11 +7,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="75c7b84f-1d4a-4ba2-8651-36d12d9a50b6" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/post_found_item.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/lof_mob3000/post_item/PostFragment.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/post_found_item.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/post_found_item.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/local.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,6 +34,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="resourceFile" />
+        <option value="Kotlin Class" />
       </list>
     </option>
   </component>
@@ -148,13 +148,17 @@
     </state>
     <state x="430" y="260" key="AndroidCreateResourceFileDialog/0.0.1280.800@0.0.1280.800" timestamp="1599564827037" />
     <state x="860" y="455" key="AndroidCreateResourceFileDialog/0.0.2560.1400/-1920.160.1920.1040@0.0.2560.1400" timestamp="1599157106593" />
-    <state x="495" y="254" key="AndroidCreateXmlResourceDialog" timestamp="1599565321183">
+    <state x="495" y="254" key="AndroidCreateXmlResourceDialog" timestamp="1599578231949">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
-    <state x="495" y="254" key="AndroidCreateXmlResourceDialog/0.0.1280.800@0.0.1280.800" timestamp="1599565321183" />
+    <state x="495" y="254" key="AndroidCreateXmlResourceDialog/0.0.1280.800@0.0.1280.800" timestamp="1599578231949" />
     <state x="1059" y="418" key="FileChooserDialogImpl" timestamp="1598980248449">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="1059" y="418" key="FileChooserDialogImpl/0.0.2560.1400/-1920.160.1920.1040@0.0.2560.1400" timestamp="1598980248449" />
+    <state x="305" y="124" width="670" height="676" key="search.everywhere.popup" timestamp="1599578939493">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state x="305" y="124" width="670" height="676" key="search.everywhere.popup/0.0.1280.800@0.0.1280.800" timestamp="1599578939493" />
   </component>
 </project>
