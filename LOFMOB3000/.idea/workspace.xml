@@ -2,16 +2,24 @@
 <project version="4">
   <component name="AndroidLayouts">
     <shared>
-      <config />
+      <config>
+        <device id="pixel_2" />
+      </config>
     </shared>
   </component>
   <component name="ChangeListManager">
     <list default="true" id="75c7b84f-1d4a-4ba2-8651-36d12d9a50b6" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/lof_mob3000/RecyclerViewAdapter.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable-v24/bigusbrainus.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable-v24/cat.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable-v24/donkey.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable-v24/throwup.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/lof_mob3000/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/lof_mob3000/MainActivity.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/liste.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/liste.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/styles.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/styles.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/local.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -19,7 +27,7 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="Pixel_3_Q" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="Pixel_2_Pie" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -35,8 +43,10 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="resourceFile" />
         <option value="layoutResourceFile" />
+        <option value="Class" />
+        <option value="Kotlin Class" />
+        <option value="resourceFile" />
       </list>
     </option>
   </component>
@@ -56,6 +66,7 @@
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="last_directory_selection" value="$PROJECT_DIR$/app/src/main/res/drawable-v24" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="AndroidSdkUpdater" />
   </component>
@@ -72,8 +83,8 @@
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="LOF-MOB3000-app" type="AndroidRunConfigurationType" factoryName="Android App">
-      <module name="LOF-MOB3000-app" />
+    <configuration name="LOF-MOB3000-app" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false">
+      <module name="app" />
       <option name="DEPLOY" value="true" />
       <option name="DEPLOY_APK_FROM_BUNDLE" value="false" />
       <option name="DEPLOY_AS_INSTANT" value="false" />
@@ -192,17 +203,33 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="359" y="348" key="#LOF-MOB3000-app" timestamp="1599681982748">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="359" y="348" key="#LOF-MOB3000-app/0.0.2560.1400/-1920.160.1920.1040@0.0.2560.1400" timestamp="1599681982748" />
+    <state x="431" y="419" key="#com.intellij.ide.util.MemberChooser" timestamp="1599681307529">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="431" y="419" key="#com.intellij.ide.util.MemberChooser/0.0.2560.1400/-1920.160.1920.1040@0.0.2560.1400" timestamp="1599681307529" />
     <state x="1010" y="447" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1599155232552">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="1010" y="447" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.2560.1400/-1920.160.1920.1040@0.0.2560.1400" timestamp="1599155232552" />
-    <state x="860" y="455" key="AndroidCreateResourceFileDialog" timestamp="1599587216449">
+    <state x="220" y="458" key="AndroidCreateResourceDirectoryDialog" timestamp="1599680379014">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="860" y="455" key="AndroidCreateResourceFileDialog/0.0.2560.1400/-1920.160.1920.1040@0.0.2560.1400" timestamp="1599587216449" />
-    <state x="1059" y="418" key="FileChooserDialogImpl" timestamp="1598980248449">
+    <state x="220" y="458" key="AndroidCreateResourceDirectoryDialog/0.0.2560.1400/-1920.160.1920.1040@0.0.2560.1400" timestamp="1599680379014" />
+    <state x="510" y="391" key="AndroidCreateResourceFileDialog" timestamp="1599682123348">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="1059" y="418" key="FileChooserDialogImpl/0.0.2560.1400/-1920.160.1920.1040@0.0.2560.1400" timestamp="1598980248449" />
+    <state x="510" y="391" key="AndroidCreateResourceFileDialog/0.0.2560.1400/-1920.160.1920.1040@0.0.2560.1400" timestamp="1599682123348" />
+    <state x="1059" y="418" key="FileChooserDialogImpl" timestamp="1599682813523">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="1059" y="418" key="FileChooserDialogImpl/0.0.2560.1400/-1920.160.1920.1040@0.0.2560.1400" timestamp="1599682813523" />
+    <state x="456" y="481" key="chooseDestDirectoryDialog" timestamp="1599680198760">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="456" y="481" key="chooseDestDirectoryDialog/0.0.2560.1400/-1920.160.1920.1040@0.0.2560.1400" timestamp="1599680198760" />
   </component>
 </project>
