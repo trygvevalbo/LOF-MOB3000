@@ -9,17 +9,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="75c7b84f-1d4a-4ba2-8651-36d12d9a50b6" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/lof_mob3000/RecyclerViewAdapter.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable-v24/bigusbrainus.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable-v24/cat.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable-v24/donkey.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable-v24/throwup.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/lof_mob3000/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/lof_mob3000/MainActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/lof_mob3000/RecyclerViewAdapter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/lof_mob3000/RecyclerViewAdapter.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/liste.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/liste.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/styles.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/styles.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/local.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -27,7 +21,7 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="Pixel_2_Pie" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="Pixel_Pie" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -64,11 +58,19 @@
   </component>
   <component name="PropertiesComponent">
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="DeviceAndSnapshotComboBoxAction.selectedDevice" value="Pixel_Pie" />
+    <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2020-09-10T10:54:20.965Z" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/app/src/main/res/drawable-v24" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../ListedemoStarter" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.17" />
+    <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="AndroidSdkUpdater" />
+  </component>
+  <component name="PsdUISettings">
+    <option name="MODULE_TAB" value="Default Config" />
   </component>
   <component name="RecentsManager">
     <key name="android.template.-1587699420">
@@ -84,7 +86,7 @@
       </method>
     </configuration>
     <configuration name="LOF-MOB3000-app" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false">
-      <module name="app" />
+      <module name="LOF-MOB3000-app" />
       <option name="DEPLOY" value="true" />
       <option name="DEPLOY_APK_FROM_BUNDLE" value="false" />
       <option name="DEPLOY_AS_INSTANT" value="false" />
@@ -207,6 +209,14 @@
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="359" y="348" key="#LOF-MOB3000-app/0.0.2560.1400/-1920.160.1920.1040@0.0.2560.1400" timestamp="1599681982748" />
+    <state x="556" y="180" key="#Notifications" timestamp="1599735395089">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="556" y="180" key="#Notifications/0.0.1920.1040@0.0.1920.1040" timestamp="1599735395089" />
+    <state x="481" y="253" key="#PSD" timestamp="1599735536056">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="481" y="253" key="#PSD/0.0.1920.1040@0.0.1920.1040" timestamp="1599735536056" />
     <state x="431" y="419" key="#com.intellij.ide.util.MemberChooser" timestamp="1599681307529">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
@@ -223,10 +233,43 @@
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="510" y="391" key="AndroidCreateResourceFileDialog/0.0.2560.1400/-1920.160.1920.1040@0.0.2560.1400" timestamp="1599682123348" />
-    <state x="1059" y="418" key="FileChooserDialogImpl" timestamp="1599682813523">
-      <screen x="0" y="0" width="2560" height="1400" />
+    <state x="794" y="311" key="FileChooserDialogImpl" timestamp="1599738259217">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
+    <state x="794" y="311" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1599738259217" />
     <state x="1059" y="418" key="FileChooserDialogImpl/0.0.2560.1400/-1920.160.1920.1040@0.0.2560.1400" timestamp="1599682813523" />
+    <state width="1874" height="274" key="GridCell.Tab.0.bottom" timestamp="1599738767118">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1874" height="274" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1599738767118" />
+    <state width="1874" height="274" key="GridCell.Tab.0.center" timestamp="1599738767117">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1874" height="274" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1599738767117" />
+    <state width="1874" height="274" key="GridCell.Tab.0.left" timestamp="1599738767115">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1874" height="274" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1599738767115" />
+    <state width="1874" height="274" key="GridCell.Tab.0.right" timestamp="1599738767117">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1874" height="274" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1599738767117" />
+    <state width="1874" height="338" key="GridCell.Tab.1.bottom" timestamp="1599738106413">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1874" height="338" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1599738106413" />
+    <state width="1874" height="338" key="GridCell.Tab.1.center" timestamp="1599738106411">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1874" height="338" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1599738106411" />
+    <state width="1874" height="338" key="GridCell.Tab.1.left" timestamp="1599738106410">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1874" height="338" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1599738106410" />
+    <state width="1874" height="338" key="GridCell.Tab.1.right" timestamp="1599738106412">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1874" height="338" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1599738106412" />
     <state x="456" y="481" key="chooseDestDirectoryDialog" timestamp="1599680198760">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>

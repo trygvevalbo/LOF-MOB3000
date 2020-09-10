@@ -12,9 +12,11 @@ import kotlinx.android.synthetic.*
 
 class RecyclerViewAdapter : RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>() {
 
-    private val itemNavn = arrayOf("text1", "text2", "text3", "text4", "text5")
+    private val itemNavn = arrayOf("Sekk funnet ved Evjudalen", "Iphone funnet på skolen", "Lommebok", "Hund", "Genser")
 
-    private val itemFarge = arrayOf("Svart", "Hvit", "Rød", "Blå", "Grønn")
+    private val itemFarge = arrayOf("Svart", "Hvit", "Rød", "Blå", "Grønn", "Farge1", "Farge2", "Farge3", "farge4", "farge5")
+
+    private val itemBesk = arrayOf("Svart sekk ble funnet i Evjudalen 16.00 i går", "Iphone lå på bakken på skolen", "Fannt en lommebok ut på gata", "Veldig snill og søt hund var ute på åkeren min", "Genser fanntes på bussen", "wow", "such", "Beskrivelse1")
 
     private val itemImage = intArrayOf(
         R.drawable.thonk,
@@ -26,10 +28,10 @@ class RecyclerViewAdapter : RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>
 
     inner class ViewHolder (itemView: View) : RecyclerView.ViewHolder(itemView){
 
-        var image   : ImageView
-        var textNavn   : TextView
-        var textFarge    : TextView
-        var textBesk   : TextView
+        var image       : ImageView
+        var textNavn    : TextView
+        var textFarge   : TextView
+        var textBesk    : TextView
 
         init {
             image       = itemView.findViewById(R.id.imageIC)
@@ -42,14 +44,15 @@ class RecyclerViewAdapter : RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val v = LayoutInflater.from(parent.context)
-            .inflate(R.layout.liste,parent, false)
+            .inflate(R.layout.liste, parent, false)
         return ViewHolder(v)
     }
 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.textNavn.text = itemNavn [position]
-        holder.textFarge.text = itemFarge [position]
+        holder.textNavn.text    = itemNavn [position]
+        holder.textFarge.text   = itemFarge [position]
+        holder.textBesk.text    = itemBesk [position]
         holder.image.setImageResource(itemImage [position])
 
         holder.itemView.setOnClickListener{v: View ->
