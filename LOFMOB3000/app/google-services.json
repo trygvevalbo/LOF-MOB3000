@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "183455339577",
+    "firebase_url": "https://lof-mob3000.firebaseio.com",
+    "project_id": "lof-mob3000",
+    "storage_bucket": "lof-mob3000.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:183455339577:android:528f25add80ca248e769e8",
+        "android_client_info": {
+          "package_name": "LOF.MOB3000"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "183455339577-j4cf2ru4qocg53i7183np7lf57jll0ir.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDh1rBBgXxsURlwIhi-XrhRiP9uEawtjOo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "183455339577-j4cf2ru4qocg53i7183np7lf57jll0ir.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
