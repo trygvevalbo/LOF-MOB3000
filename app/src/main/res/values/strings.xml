@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">LOF-MOB3000</string>
-    <string name="header_make_post_found_item">leg en kort beskrivelse på hva du har funnet</string>
-    <string name="item_descripstion">Hva er det</string>
-    <string name="color_of_item">Hvilken farge er det?</string>
+    <string name="header_make_post_found_item">Lag en kort beskrivelse av hva du har funnet</string>
+    <string name="item_descripstion">Hva er gjenstanden?</string>
+    <string name="color_of_item">Hvilken farge er den?</string>
     <string name="date_found">Når var den funnet?</string>
     <string name="contact_infromation">Kontaktinfromasjon</string>
-    <string name="post_button" />
+    <string name="post_button" >Last opp</string>
 </resources>
