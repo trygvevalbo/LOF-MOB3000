@@ -85,3 +85,8 @@ lint/generated/
 lint/outputs/
 lint/tmp/
 # lint/reports/
+LOFMOB3000/gradle/.DS_Store
+LOFMOB3000/.DS_Store
+app/src/.DS_Store
+app/.DS_Store
+.DS_Store
