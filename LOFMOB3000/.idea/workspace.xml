@@ -134,10 +134,6 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="333" y="23" width="614" height="705" key="#app" timestamp="1600085073055">
-      <screen x="0" y="23" width="1280" height="705" />
-    </state>
-    <state x="333" y="23" width="614" height="705" key="#app/0.23.1280.705@0.23.1280.705" timestamp="1600085073055" />
     <state x="1010" y="447" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1599155232552">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
