@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/LOF-MOB3000.iml" filepath="$PROJECT_DIR$/.idea/modules/LOF-MOB3000.iml" group="LOF-MOB3000" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/LOF-MOB3000-app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/LOF-MOB3000-app.iml" group="LOF-MOB3000/app" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/LOFMOB3000-LOF-MOB3000.iml" filepath="$PROJECT_DIR$/.idea/modules/LOFMOB3000-LOF-MOB3000.iml" group="LOF-MOB3000" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/app.iml" group="LOF-MOB3000/app" />
     </modules>
   </component>
