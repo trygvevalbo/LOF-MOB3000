@@ -85,12 +85,8 @@ lint/generated/
 lint/outputs/
 lint/tmp/
 # lint/reports/
-LOFMOB3000/.idea/workspace.xml
-LOFMOB3000/.idea/workspace.xml
-LOFMOB3000/.idea/misc.xml
-LOFMOB3000/.idea/workspace.xml
-LOFMOB3000/.idea/modules.xml
-LOFMOB3000/local.properties
-LOFMOB3000/local.properties
-LOFMOB3000/.idea/caches/build_file_checksums.ser
-LOFMOB3000/.idea/workspace.xml
+LOFMOB3000/gradle/.DS_Store
+LOFMOB3000/.DS_Store
+app/src/.DS_Store
+app/.DS_Store
+.DS_Store
