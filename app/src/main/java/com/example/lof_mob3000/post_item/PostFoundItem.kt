@@ -12,13 +12,9 @@ class PostFoundItem : AppCompatActivity() {
         setContentView(R.layout.activity_post_found_item)
 
         val chooseButton = findViewById<Button>(R.id.chooseButton)
-        chooseButton.setOnClickListener(chooseListener)
 
-        chooseButton.setOnClickListener(object : View.OnClickListener{
-            override fun onClick(v: View?) {
-                //https://stackoverflow.com/questions/44301301/android-how-to-achieve-setonclicklistener-in-kotlin
-               new onShowUploadButton()
-            }})
+
+
 
         fun onShowUploadButton(view: View){
             var uploadBtn = findViewById<Button>(R.id.uploadBtn)
