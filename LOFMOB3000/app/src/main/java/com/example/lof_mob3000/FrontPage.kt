@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 import kotlin.collections.ArrayList
 
-class MainActivity : AppCompatActivity() {
+class FrontPage : AppCompatActivity() {
 
     val arrayList = ArrayList<CardModel>()
     val displaList = ArrayList<CardModel>()
