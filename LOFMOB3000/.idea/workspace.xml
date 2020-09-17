@@ -9,11 +9,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="75c7b84f-1d4a-4ba2-8651-36d12d9a50b6" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable-anydpi/ic_action_name.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable-anydpi/ic_search_location.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable-hdpi/ic_action_name.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable-hdpi/ic_search_location.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable-mdpi/ic_action_name.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable-mdpi/ic_search_location.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/ic_action_name.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/ic_search_location.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable-xxhdpi/ic_action_name.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable-xxhdpi/ic_search_location.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/lof_mob3000/RecyclerViewAdapter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/lof_mob3000/RecyclerViewAdapter.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/liste.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/liste.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/menu/searchmenu.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/menu/searchmenu.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/local.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -63,7 +73,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/app/src/main/res/drawable-v24" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../ListedemoStarter" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.17" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -238,22 +248,22 @@
     </state>
     <state x="794" y="311" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1599738259217" />
     <state x="1059" y="418" key="FileChooserDialogImpl/0.0.2560.1400/-1920.160.1920.1040@0.0.2560.1400" timestamp="1599682813523" />
-    <state width="1874" height="338" key="GridCell.Tab.0.bottom" timestamp="1599820670260">
+    <state width="1874" height="274" key="GridCell.Tab.0.bottom" timestamp="1600338027288">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1874" height="338" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1599820670260" />
-    <state width="1874" height="338" key="GridCell.Tab.0.center" timestamp="1599820670256">
+    <state width="1874" height="274" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1600338027288" />
+    <state width="1874" height="274" key="GridCell.Tab.0.center" timestamp="1600338027284">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1874" height="338" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1599820670256" />
-    <state width="1874" height="338" key="GridCell.Tab.0.left" timestamp="1599820670254">
+    <state width="1874" height="274" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1600338027284" />
+    <state width="1874" height="274" key="GridCell.Tab.0.left" timestamp="1600338027282">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1874" height="338" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1599820670254" />
-    <state width="1874" height="338" key="GridCell.Tab.0.right" timestamp="1599820670258">
+    <state width="1874" height="274" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1600338027282" />
+    <state width="1874" height="274" key="GridCell.Tab.0.right" timestamp="1600338027285">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1874" height="338" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1599820670258" />
+    <state width="1874" height="274" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1600338027285" />
     <state width="1874" height="338" key="GridCell.Tab.1.bottom" timestamp="1599820670268">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
