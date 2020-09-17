@@ -9,10 +9,33 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="75c7b84f-1d4a-4ba2-8651-36d12d9a50b6" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/anim/fob_close.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/anim/fob_open.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/anim/spin_clockwise.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/anim/spin_counterclockwise.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable-anydpi/ic_add_item_light.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable-anydpi/ic_funnet.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable-anydpi/ic_tapt.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable-hdpi/ic_add_item.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable-hdpi/ic_add_item_light.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable-hdpi/ic_funnet.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable-hdpi/ic_tapt.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable-mdpi/ic_add_item.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable-mdpi/ic_add_item_light.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable-mdpi/ic_funnet.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable-mdpi/ic_tapt.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/ic_add_item.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/ic_add_item_light.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/ic_funnet.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/ic_tapt.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable-xxhdpi/ic_add_item.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable-xxhdpi/ic_add_item_light.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable-xxhdpi/ic_funnet.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable-xxhdpi/ic_tapt.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/lof_mob3000/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/lof_mob3000/FrontPage.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/lof_mob3000/FrontPage.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/lof_mob3000/FrontPage.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/liste.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/liste.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/menu/searchmenu.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/menu/searchmenu.xml" afterDir="false" />
@@ -223,13 +246,15 @@
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="431" y="419" key="#com.intellij.ide.util.MemberChooser/0.0.2560.1400/-1920.160.1920.1040@0.0.2560.1400" timestamp="1599681307529" />
-    <state x="1010" y="447" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1599155232552">
-      <screen x="0" y="0" width="2560" height="1400" />
+    <state x="758" y="332" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1600366622665">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
+    <state x="758" y="332" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1600366622665" />
     <state x="1010" y="447" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.2560.1400/-1920.160.1920.1040@0.0.2560.1400" timestamp="1599155232552" />
-    <state x="220" y="458" key="AndroidCreateResourceDirectoryDialog" timestamp="1599680379014">
-      <screen x="0" y="0" width="2560" height="1400" />
+    <state x="165" y="340" key="AndroidCreateResourceDirectoryDialog" timestamp="1600367564858">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
+    <state x="165" y="340" key="AndroidCreateResourceDirectoryDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1600367564858" />
     <state x="220" y="458" key="AndroidCreateResourceDirectoryDialog/0.0.2560.1400/-1920.160.1920.1040@0.0.2560.1400" timestamp="1599680379014" />
     <state x="510" y="391" key="AndroidCreateResourceFileDialog" timestamp="1599682123348">
       <screen x="0" y="0" width="2560" height="1400" />
@@ -240,38 +265,38 @@
     </state>
     <state x="794" y="311" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1599738259217" />
     <state x="1059" y="418" key="FileChooserDialogImpl/0.0.2560.1400/-1920.160.1920.1040@0.0.2560.1400" timestamp="1599682813523" />
-    <state width="1874" height="274" key="GridCell.Tab.0.bottom" timestamp="1600350619216">
+    <state width="1874" height="338" key="GridCell.Tab.0.bottom" timestamp="1600364711087">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1874" height="274" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1600350619216" />
-    <state width="1874" height="274" key="GridCell.Tab.0.center" timestamp="1600350619215">
+    <state width="1874" height="338" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1600364711087" />
+    <state width="1874" height="338" key="GridCell.Tab.0.center" timestamp="1600364711084">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1874" height="274" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1600350619215" />
-    <state width="1874" height="274" key="GridCell.Tab.0.left" timestamp="1600350619215">
+    <state width="1874" height="338" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1600364711084" />
+    <state width="1874" height="338" key="GridCell.Tab.0.left" timestamp="1600364711082">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1874" height="274" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1600350619215" />
-    <state width="1874" height="274" key="GridCell.Tab.0.right" timestamp="1600350619216">
+    <state width="1874" height="338" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1600364711082" />
+    <state width="1874" height="338" key="GridCell.Tab.0.right" timestamp="1600364711085">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1874" height="274" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1600350619216" />
-    <state width="1874" height="338" key="GridCell.Tab.1.bottom" timestamp="1599820670268">
+    <state width="1874" height="338" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1600364711085" />
+    <state width="1874" height="338" key="GridCell.Tab.1.bottom" timestamp="1600364711096">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1874" height="338" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1599820670268" />
-    <state width="1874" height="338" key="GridCell.Tab.1.center" timestamp="1599820670263">
+    <state width="1874" height="338" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1600364711096" />
+    <state width="1874" height="338" key="GridCell.Tab.1.center" timestamp="1600364711091">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1874" height="338" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1599820670263" />
-    <state width="1874" height="338" key="GridCell.Tab.1.left" timestamp="1599820670261">
+    <state width="1874" height="338" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1600364711091" />
+    <state width="1874" height="338" key="GridCell.Tab.1.left" timestamp="1600364711088">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1874" height="338" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1599820670261" />
-    <state width="1874" height="338" key="GridCell.Tab.1.right" timestamp="1599820670265">
+    <state width="1874" height="338" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1600364711088" />
+    <state width="1874" height="338" key="GridCell.Tab.1.right" timestamp="1600364711093">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1874" height="338" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1599820670265" />
+    <state width="1874" height="338" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1600364711093" />
     <state x="456" y="481" key="chooseDestDirectoryDialog" timestamp="1599680198760">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>

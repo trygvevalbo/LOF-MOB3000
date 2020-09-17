@@ -3,14 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
-    <item
-        android:id="@+id/submitButton"
-        android:title="Submit"
-        app:showAsAction="always|collapseActionView"
-        app:actionViewClass="android.widget.Button"
-        app:actionProviderClass=""
 
-        />
     <item
         android:id="@+id/locationButton"
         android:title="GLocation"
