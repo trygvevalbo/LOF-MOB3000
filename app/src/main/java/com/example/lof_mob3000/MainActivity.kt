@@ -18,6 +18,13 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, PostLostItem::class.java)
             startActivity(intent)
         }
+
+
+        val button1 = findViewById<Button>(R.id.button1)
+        button1.setOnClickListener{
+            val intent1 = Intent(this, PostFoundItem::class.java)
+            startActivity(intent1)
+        }
     }
 
 }

@@ -99,11 +99,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName4"></fragment>
 
-        <ImageView
-            android:id="@+id/transparent_image"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@color/transparent" /> //https://stackoverflow.com/questions/16974983/google-maps-api-v2-supportmapfragment-inside-scrollview-users-cannot-scroll-th
 
         <Button
             android:id="@+id/post_button_missing_item"
