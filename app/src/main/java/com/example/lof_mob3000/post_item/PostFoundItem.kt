@@ -10,17 +10,6 @@ class PostFoundItem : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_post_found_item)
-
-        val chooseButton = findViewById<Button>(R.id.chooseButton)
-
-
-
-
-        fun onShowUploadButton(view: View){
-            var uploadBtn = findViewById<Button>(R.id.uploadBtn)
-            uploadBtn.isClickable = true
-            uploadBtn.visibility = View.VISIBLE
-        }
     }
 
 

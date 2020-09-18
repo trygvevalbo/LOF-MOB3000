@@ -9,9 +9,11 @@
     You can also add your credentials to an existing key, using these values:
 
     Package name:
-    com.example.lof_mob3000.post_item
+    com.example.lof_mob3000
 
     SHA-1 certificate fingerprint:
+    4D:54:97:12:97:81:BE:07:39:82:B7:64:82:6D:98:D1:3B:6C:9F:5E
+    4D:54:97:12:97:81:BE:07:39:82:B7:64:82:6D:98:D1:3B:6C:9F:5E
     4D:54:97:12:97:81:BE:07:39:82:B7:64:82:6D:98:D1:3B:6C:9F:5E
 
     Alternatively, follow the directions here:
@@ -20,5 +22,5 @@
     Once you have your key (it starts with "AIza"), replace the "google_maps_key"
     string in this file.
     -->
-    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">YOUR_KEY_HERE</string>
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyDNjjIvEWROODgAIAGTPLsg3_YihZEIOTw</string>
 </resources>

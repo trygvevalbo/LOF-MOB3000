@@ -7,4 +7,5 @@
     <color name="DarkGray">#815A6D81</color>
     <color name="LightGray">#B2FFFFFF</color>
     <color name="White">#FFFFFF</color>
+    <color name="transparent">#00ED0000</color>
 </resources>
