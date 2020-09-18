@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">LOF-MOB3000</string>
+    <string name="submit_button">Lag Anonnse</string>
     <string name="header_make_post_found_item">Lag en kort beskrivelse av hva du har funnet</string>
     <string name="item_descripstion">Hva er gjenstanden?</string>
     <string name="color_of_item">Hvilken farge er den?</string>
