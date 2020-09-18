@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    tools:context=".MainActivity">
+    tools:context="com.example.lof_mob3000.MainActivity">
 
 
 
@@ -13,7 +13,7 @@
         android:id="@+id/button"
         android:layout_width="159dp"
         android:layout_height="63dp"
-        android:text="Click Me!!"
+        android:text="lost"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,5 +21,15 @@
         app:layout_constraintVertical_bias="0.197" />
 
 
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="159dp"
+        android:layout_height="63dp"
+        android:text="found"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintVertical_bias="0.197" />
 
 </LinearLayout>

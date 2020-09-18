@@ -5,6 +5,9 @@
     <string name="color_of_item">Hvilken farge er den?</string>
     <string name="date_found">Når var den funnet?</string>
     <string name="contact_infromation">Kontaktinfromasjon</string>
-    <string name="post_button" >Last opp</string>
+    <string name="post_found_button">Post funnet gjenstand</string>
     <string name="uploadBtnText">Upload</string>
+    <string name="header_make_post_lost_item">Lag en kort beskrivelse av hva du har mistet</string>
+    <string name="post_lost_button">Post mistet gjenstand</string>
+    <string name="title_activity_maps_full_screen">Map</string>
 </resources>
