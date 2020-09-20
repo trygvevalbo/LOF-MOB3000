@@ -2,7 +2,6 @@ package com.example.lof_mob3000.post_item
 
 import android.Manifest
 import android.app.Activity
-import android.content.ContentResolver
 import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -12,6 +11,8 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import com.example.lof_mob3000.R
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -20,7 +21,6 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.activity_post_lost_item.*
-
 
 
 class PostLostItem : AppCompatActivity() {
@@ -35,6 +35,14 @@ class PostLostItem : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_post_lost_item)
 
+        val fragment: DescriptionFragment? = DescriptionFragment.newInstance()
+        val fragmentManager: FragmentManager = supportFragmentManager
+        val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
+        if (fragment != null) {
+            fragmentTransaction.add(R.id.fragment_container, fragment)
+        };
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
 
         capture_btn.setOnClickListener {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -66,12 +74,12 @@ class PostLostItem : AppCompatActivity() {
         mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(OnMapReadyCallback {
             googleMap = it
-          //  googleMap.isMyLocationEnabled = true
+            //  googleMap.isMyLocationEnabled = true
             val location1 = LatLng(62.479386, 6.819220)
             googleMap.addMarker(MarkerOptions().position(location1).title("My location"))
             googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(location1, 10f))
 
-                //https://stackoverflow.com/questions/41254834/add-marker-on-google-map-on-touching-the-screen-using-android/41254877
+            //https://stackoverflow.com/questions/41254834/add-marker-on-google-map-on-touching-the-screen-using-android/41254877
             googleMap.setOnMapClickListener { latLng -> // Creating a marker
                 val markerOptions = MarkerOptions()
 
@@ -119,9 +127,10 @@ class PostLostItem : AppCompatActivity() {
     ) {
         // called when user presses ALLOW or DENY from Permission Request Popup
         when(requestCode){
-            PERMISSION_CODE ->{
-                if(grantResults.size > 0 && grantResults[0] ==
-                        PackageManager.PERMISSION_GRANTED){
+            PERMISSION_CODE -> {
+                if (grantResults.size > 0 && grantResults[0] ==
+                    PackageManager.PERMISSION_GRANTED
+                ) {
                     //permission from popup was granted
                     openCamera()
                 } else {
