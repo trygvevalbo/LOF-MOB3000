@@ -60,4 +60,11 @@ class RecyclerViewAdapter(val arrayList: ArrayList<CardModel>, val context: Cont
         }
     }
 
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.bindItems(arrayList[position])
+    }
+
+    override fun getItemCount(): Int {
+        return arrayList.size
+    }
 }
