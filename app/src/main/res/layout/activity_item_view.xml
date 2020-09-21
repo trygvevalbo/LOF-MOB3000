@@ -67,6 +67,17 @@
         android:clickable="true"
         android:enabled="true"
         />
+
+    <fragment
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_marginBottom="13dp"
+        android:layout_below="@id/textIC_Besk"
+        android:apiKey="@string/google_maps_key"
+        android:clickable="true"
+        android:enabled="true"/>
 </RelativeLayout>
 
 </ScrollView>

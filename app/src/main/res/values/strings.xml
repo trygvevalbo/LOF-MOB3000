@@ -17,6 +17,9 @@
     <string name="Farge">                           Farge</string>
     <string name="Besk">                            Beskrivelse</string>
 
+    <!-- GOOGLE MAPS -->
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyDNjjIvEWROODgAIAGTPLsg3_YihZEIOTw</string>
+
 
 
     <!-- TODO: Remove or change this placeholder text -->
