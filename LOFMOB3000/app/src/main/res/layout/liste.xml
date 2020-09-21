@@ -12,8 +12,6 @@
     android:foreground="?selectableItemBackground"
     android:clickable="true">
 
-
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -40,7 +38,7 @@
             android:text="NAME"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:textColor="@color/Black"
+            android:textColor="@color/LightGray"
 
             />
         <TextView
@@ -49,7 +47,7 @@
             android:layout_height="wrap_content"
             android:text="Farge"
             android:textSize="16sp"
-            android:textColor="@color/LightGray"
+            android:textColor="@color/AlmostWhite"
             android:layout_below="@id/textIC_Navn"
             android:layout_alignParentStart="true"
             android:layout_toStartOf="@+id/imageIC"
@@ -61,7 +59,7 @@
             android:layout_height="wrap_content"
             android:text="Beskrivelse"
             android:textSize="16sp"
-            android:textColor="@color/LightGray"
+            android:textColor="@color/AlmostWhite"
             android:layout_below="@id/textIC_Farge"
             android:layout_alignParentStart="true"
             android:layout_toStartOf="@+id/imageIC"

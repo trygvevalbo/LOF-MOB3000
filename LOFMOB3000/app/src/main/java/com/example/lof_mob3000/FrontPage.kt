@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.animation.AnimationUtils
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,7 +15,9 @@ import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 import kotlin.collections.ArrayList
 
-class MainActivity : AppCompatActivity() {
+class FrontPage : AppCompatActivity() {
+
+    var isOpen = false
 
     val arrayList = ArrayList<CardModel>()
     val displaList = ArrayList<CardModel>()
@@ -39,6 +43,38 @@ class MainActivity : AppCompatActivity() {
         hovedListe.layoutManager = LinearLayoutManager(this)
         hovedListe.adapter = myAdapter
 
+
+        val fobOpen = AnimationUtils.loadAnimation(this, R.anim.fob_open)
+        val fobClose = AnimationUtils.loadAnimation(this, R.anim.fob_close)
+        val fobClockwise = AnimationUtils.loadAnimation(this, R.anim.spin_clockwise)
+        val fobCounterclockwise = AnimationUtils.loadAnimation(this, R.anim.spin_counterclockwise)
+
+        submitButton.setOnClickListener {
+            if (isOpen) {
+                taptKnapp.startAnimation(fobClose)
+                funnetKnapp.startAnimation(fobClose)
+                submitButton.startAnimation(fobClockwise)
+
+                isOpen = false
+            }
+            else {
+                taptKnapp.startAnimation(fobOpen)
+                funnetKnapp.startAnimation(fobOpen)
+                submitButton.startAnimation(fobCounterclockwise)
+
+                taptKnapp.isClickable
+                funnetKnapp.isClickable
+
+                isOpen = true
+            }
+            taptKnapp.setOnClickListener{
+                Toast.makeText(this, "Lag tapt Anonnse", Toast.LENGTH_SHORT).show()
+            }
+
+            funnetKnapp.setOnClickListener{
+                Toast.makeText(this, "Lag funnet Anonnse", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
