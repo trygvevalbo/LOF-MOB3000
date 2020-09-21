@@ -75,9 +75,6 @@ class FrontPage : AppCompatActivity() {
                 Toast.makeText(this, "Lag funnet Anonnse", Toast.LENGTH_SHORT).show()
             }
         }
-
-
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

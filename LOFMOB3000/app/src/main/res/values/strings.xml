@@ -5,4 +5,5 @@
     <string name="farge">Farge</string>
     <string name="name">NAME</string>
     <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyDNjjIvEWROODgAIAGTPLsg3_YihZEIOTw</string>
+    <string name="search">Search</string>
 </resources>

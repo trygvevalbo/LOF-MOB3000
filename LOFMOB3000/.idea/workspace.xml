@@ -9,21 +9,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="75c7b84f-1d4a-4ba2-8651-36d12d9a50b6" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/lof_mob3000/ItemViewActivity.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_item_view.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/lof_mob3000/RecyclerViewAdapter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/lof_mob3000/RecyclerViewAdapter.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/lof_mob3000/FrontPage.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/lof_mob3000/FrontPage.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/menu/searchmenu.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/menu/searchmenu.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/local.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="Pixel_Pie" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="Pixel_2_Pie" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -69,7 +68,7 @@
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.17" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="AndroidSdkUpdater" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Kotlin" />
   </component>
   <component name="PsdUISettings">
     <option name="MODULE_TAB" value="Default Config" />
@@ -91,7 +90,7 @@
       </method>
     </configuration>
     <configuration name="LOF-MOB3000-app" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false">
-      <module name="LOF-MOB3000-app" />
+      <module name="app" />
       <option name="DEPLOY" value="true" />
       <option name="DEPLOY_APK_FROM_BUNDLE" value="false" />
       <option name="DEPLOY_AS_INSTANT" value="false" />
@@ -210,14 +209,15 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="359" y="348" key="#LOF-MOB3000-app" timestamp="1599681982748">
+    <state x="359" y="348" key="#LOF-MOB3000-app" timestamp="1600682392930">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="359" y="348" key="#LOF-MOB3000-app/0.0.2560.1400/-1920.160.1920.1040@0.0.2560.1400" timestamp="1599681982748" />
-    <state x="556" y="180" key="#Notifications" timestamp="1599735395089">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state x="359" y="348" key="#LOF-MOB3000-app/0.0.2560.1400/-1920.160.1920.1040@0.0.2560.1400" timestamp="1600682392930" />
+    <state x="741" y="242" key="#Notifications" timestamp="1600684056430">
+      <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="556" y="180" key="#Notifications/0.0.1920.1040@0.0.1920.1040" timestamp="1599735395089" />
+    <state x="741" y="242" key="#Notifications/0.0.2560.1400/-1920.160.1920.1040@0.0.2560.1400" timestamp="1600684056430" />
     <state x="481" y="253" key="#PSD" timestamp="1599735536056">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -240,10 +240,11 @@
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="510" y="391" key="AndroidCreateResourceFileDialog/0.0.2560.1400/-1920.160.1920.1040@0.0.2560.1400" timestamp="1599682123348" />
-    <state x="816" y="333" key="AndroidCreateXmlResourceDialog" timestamp="1600463623795">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state x="1088" y="448" key="AndroidCreateXmlResourceDialog" timestamp="1600682623865">
+      <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="816" y="333" key="AndroidCreateXmlResourceDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1600463623795" />
+    <state x="1088" y="448" key="AndroidCreateXmlResourceDialog/0.0.2560.1400/-1920.160.1920.1040@0.0.2560.1400" timestamp="1600682623865" />
     <state x="794" y="311" key="FileChooserDialogImpl" timestamp="1599738259217">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -281,6 +282,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1874" height="338" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1600465472745" />
+    <state x="45" y="267" key="SettingsEditor" timestamp="1600682806455">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="45" y="267" key="SettingsEditor/0.0.2560.1400/-1920.160.1920.1040@0.0.2560.1400" timestamp="1600682806455" />
     <state x="456" y="481" key="chooseDestDirectoryDialog" timestamp="1599680198760">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
