@@ -3,6 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
+
+    <item
+        android:id="@+id/locationButton"
+        android:title="GLocation"
+        android:icon="@drawable/ic_search_location"
+        app:showAsAction="always|collapseActionView"
+        />
+
+
     <item
         android:id="@+id/searchBar"
         android:title="Search"
@@ -10,5 +19,7 @@
         app:showAsAction="always|collapseActionView"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
         />
+
+
 
 </menu>

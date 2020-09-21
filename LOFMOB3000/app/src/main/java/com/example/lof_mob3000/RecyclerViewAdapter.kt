@@ -1,6 +1,7 @@
 package com.example.lof_mob3000
 
 import android.content.Context
+import android.content.Intent
 import android.view.ContextMenu
 import android.view.LayoutInflater
 import android.view.View
@@ -34,11 +35,29 @@ class RecyclerViewAdapter(val arrayList: ArrayList<CardModel>, val context: Cont
         return ViewHolder(v)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bindItems(arrayList[position])
-    }
-
     override fun getItemCount(): Int {
         return arrayList.size
     }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.bindItems(arrayList[position])
+
+        holder.itemView.setOnClickListener {
+            val model = arrayList.get(position)
+            var gNavn   : String = model.navn
+            var gFarge  : String = model.farge
+            var gBesk   : String = model.besk
+            var gImage  : Int    = model.image
+
+            val intent = Intent(context, ItemViewActivity::class.java)
+
+            intent.putExtra("iNavn", gNavn)
+            intent.putExtra("iFarge", gFarge)
+            intent.putExtra("iBesk", gBesk)
+            intent.putExtra("iImage", gImage)
+
+            context.startActivity(intent)
+        }
+    }
+
 }
