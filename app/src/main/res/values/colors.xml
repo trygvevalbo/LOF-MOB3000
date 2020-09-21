@@ -10,4 +10,12 @@
     <color name="transparent">#00ED0000</color>
     <color name="LightGray2">#F3FFFFFF</color>
     <color name="AlmostWhite">#CCCCCC</color>
+
+    <!--Color pallet-->
+    <color name="MainBackground">#264653</color>
+    <color name="MainAccent">#2A9D8F</color>
+    <color name="SecondaryAccent">#E9C46A</color>
+    <color name="Tetryary">#F4A261</color>
+    <color name="AlmostRead">#E76F51</color>
+    E9C46A
 </resources>
