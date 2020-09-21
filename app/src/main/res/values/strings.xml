@@ -1,16 +1,24 @@
 <resources>
-    <string name="app_name">LOF-MOB3000</string>
-    <string name="submit_button">Lag Anonnse</string>
-    <string name="header_make_post_found_item">Overskrift</string>
-    <string name="item_descripstion">Beskrivelse</string>
-    <string name="color_of_item">Hvilken farge er den?</string>
-    <string name="date_found">Når var den funnet?</string>
-    <string name="contact_infromation">Kontaktinfromasjon</string>
-    <string name="post_found_button">Post funnet gjenstand</string>
-    <string name="uploadBtnText">Last opp</string>
-    <string name="header_make_post_lost_item">Lag en kort beskrivelse av hva du har mistet</string>
-    <string name="post_lost_button">Post mistet gjenstand</string>
-    <string name="title_activity_maps_full_screen">Map</string>
-<!-- TODO: Remove or change this placeholder text -->
+
+
+    <string name="app_name">                        LOF-MOB3000</string>
+    <string name="submit_button">                   Lag Anonnse</string>
+    <string name="header_make_post_found_item">     Overskrift</string>
+    <string name="item_descripstion">               Beskrivelse</string>
+    <string name="color_of_item">                   Hvilken farge er den?</string>
+    <string name="date_found">                      Når var den funnet?</string>
+    <string name="contact_infromation">             Kontaktinfromasjon</string>
+    <string name="post_found_button">               Post funnet gjenstand</string>
+    <string name="uploadBtnText">                   Last opp</string>
+    <string name="header_make_post_lost_item">      Lag en kort beskrivelse av hva du har mistet</string>
+    <string name="post_lost_button">                Post mistet gjenstand</string>
+    <string name="title_activity_maps_full_screen"> Map</string>
+    <string name="Navn">                            Navn</string>
+    <string name="Farge">                           Farge</string>
+    <string name="Besk">                            Beskrivelse</string>
+
+
+
+    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
