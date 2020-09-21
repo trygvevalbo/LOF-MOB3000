@@ -41,7 +41,6 @@
             android:textSize="20sp"
             android:textStyle="bold"
             android:textColor="@color/LightGray"
-            android:textColor="@color/Black"
 
             />
         <TextView
@@ -51,7 +50,6 @@
             android:text="Farge"
             android:textSize="16sp"
             android:textColor="@color/AlmostWhite"
-            android:textColor="@color/LightGray"
             android:layout_below="@id/textIC_Navn"
             android:layout_alignParentStart="true"
             android:layout_toStartOf="@+id/imageIC"
@@ -64,7 +62,6 @@
             android:text="Beskrivelse"
             android:textSize="16sp"
             android:textColor="@color/AlmostWhite"
-            android:textColor="@color/LightGray"
             android:layout_below="@id/textIC_Farge"
             android:layout_alignParentStart="true"
             android:layout_toStartOf="@+id/imageIC"
