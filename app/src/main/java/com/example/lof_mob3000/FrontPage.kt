@@ -1,5 +1,6 @@
 package com.example.lof_mob3000
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -11,6 +12,8 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.lof_mob3000.post_item.PostFoundItem
+import com.example.lof_mob3000.post_item.PostLostItem
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 import kotlin.collections.ArrayList
@@ -68,11 +71,14 @@ class FrontPage : AppCompatActivity() {
                 isOpen = true
             }
             taptKnapp.setOnClickListener{
-                Toast.makeText(this, "Lag tapt Anonnse", Toast.LENGTH_SHORT).show()
+
+                    val intent1 = Intent(this, PostFoundItem::class.java)
+                    startActivity(intent1)
             }
 
             funnetKnapp.setOnClickListener{
-                Toast.makeText(this, "Lag funnet Anonnse", Toast.LENGTH_SHORT).show()
+                val intent1 = Intent(this, PostLostItem::class.java)
+                startActivity(intent1)
             }
         }
     }
