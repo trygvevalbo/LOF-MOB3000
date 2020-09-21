@@ -32,16 +32,6 @@ class MainActivity : AppCompatActivity() {
 
 
 
-        val button = findViewById<Button>(R.id.button)
-        button.setOnClickListener{
-            val intent = Intent(this, PostLostItem::class.java)
-            startActivity(intent)
-        }
-
-
-
-
-
         arrayList.add(CardModel("Item1", "blå", "Funnet ute på bakken", R.drawable.bigusbrainus))
         arrayList.add(CardModel("Item2", "Svart", "Dette er et eksempel på lengere text en passer til Cardviewen. Loreum ipsum dolaro disico nipslandat.", R.drawable.throwup))
         arrayList.add(CardModel("Item3", "hvit", "Funnet ute på bakken", R.drawable.cat))

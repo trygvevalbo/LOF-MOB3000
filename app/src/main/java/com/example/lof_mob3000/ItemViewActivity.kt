@@ -12,7 +12,7 @@ class ItemViewActivity : AppCompatActivity() {
 
         val actionBar : ActionBar? = supportActionBar
         actionBar!!.setDisplayHomeAsUpEnabled(true)
-        actionBar!!.setDisplayShowHomeEnabled(true)
+        actionBar.setDisplayShowHomeEnabled(true)
         var intent = intent
         val aNavn = intent.getStringExtra("iNavn")
         val aFarge = intent.getStringExtra("iFarge")
