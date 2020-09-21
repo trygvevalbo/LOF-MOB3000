@@ -35,6 +35,9 @@ class PostLostItem : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_post_lost_item)
 
+
+
+
         val fragment: DescriptionFragment? = DescriptionFragment.newInstance()
         val fragmentManager: FragmentManager = supportFragmentManager
         val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
