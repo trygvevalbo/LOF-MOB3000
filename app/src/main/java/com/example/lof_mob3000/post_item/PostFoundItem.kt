@@ -23,7 +23,7 @@ class PostFoundItem : AppCompatActivity() {
     mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
     mapFragment.getMapAsync(OnMapReadyCallback {
         googleMap = it
-        googleMap.isMyLocationEnabled = true
+        //googleMap.isMyLocationEnabled = true
         val location1 = LatLng(62.479386, 6.819220)
         googleMap.addMarker(MarkerOptions().position(location1).title("My location"))
         googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(location1, 10f))
