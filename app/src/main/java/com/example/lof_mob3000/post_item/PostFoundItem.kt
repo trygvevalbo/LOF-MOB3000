@@ -1,9 +1,19 @@
 package com.example.lof_mob3000.post_item
 
+import android.Manifest
+import android.app.Activity
+import android.content.ContentValues
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.View
 import android.widget.Button
+import android.widget.Toast
+import com.example.lof_mob3000.FrontPage
 import com.example.lof_mob3000.R
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -11,14 +21,47 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import kotlinx.android.synthetic.main.activity_post_found_item.*
+import kotlinx.android.synthetic.main.activity_post_lost_item.*
+import kotlinx.android.synthetic.main.activity_post_lost_item.capture_btn
+import kotlinx.android.synthetic.main.activity_post_lost_item.image_view
 
 class PostFoundItem : AppCompatActivity() {
+
+    private val IMAGE_CAPTURE_CODE  = 1001 // camera funksjon https://www.youtube.com/watch?v=3gkAoF90RZ4
+    private val PERMISSION_CODE  = 1000;
+    var image_uri: Uri? = null
 
     lateinit var mapFragment: SupportMapFragment
     lateinit var googleMap: GoogleMap
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_post_found_item)
+
+        capture_btn.setOnClickListener {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (checkSelfPermission(Manifest.permission.CAMERA)
+                    == PackageManager.PERMISSION_DENIED ||
+                    checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    == PackageManager.PERMISSION_DENIED
+                ) {
+                    //Permission was not enabled
+                    val permission = arrayOf(
+                        Manifest.permission.CAMERA,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    )
+                    //show popup ti request permission
+                    requestPermissions(permission, PERMISSION_CODE)
+                } else {
+                    //Permission already granted
+                    openCamera()
+                }
+            }
+            else{
+                //systen is us <marhmallow
+                openCamera()
+            }
+        }
 
     mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
     mapFragment.getMapAsync(OnMapReadyCallback {
@@ -51,6 +94,54 @@ class PostFoundItem : AppCompatActivity() {
 
 
     })
+
+        post_button_found_item.setOnClickListener{
+
+            val intent1 = Intent(this, FrontPage::class.java)
+            startActivity(intent1)
+        }
 }
+    private fun openCamera() {
+        val values = ContentValues()
+        values.put(MediaStore.Images.Media.TITLE, "New picture")
+        values.put(MediaStore.Images.Media.TITLE, "From the Camera")
+        image_uri = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
+
+        //camera intent
+        val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, image_uri)
+        startActivityForResult(cameraIntent, IMAGE_CAPTURE_CODE)
+
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        // called when user presses ALLOW or DENY from Permission Request Popup
+        when(requestCode){
+            PERMISSION_CODE -> {
+                if (grantResults.size > 0 && grantResults[0] ==
+                    PackageManager.PERMISSION_GRANTED
+                ) {
+                    //permission from popup was granted
+                    openCamera()
+                } else {
+                    //permission from popup was denied
+                    Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(resultCode == Activity.RESULT_OK){
+            //set image captured to image view
+            image_view.setImageURI(image_uri)
+        }
+    }
 
 }

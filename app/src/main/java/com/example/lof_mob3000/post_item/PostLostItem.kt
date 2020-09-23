@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import com.example.lof_mob3000.FrontPage
 import com.example.lof_mob3000.R
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -20,6 +21,7 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_post_lost_item.*
 
 
@@ -38,14 +40,14 @@ class PostLostItem : AppCompatActivity() {
 
 
 
-        val fragment: DescriptionFragment? = DescriptionFragment.newInstance()
+       /* val fragment: DescriptionFragment? = DescriptionFragment.newInstance()
         val fragmentManager: FragmentManager = supportFragmentManager
         val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
         if (fragment != null) {
             fragmentTransaction.add(R.id.fragment_container, fragment)
         };
         fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
+        fragmentTransaction.commit();*/
 
         capture_btn.setOnClickListener {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -106,7 +108,11 @@ class PostLostItem : AppCompatActivity() {
 
         })
 
+        post_button_missing_item.setOnClickListener{
 
+            val intent1 = Intent(this, FrontPage::class.java)
+            startActivity(intent1)
+        }
 
     }
 

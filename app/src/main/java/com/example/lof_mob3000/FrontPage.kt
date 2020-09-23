@@ -83,13 +83,12 @@ class FrontPage : AppCompatActivity() {
                 isOpen = true
             }
             taptKnapp.setOnClickListener{
-
-                    val intent1 = Intent(this, PostFoundItem::class.java)
-                    startActivity(intent1)
+                val intent1 = Intent(this, PostLostItem::class.java)
+                startActivity(intent1)
             }
 
             funnetKnapp.setOnClickListener{
-                val intent1 = Intent(this, PostLostItem::class.java)
+                val intent1 = Intent(this, PostFoundItem::class.java)
                 startActivity(intent1)
             }
         }
