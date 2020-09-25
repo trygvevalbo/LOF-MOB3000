@@ -18,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:maxHeight="50dp"
+        android:minHeight="100dp"
         android:layout_margin="5dp"
         >
 
@@ -29,6 +29,7 @@
             android:layout_height="75dp"
             android:src="@mipmap/ic_launcher"
             android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
             />
 
         <TextView
@@ -37,10 +38,22 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_toStartOf="@+id/imageIC"
+            android:layout_margin="5dp"
             android:text="NAME"
             android:textSize="20sp"
             android:textStyle="bold"
             android:textColor="@color/LightGray"
+            />
+
+        <TextView
+            android:id="@+id/textIC_Type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TYPE"
+            android:textStyle="bold"
+            android:textColor="@color/LightGray"
+            android:layout_below="@+id/textIC_Navn"
+            android:layout_marginStart="5dp"
 
             />
         <TextView
@@ -50,9 +63,11 @@
             android:text="Farge"
             android:textSize="16sp"
             android:textColor="@color/AlmostWhite"
-            android:layout_below="@id/textIC_Navn"
+            android:layout_below="@id/textIC_Type"
             android:layout_alignParentStart="true"
             android:layout_toStartOf="@+id/imageIC"
+            android:layout_marginStart="5dp"
+
 
             />
         <TextView
@@ -65,6 +80,8 @@
             android:layout_below="@id/textIC_Farge"
             android:layout_alignParentStart="true"
             android:layout_toStartOf="@+id/imageIC"
+            android:layout_marginStart="5dp"
+
             />
     </RelativeLayout>
 

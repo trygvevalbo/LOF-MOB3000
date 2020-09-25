@@ -32,14 +32,7 @@ class MainActivity : AppCompatActivity() {
 
 
 
-        arrayList.add(CardModel("Item1", "blå", "Funnet ute på bakken", R.drawable.bigusbrainus))
-        arrayList.add(CardModel("Item2", "Svart", "Dette er et eksempel på lengere text en passer til Cardviewen. Loreum ipsum dolaro disico nipslandat.", R.drawable.throwup))
-        arrayList.add(CardModel("Item3", "hvit", "Funnet ute på bakken", R.drawable.cat))
-        arrayList.add(CardModel("Item4", "blå", "Funnet ute på bakken", R.drawable.donkey))
-        arrayList.add(CardModel("Item5", "ingen", "Funnet ute på bakken", R.drawable.donkey))
-        arrayList.add(CardModel("Item6", "rød", "Funnet ute på bakken", R.drawable.donkey))
-        arrayList.add(CardModel("Item6", "rød", "Funnet ute på bakken", R.drawable.donkey))
-        arrayList.add(CardModel("Item6", "rød", "Funnet ute på bakken", R.drawable.ic_launcher_background))
+
         displaList.addAll(arrayList)
 
         val myAdapter = RecyclerViewAdapter(displaList, this)

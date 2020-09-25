@@ -23,6 +23,7 @@ class RecyclerViewAdapter(val arrayList: ArrayList<CardModel>, val context: Cont
 
         fun bindItems(model: CardModel) {
             itemView.textIC_Navn.text = model.navn
+            itemView.textIC_Type.text = model.type
             itemView.textIC_Farge.text = model.farge
             itemView.textIC_Besk.text = model.besk
             itemView.imageIC.setImageResource(model.image)
@@ -45,15 +46,17 @@ class RecyclerViewAdapter(val arrayList: ArrayList<CardModel>, val context: Cont
         holder.itemView.setOnClickListener {
             val model = arrayList.get(position)
             var gNavn   : String = model.navn
+            var gType   : String = model.type
             var gFarge  : String = model.farge
             var gBesk   : String = model.besk
             var gImage  : Int    = model.image
 
             val intent = Intent(context, ItemViewActivity::class.java)
 
-            intent.putExtra("iNavn", gNavn)
+            intent.putExtra("iNavn",  gNavn)
+            intent.putExtra("iType",  gType)
             intent.putExtra("iFarge", gFarge)
-            intent.putExtra("iBesk", gBesk)
+            intent.putExtra("iBesk",  gBesk)
             intent.putExtra("iImage", gImage)
 
             context.startActivity(intent)

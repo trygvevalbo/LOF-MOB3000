@@ -13,16 +13,18 @@ class ItemViewActivity : AppCompatActivity() {
         val actionBar : ActionBar? = supportActionBar
         actionBar!!.setDisplayHomeAsUpEnabled(true)
         actionBar.setDisplayShowHomeEnabled(true)
-        var intent = intent
-        val aNavn = intent.getStringExtra("iNavn")
-        val aFarge = intent.getStringExtra("iFarge")
-        val aBesk = intent.getStringExtra("iBesk")
-        val aImage = intent.getIntExtra("iImage", 0)
+        var intent  = intent
+        val aNavn   = intent.getStringExtra("iNavn")
+        val aType   = intent.getStringExtra("iType")
+        val aFarge  = intent.getStringExtra("iFarge")
+        val aBesk   = intent.getStringExtra("iBesk")
+        val aImage  = intent.getIntExtra("iImage", 0)
 
         actionBar.setTitle(aNavn)
-        textIC_Navn.text = aNavn
+        textIC_Navn.text  = aNavn
+        textIC_Type.text  = aType
         textIC_Farge.text = aFarge
-        textIC_Besk.text = aBesk
+        textIC_Besk.text  = aBesk
         imageIC.setImageResource(aImage)
     }
 }
