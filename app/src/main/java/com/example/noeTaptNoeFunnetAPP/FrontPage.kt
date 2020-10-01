@@ -57,11 +57,15 @@ class FrontPage : AppCompatActivity() {
        preferences = getSharedPreferences("My_Pref", Context.MODE_PRIVATE)
        val mSortSetting = preferences.getString("Sort", "Funnet")
 
-        if (mSortSetting == "Funnet"){
-            sortTapt(myAdapter)
+        if (mSortSetting == null) {
+            sortAlle(myAdapter)
+
+        } else if (mSortSetting == "Funnet") {
+            sortFunnet(myAdapter)
 
         } else if (mSortSetting == "Tapt"){
-            sortFunnet(myAdapter)
+            sortTapt(myAdapter)
+
         } else if (mSortSetting == "Alle"){
             sortAlle(myAdapter)
         }
@@ -187,19 +191,19 @@ class FrontPage : AppCompatActivity() {
     private fun sortDialog() {
         val options = arrayOf("Alle", "Funnet", "Tapt")
         val builder = AlertDialog.Builder(this)
-        builder.setTitle("Sort By")
+        builder.setTitle("Vis")
 
         builder.setItems(options) {dialog, wich ->
             if (wich == 0){
                 val editor : SharedPreferences.Editor = preferences.edit()
-                editor.putString("sort", "Alle")
+                editor.putString("Vis", "Alle")
                 editor.apply()
                 sortAlle(myAdapter)
                 Toast.makeText(this@FrontPage, "Alle", Toast.LENGTH_LONG).show()
             }
             if (wich == 1){
                 val editor : SharedPreferences.Editor = preferences.edit()
-                editor.putString("sort", "Funnet")
+                editor.putString("Vis", "Funnet")
                 editor.apply()
                 sortFunnet(myAdapter)
                 Toast.makeText(this@FrontPage, "Funnet", Toast.LENGTH_LONG).show()
@@ -207,7 +211,7 @@ class FrontPage : AppCompatActivity() {
             }
             if (wich == 2){
                 val editor : SharedPreferences.Editor = preferences.edit()
-                editor.putString("sort", "Tapt")
+                editor.putString("Vis", "Tapt")
                 editor.apply()
                 sortTapt(myAdapter)
                 Toast.makeText(this@FrontPage, "Tapt", Toast.LENGTH_LONG).show()
