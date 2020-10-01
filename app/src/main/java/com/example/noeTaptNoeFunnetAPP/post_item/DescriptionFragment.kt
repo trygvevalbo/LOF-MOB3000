@@ -1,11 +1,11 @@
-package com.example.lof_mob3000.post_item
+package com.example.noeTaptNoeFunnetAPP.post_item
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.lof_mob3000.R
+import com.example.noeTaptNoeFunnetAPP.R
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER

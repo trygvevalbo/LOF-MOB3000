@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.lof_mob3000.post_item.PostLostItem"> <!--https://stackoverflow.com/questions/43098150/android-how-to-make-a-scrollable-constraintlayout -->
+    tools:context="com.example.noeTaptNoeFunnetAPP.post_item.PostLostItem"> <!--https://stackoverflow.com/questions/43098150/android-how-to-make-a-scrollable-constraintlayout -->
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

@@ -1,4 +1,4 @@
-package com.example.lof_mob3000
+package com.example.noeTaptNoeFunnetAPP
 
 import android.content.Context
 import android.content.Intent
@@ -9,17 +9,14 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.animation.AnimationUtils
 import android.widget.EditText
-import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.lof_mob3000.post_item.PostFoundItem
-import com.example.lof_mob3000.post_item.PostLostItem
+import com.example.noeTaptNoeFunnetAPP.post_item.PostFoundItem
+import com.example.noeTaptNoeFunnetAPP.post_item.PostLostItem
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.liste.*
 import java.util.*
 import kotlin.collections.ArrayList
 

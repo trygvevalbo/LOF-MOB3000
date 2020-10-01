@@ -1,17 +1,11 @@
-package com.example.lof_mob3000
+package com.example.noeTaptNoeFunnetAPP
 
 import android.content.Context
 import android.content.Intent
-import android.view.ContextMenu
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
-import androidx.appcompat.view.menu.ActionMenuItemView
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.*
 import kotlinx.android.synthetic.main.liste.view.*
 
 class RecyclerViewAdapter(val arrayList: ArrayList<CardModel>, val context: Context) :

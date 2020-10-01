@@ -1,8 +1,8 @@
-package com.example.lof_mob3000.post_item
+package com.example.noeTaptNoeFunnetAPP.post_item
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.lof_mob3000.R
+import com.example.noeTaptNoeFunnetAPP.R
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap

@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "99984673318",
+    "firebase_url": "https://ntnfapp.firebaseio.com",
+    "project_id": "ntnfapp",
+    "storage_bucket": "ntnfapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:99984673318:android:21161f9e293f2cea4a34e7",
+        "android_client_info": {
+          "package_name": "com.example.noeTaptNoeFunnetAPP"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "99984673318-fkomv5ho156t0q537f045lvm1q7nj5jo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.noeTaptNoeFunnetAPP",
+            "certificate_hash": "36af994e26c3496f17126549f0d407449dd9fe4f"
+          }
+        },
+        {
+          "client_id": "99984673318-afdd5eg8f0p828ffi2dkmmrsosikj789.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBXVP2YanFWvKjEZFclBOH5HDFEY_Fh20E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "99984673318-afdd5eg8f0p828ffi2dkmmrsosikj789.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
