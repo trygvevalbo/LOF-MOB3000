@@ -2,6 +2,7 @@ package com.example.noeTaptNoeFunnetAPP.post_item
 
 import android.Manifest
 import android.app.Activity
+import android.app.ProgressDialog
 import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -11,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.widget.Toast
+import androidx.core.app.ActivityCompat.startActivityForResult
 import com.example.noeTaptNoeFunnetAPP.FrontPage
 import com.example.noeTaptNoeFunnetAPP.R
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -19,6 +21,12 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.tasks.Continuation
+import com.google.android.gms.tasks.Task
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
+import com.google.firebase.storage.StorageTask
+import com.google.firebase.storage.UploadTask
 import kotlinx.android.synthetic.main.activity_post_found_item.*
 import kotlinx.android.synthetic.main.activity_post_lost_item.capture_btn
 import kotlinx.android.synthetic.main.activity_post_lost_item.image_view
@@ -27,7 +35,14 @@ class PostFoundItem : AppCompatActivity() {
 
     private val IMAGE_CAPTURE_CODE  = 1001 // camera funksjon https://www.youtube.com/watch?v=3gkAoF90RZ4
     private val PERMISSION_CODE  = 1000;
+    private val RequestCode = 438
     var image_uri: Uri? = null
+    private var storageRef: StorageReference? = null
+
+    private var coverChecker: String? = ""
+
+
+
 
     lateinit var mapFragment: SupportMapFragment
     lateinit var googleMap: GoogleMap
@@ -35,7 +50,10 @@ class PostFoundItem : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_post_found_item)
 
+        storageRef = FirebaseStorage.getInstance().reference.child("User Images")
+
         capture_btn.setOnClickListener {
+
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 if (checkSelfPermission(Manifest.permission.CAMERA)
                     == PackageManager.PERMISSION_DENIED ||
@@ -58,6 +76,10 @@ class PostFoundItem : AppCompatActivity() {
                 //systen is us <marhmallow
                 openCamera()
             }
+        }
+
+        choose_image.setOnClickListener {
+            pickImage()
         }
 
     mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
@@ -96,6 +118,11 @@ class PostFoundItem : AppCompatActivity() {
 
             val intent1 = Intent(this, FrontPage::class.java)
             startActivity(intent1)
+        }
+
+        image_view.setOnClickListener {
+            coverChecker = "cover"
+            pickImage()
         }
 }
     private fun openCamera() {
@@ -139,6 +166,53 @@ class PostFoundItem : AppCompatActivity() {
             //set image captured to image view
             image_view.setImageURI(image_uri)
         }
+
+        if(RequestCode == RequestCode && resultCode == Activity.RESULT_OK && data!!.data != null) run {
+            image_uri = data.data
+            Toast.makeText(this,"uploading", Toast.LENGTH_LONG).show()
+            uploadImageToDatabase()
+        }
     }
+
+    private fun uploadImageToDatabase() {
+      /*  val progressBar: ProgressDialog(TAG)
+        progressBar.setCancelMessage("Image is uploading please wait...")
+        progressBar.show()*/
+
+        if(image_uri!= null){
+            val fileRef = storageRef!!.child(System.currentTimeMillis().toString()+ ".jpg")
+            var uploadTask: StorageTask<*>
+            uploadTask = fileRef.putFile(image_uri!!)
+
+            uploadTask.continueWithTask(Continuation<UploadTask.TaskSnapshot, Task<Uri>>{task ->
+                if(!task.isSuccessful){
+                    task.exception?.let{
+                        throw it
+                    }
+
+
+                }
+                return@Continuation fileRef.downloadUrl
+            } ).addOnCompleteListener { task ->
+                if(task.isSuccessful){
+                    val downloadUrl = task.result
+                    val url= downloadUrl.toString()
+
+                    Toast.makeText(this,"funker", Toast.LENGTH_LONG).show()
+
+                    }
+                Toast.makeText(this,"feil", Toast.LENGTH_LONG).show()
+                }
+            }
+        }
+
+
+    private fun pickImage(){
+    val intent  = Intent()
+        intent.type="image/*"
+        intent.action = Intent.ACTION_GET_CONTENT
+        startActivityForResult(intent, RequestCode)
+    }
+
 
 }

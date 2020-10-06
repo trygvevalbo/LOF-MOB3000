@@ -20,7 +20,6 @@
         android:layout_marginTop="20dp"
         android:text="@string/header_make_post_found_item"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/image_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
@@ -29,13 +28,13 @@
 
     <ImageView
         android:id="@+id/image_view"
-        android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="336dp"
+        android:layout_height="249dp"
+        android:layout_marginTop="32dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/header"
+        app:layout_constraintTop_toBottomOf="@+id/found_header"
         app:srcCompat="@drawable/stock_image_before_upload" />
 
     <Button
@@ -43,10 +42,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Last opp bilde"
+        android:text="Ta et bilde"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/choose_image"
         app:layout_constraintTop_toBottomOf="@+id/image_view" />
 
     <EditText
@@ -137,6 +135,17 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:layout="@layout/fragment_description">
     </FrameLayout>
+
+    <Button
+        android:id="@+id/choose_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:text="Velg bilde"
+        app:layout_constraintBottom_toBottomOf="@+id/capture_btn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/image_view"
+        app:layout_constraintVertical_bias="1.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
