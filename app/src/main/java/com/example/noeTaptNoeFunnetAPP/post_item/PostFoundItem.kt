@@ -2,19 +2,17 @@ package com.example.noeTaptNoeFunnetAPP.post_item
 
 import android.Manifest
 import android.app.Activity
-import android.app.ProgressDialog
 import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.media.Image
 import android.net.Uri
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.widget.ImageView
 import android.widget.Toast
-import androidx.core.app.ActivityCompat.startActivityForResult
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.example.noeTaptNoeFunnetAPP.FrontPage
 import com.example.noeTaptNoeFunnetAPP.R
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -30,7 +28,6 @@ import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.StorageTask
 import com.google.firebase.storage.UploadTask
 import kotlinx.android.synthetic.main.activity_post_found_item.*
-import kotlinx.android.synthetic.main.activity_post_lost_item.capture_btn
 import kotlinx.android.synthetic.main.activity_post_lost_item.image_view
 
 class PostFoundItem : AppCompatActivity() {
@@ -128,7 +125,26 @@ class PostFoundItem : AppCompatActivity() {
             coverChecker = "cover"
             pickImage()
         }
+
+        description.setOnClickListener {
+            var mFragment: Fragment? = null
+            mFragment = DescriptionFragment()
+            val fragmentManager = supportFragmentManager
+            fragmentManager.beginTransaction()
+                .replace(R.id.postfound, mFragment!!).commit()
+
+            
+        }
+
+
+
 }
+
+
+
+
+
+
     private fun openCamera() {
         val values = ContentValues()
         values.put(MediaStore.Images.Media.TITLE, "New picture")
@@ -174,7 +190,7 @@ class PostFoundItem : AppCompatActivity() {
         if(RequestCode == RequestCode && resultCode == Activity.RESULT_OK && data!!.data != null) run {
             image_uri = data.data
             image_view.setImageURI(image_uri)
-            Toast.makeText(this,"uploading", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "uploading", Toast.LENGTH_LONG).show()
 
         }
     }
@@ -185,22 +201,22 @@ class PostFoundItem : AppCompatActivity() {
         progressBar.show()*/
 
         if(image_uri!= null){
-            val fileRef = storageRef!!.child(System.currentTimeMillis().toString()+ ".jpg")
+            val fileRef = storageRef!!.child(System.currentTimeMillis().toString() + ".jpg")
             var uploadTask: StorageTask<*>
             uploadTask = fileRef.putFile(image_uri!!)
 
-            uploadTask.continueWithTask(Continuation<UploadTask.TaskSnapshot, Task<Uri>>{task ->
-                if(!task.isSuccessful){
-                    task.exception?.let{
+            uploadTask.continueWithTask(Continuation<UploadTask.TaskSnapshot, Task<Uri>> { task ->
+                if (!task.isSuccessful) {
+                    task.exception?.let {
                         throw it
                     }
 
 
                 }
                 return@Continuation fileRef.downloadUrl
-            } ).addOnCompleteListener { task ->
+            }).addOnCompleteListener { task ->
                 if(task.isSuccessful){
-                    Toast.makeText(this,"Bildet er lastet opp", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, "Bildet er lastet opp", Toast.LENGTH_LONG).show()
 
                     }
 
