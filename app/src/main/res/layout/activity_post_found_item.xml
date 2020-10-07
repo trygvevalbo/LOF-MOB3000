@@ -37,28 +37,65 @@
         app:layout_constraintTop_toBottomOf="@+id/found_header"
         app:srcCompat="@drawable/stock_image_before_upload" />
 
-    <Button
-        android:id="@+id/capture_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <RelativeLayout
+        android:id="@+id/image_button_container"
+        android:layout_width="fill_parent"
+        android:layout_height="70dp"
         android:layout_marginTop="16dp"
-        android:text="Ta et bilde"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/choose_image"
-        app:layout_constraintTop_toBottomOf="@+id/image_view" />
+        android:background="@color/ContainerPostDark"
+        android:layout_alignParentRight="true"
+        app:layout_constraintTop_toBottomOf="@+id/image_view">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/choose_image"
+                android:layout_width="77dp"
+                android:layout_height="55dp"
+
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentBottom="true"
+
+                android:layout_marginStart="86dp"
+                android:layout_marginEnd="45dp"
+                android:text="Velg bilde"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/capture_btn"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/browse_image" />
+
+            <ImageView
+                android:id="@+id/capture_btn"
+                android:layout_width="77dp"
+                android:layout_height="55dp"
+
+                android:layout_marginEnd="86dp"
+                android:text="Ta et bilde"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/choose_image"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/take_picture_icon" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </RelativeLayout>
 
     <EditText
         android:id="@+id/description"
         android:layout_width="fill_parent"
         android:layout_height="42dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="32dp"
         android:ems="10"
         android:hint="@string/item_descripstion"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/capture_btn" />
+        app:layout_constraintTop_toBottomOf="@id/image_button_container" />
 
     <EditText
         android:id="@+id/colordescription"
@@ -136,16 +173,7 @@
         tools:layout="@layout/fragment_description">
     </FrameLayout>
 
-    <Button
-        android:id="@+id/choose_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:text="Velg bilde"
-        app:layout_constraintBottom_toBottomOf="@+id/capture_btn"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/image_view"
-        app:layout_constraintVertical_bias="1.0" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

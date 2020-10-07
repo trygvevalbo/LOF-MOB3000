@@ -6,11 +6,13 @@ import android.app.ProgressDialog
 import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.media.Image
 import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat.startActivityForResult
 import com.example.noeTaptNoeFunnetAPP.FrontPage
@@ -41,17 +43,16 @@ class PostFoundItem : AppCompatActivity() {
 
     private var coverChecker: String? = ""
 
-
-
-
     lateinit var mapFragment: SupportMapFragment
     lateinit var googleMap: GoogleMap
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_post_found_item)
 
         storageRef = FirebaseStorage.getInstance().reference.child("User Images")
 
+       val capture_btn = findViewById(R.id.capture_btn) as ImageView
         capture_btn.setOnClickListener {
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -77,7 +78,7 @@ class PostFoundItem : AppCompatActivity() {
                 openCamera()
             }
         }
-
+        val choose_image = findViewById(R.id.choose_image) as ImageView
         choose_image.setOnClickListener {
             pickImage()
         }
@@ -116,6 +117,9 @@ class PostFoundItem : AppCompatActivity() {
 
         post_button_found_item.setOnClickListener{
 
+            if(image_uri != null) {  //last opp bilde til database
+                uploadImageToDatabase()
+            }
             val intent1 = Intent(this, FrontPage::class.java)
             startActivity(intent1)
         }
@@ -169,8 +173,9 @@ class PostFoundItem : AppCompatActivity() {
 
         if(RequestCode == RequestCode && resultCode == Activity.RESULT_OK && data!!.data != null) run {
             image_uri = data.data
+            image_view.setImageURI(image_uri)
             Toast.makeText(this,"uploading", Toast.LENGTH_LONG).show()
-            uploadImageToDatabase()
+
         }
     }
 
@@ -195,13 +200,10 @@ class PostFoundItem : AppCompatActivity() {
                 return@Continuation fileRef.downloadUrl
             } ).addOnCompleteListener { task ->
                 if(task.isSuccessful){
-                    val downloadUrl = task.result
-                    val url= downloadUrl.toString()
-
-                    Toast.makeText(this,"funker", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this,"Bildet er lastet opp", Toast.LENGTH_LONG).show()
 
                     }
-                Toast.makeText(this,"feil", Toast.LENGTH_LONG).show()
+
                 }
             }
         }
