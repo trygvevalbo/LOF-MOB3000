@@ -18,14 +18,6 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class DescriptionFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-       
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -34,6 +26,13 @@ class DescriptionFragment : Fragment() {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_description, container, false)
     }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+       
+    }
+
+
 
 
 

@@ -10,7 +10,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <!-- Alle rettigheter som trenges for funksjonaliteten av denne appen -->
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.IN TERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.ACCEPT_HANDOVER" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -22,30 +22,31 @@
         android:allowBackup="true"
         android:icon="@mipmap/appicon"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
+        <!--
+             The API key for Google Maps-based APIs is defined as a string resource.
+             (See the file "res/values/google_maps_api.xml").
+             Note that the API key is linked to the encryption key used to sign the APK.
+             You need a different API key for each encryption key, including the release key that is used to
+             sign the APK for publishing.
+             You can define the keys for the debug and release targets in src/debug/ and src/release/.
+        -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity
-            android:name="com.example.noeTaptNoeFunnetAPP.post_item.MapsFullScreenActivity"
-            android:label="@string/title_activity_maps_full_screen">
-
-        </activity>
 
         <activity
-            android:name="com.example.noeTaptNoeFunnetAPP.ItemViewActivity"
-            android:parentActivityName="com.example.noeTaptNoeFunnetAPP.FrontPage">
-
-        </activity>
-
-        <activity android:name="com.example.noeTaptNoeFunnetAPP.post_item.PostLostItem" />
-        <activity android:name="com.example.noeTaptNoeFunnetAPP.post_item.PostFoundItem" />
+            android:name=".ItemViewActivity"
+            android:parentActivityName=".FrontPage"></activity>
+        <activity android:name=".post_item.PostLostItem" />
+        <activity android:name=".post_item.PostFoundItem" />
         <activity
-            android:name="com.example.noeTaptNoeFunnetAPP.FrontPage"
+            android:name=".FrontPage"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

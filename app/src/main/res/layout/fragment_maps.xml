@@ -5,25 +5,6 @@
     android:id="@+id/map"
     android:name="com.google.android.gms.maps.SupportMapFragment"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MapsFragment">
+    android:layout_height="400dp"
 
-    <com.google.android.gms.maps.MapView
-        android:id="@+id/map_view"
-       android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </com.google.android.gms.maps.MapView>
-
-
-    <fragment
-        android:name="androidx.navigation.fragment.NavHostFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:navGraph="@navigation/nav_graph"
-        app:defaultNavHost="true"
-        android:id="@+id/fragment"
-        android:layout_below="@+id/toolbar"
-        />
-
-
-</fragment>
+   />
