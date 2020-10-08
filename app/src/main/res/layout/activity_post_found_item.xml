@@ -1,181 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.noeTaptNoeFunnetAPP.post_item.PostFoundItem"> <!--https://stackoverflow.com/questions/43098150/android-how-to-make-a-scrollable-constraintlayout -->
 
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".post_item.PostFoundItem"
-    android:id="@+id/postfound">
 
-
-    <TextView
-        android:id="@+id/found_header"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="@string/header_make_post_found_item"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
-    <ImageView
-        android:id="@+id/image_view"
-        android:layout_width="336dp"
-        android:layout_height="249dp"
-        android:layout_marginTop="32dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.493"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/found_header"
-        app:srcCompat="@drawable/stock_image_before_upload" />
-
-    <RelativeLayout
-        android:id="@+id/image_button_container"
-        android:layout_width="fill_parent"
-        android:layout_height="70dp"
-        android:layout_marginTop="16dp"
-        android:background="@color/ContainerPostDark"
-        android:layout_alignParentRight="true"
-        app:layout_constraintTop_toBottomOf="@+id/image_view">
-
+   <ScrollView
+       android:layout_width="match_parent"
+       android:layout_height="match_parent">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <ImageView
-                android:id="@+id/choose_image"
-                android:layout_width="77dp"
-                android:layout_height="55dp"
 
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentBottom="true"
 
-                android:layout_marginStart="86dp"
-                android:layout_marginEnd="45dp"
-                android:text="Velg bilde"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/capture_btn"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/browse_image" />
-
-            <ImageView
-                android:id="@+id/capture_btn"
-                android:layout_width="77dp"
-                android:layout_height="55dp"
-
-                android:layout_marginEnd="86dp"
-                android:text="Ta et bilde"
-                app:layout_constraintBottom_toBottomOf="parent"
+            <RelativeLayout
+                android:id="@+id/form_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/choose_image"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/take_picture_icon" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+
+
+
+
+
+
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </RelativeLayout>
-
-    <Button
-        android:id="@+id/description"
-        android:layout_width="fill_parent"
-        android:layout_height="42dp"
-        android:layout_marginTop="32dp"
-        android:ems="10"
-        android:hint="@string/item_descripstion"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/image_button_container" />
-
-    <EditText
-        android:id="@+id/colordescription"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:hint="@string/color_of_item"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/description" />
-
-    <EditText
-        android:id="@+id/timewhenfound"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:hint="@string/date_found"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/colordescription" />
-
-    <EditText
-        android:id="@+id/contactinformation"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:hint="@string/contact_infromation"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/timewhenfound" />
-
-    <fragment
-        android:id="@+id/map"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginBottom="13dp"
-        app:layout_constraintBottom_toTopOf="@+id/post_button_missing_item"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/contactinformation"
-        app:layout_constraintVertical_bias="1.0"></fragment>
-
-    <Button
-        android:id="@+id/post_button_found_item"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="@string/post_found_button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/map" />
-
-
-    <FrameLayout
-        android:id="@+id/fragment_container"
-        android:name="SimpleFragment"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout="@layout/fragment_description">
-    </FrameLayout>
-
-
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>
+   </ScrollView>
+</RelativeLayout>
