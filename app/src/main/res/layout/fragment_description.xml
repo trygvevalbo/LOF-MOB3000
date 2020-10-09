@@ -11,10 +11,11 @@
     android:layout_height="match_parent"
     tools:context=".post_item.DescriptionFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <EditText
+        android:id="@+id/editTextTextPersonName"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
-
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Name" />
 </FrameLayout>

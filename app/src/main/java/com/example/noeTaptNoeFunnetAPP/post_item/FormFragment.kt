@@ -4,6 +4,7 @@ import android.Manifest
 import android.app.Activity
 import android.content.ContentResolver
 import android.content.ContentValues
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -16,31 +17,37 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import com.example.noeTaptNoeFunnetAPP.FrontPage
 import com.example.noeTaptNoeFunnetAPP.R
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.tasks.Continuation
 import com.google.android.gms.tasks.Task
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.StorageTask
 import com.google.firebase.storage.UploadTask
+import kotlinx.android.synthetic.main.activity_post_found_item.*
 import kotlinx.android.synthetic.main.fragment_form.*
 import kotlinx.android.synthetic.main.fragment_form.view.*
 
 
 class FormFragment : Fragment() {
 
+
+    private lateinit var appNavigator: AppNavigator
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        appNavigator = context as AppNavigator
+    }
+
+
     private val IMAGE_CAPTURE_CODE  = 1001 // camera funksjon https://www.youtube.com/watch?v=3gkAoF90RZ4
     private val PERMISSION_CODE  = 1000;
     private val RequestCode = 438
     var image_uri: Uri? = null
     private var storageRef: StorageReference? = null
+
 
     private var coverChecker: String? = ""
 
@@ -115,29 +122,34 @@ class FormFragment : Fragment() {
 
 
 
-/*        post_button_found_item.setOnClickListener{
+        view.post_button_found_item.setOnClickListener{
 
             if(image_uri != null) {  //last opp bilde til database
                 uploadImageToDatabase()
             }
             val intent1 = Intent(activity, FrontPage::class.java)
             startActivity(intent1)
-        }*/
+        }
 
             view.image_view.setOnClickListener {
             coverChecker = "cover"
             pickImage()
         }
 
-       /* description.setOnClickListener {
-            var mFragment: Fragment? = null
-            mFragment = DescriptionFragment()
-            val fragmentManager = supportFragmentManager
-            fragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, mFragment!!).commit()
+        view.description.setOnClickListener {
+
+    appNavigator.navigateToDescription()
 
 
-        } */
+          //  val nextFrag = DescriptionFragment()
+          /*  requireActivity().supportFragmentManager.beginTransaction()
+
+                .replace(R.id.description_container, nextFrag, "findThisFragment")
+                .addToBackStack(null)
+                .commit()*/
+
+
+        }
 
 
 
