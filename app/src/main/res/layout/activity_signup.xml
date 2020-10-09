@@ -10,10 +10,12 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:paddingTop="56dp"
         android:paddingLeft="24dp"
-        android:paddingRight="24dp">
+        android:paddingRight="24dp"
+        android:gravity="center_vertical"
+        >
 
         <ImageView android:src="@drawable/tf"
             android:layout_width="wrap_content"
@@ -21,37 +23,31 @@
             android:layout_marginBottom="24dp"
             android:layout_gravity="center_horizontal" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            >
-            <EditText android:id="@+id/login_email"
+
+            <EditText android:id="@+id/signup_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
                 android:background="@color/transparent"
                 android:hint="Email"
-                tools:ignore="Autofill" />
-        </com.google.android.material.textfield.TextInputLayout>
+                tools:ignore="Autofill"
+                android:padding="8dp"
+                />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp">
-            <EditText android:id="@+id/login_password"
+
+
+            <EditText android:id="@+id/signup_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
                 android:background="@color/transparent"
                 android:hint="Password"
-                tools:ignore="Autofill" />
-        </com.google.android.material.textfield.TextInputLayout>
+                tools:ignore="Autofill"
+                android:padding="8dp"
+                />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/signup_button"
+        <Button
+            android:id="@+id/submit_signup_btn"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"

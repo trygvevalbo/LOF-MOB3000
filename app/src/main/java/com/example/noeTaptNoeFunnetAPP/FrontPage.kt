@@ -16,6 +16,10 @@ import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.noeTaptNoeFunnetAPP.post_item.PostFoundItem
 import com.example.noeTaptNoeFunnetAPP.post_item.PostLostItem
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_main.*
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
@@ -26,8 +30,9 @@ import kotlin.collections.ArrayList
 
 class FrontPage : AppCompatActivity() {
 
-    var isOpen = false
+    private lateinit var auth: FirebaseAuth
 
+    var isOpen = false
     val arrayList = ArrayList<CardModel>()
     val displaList = ArrayList<CardModel>()
     lateinit var myAdapter: RecyclerViewAdapter
@@ -48,6 +53,7 @@ class FrontPage : AppCompatActivity() {
         setTheme(R.style.AppTheme)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         setContentView(R.layout.activity_main)
+        auth = FirebaseAuth.getInstance()
 
         val date = getCurrentDateTime()
         val datenow = date.toString("dd/MM/yyyy HH:mm")
@@ -112,13 +118,27 @@ class FrontPage : AppCompatActivity() {
                 isOpen = true
             }
             taptKnapp.setOnClickListener{
-                val intent1 = Intent(this, PostLostItem::class.java)
-                startActivity(intent1)
+                val user = Firebase.auth.currentUser
+                if (user != null){
+                    val intent1 = Intent(this, PostLostItem::class.java)
+                    startActivity(intent1)
+                } else {
+                    val intent1 = Intent(this, LoginActivity::class.java)
+                    startActivity(intent1)
+
+                }
             }
 
             funnetKnapp.setOnClickListener{
-                val intent1 = Intent(this, PostFoundItem::class.java)
-                startActivity(intent1)
+                val user = Firebase.auth.currentUser
+                if (user != null){
+                    val intent1 = Intent(this, PostFoundItem::class.java)
+                    startActivity(intent1)
+                } else {
+                    val intent1 = Intent(this, LoginActivity::class.java)
+                    startActivity(intent1)
+
+                }
             }
         }
     }
