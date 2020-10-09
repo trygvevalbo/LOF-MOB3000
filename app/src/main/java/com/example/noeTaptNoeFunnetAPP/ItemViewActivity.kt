@@ -16,6 +16,7 @@ class ItemViewActivity : AppCompatActivity() {
         var intent  = intent
         val aNavn   = intent.getStringExtra("iNavn")
         val aType   = intent.getStringExtra("iType")
+        val aDato   = intent.getStringExtra("iDato")
         val aFarge  = intent.getStringExtra("iFarge")
         val aBesk   = intent.getStringExtra("iBesk")
         val aImage  = intent.getIntExtra("iImage", 0)
@@ -23,6 +24,7 @@ class ItemViewActivity : AppCompatActivity() {
         actionBar.setTitle(aNavn)
         textIC_Navn.text  = aNavn
         textIC_Type.text  = aType
+        textIC_dato.text  = aDato
         textIC_Farge.text = aFarge
         textIC_Besk.text  = aBesk
         imageIC.setImageResource(aImage)
