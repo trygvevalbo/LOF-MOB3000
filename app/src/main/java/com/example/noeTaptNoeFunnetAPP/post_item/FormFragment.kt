@@ -17,30 +17,39 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.noeTaptNoeFunnetAPP.FrontPage
 import com.example.noeTaptNoeFunnetAPP.R
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.tasks.Continuation
 import com.google.android.gms.tasks.Task
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.StorageTask
 import com.google.firebase.storage.UploadTask
-import kotlinx.android.synthetic.main.activity_post_found_item.*
 import kotlinx.android.synthetic.main.fragment_form.*
 import kotlinx.android.synthetic.main.fragment_form.view.*
 
 
 class FormFragment : Fragment() {
-
+    private val args: FormFragmentArgs by navArgs()
 
     private lateinit var appNavigator: AppNavigator
+
+    private var mUri: Uri? = null
+
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         appNavigator = context as AppNavigator
     }
-
+    lateinit var mapFragment: SupportMapFragment
+    lateinit var googleMap: GoogleMap
 
     private val IMAGE_CAPTURE_CODE  = 1001 // camera funksjon https://www.youtube.com/watch?v=3gkAoF90RZ4
     private val PERMISSION_CODE  = 1000;
@@ -64,15 +73,15 @@ class FormFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_form, container, false)
-        /*val binding = DataBindingUtil.inflate<FragmentFormBinding>(
-            inflater, R.layout.fragment_form, container, false
-        )
 
 
 
-        binding.form = this
+        if (savedInstanceState != null){
+            mUri = savedInstanceState.getParcelable("uri")
+            image_view.setImageURI(mUri)
+        }
 
-         */
+
         storageRef = FirebaseStorage.getInstance().reference.child("User Images")
 
         //val view.capture_btn = getView()?.findViewById(R.id.capture_btn) as ImageView
@@ -109,6 +118,40 @@ class FormFragment : Fragment() {
 
 
 
+        val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
+        mapFragment?.getMapAsync(OnMapReadyCallback {
+            googleMap = it
+            //googleMap.isMyLocationEnabled = true
+            val location1 = LatLng(62.479386, 6.819220)
+            googleMap.addMarker(MarkerOptions().position(location1).title("My location"))
+            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(location1, 10f))
+
+            //https://stackoverflow.com/questions/41254834/add-marker-on-google-map-on-touching-the-screen-using-android/41254877
+            googleMap.setOnMapClickListener { latLng -> // Creating a marker
+                val markerOptions = MarkerOptions()
+
+                // Setting the position for the marker
+                markerOptions.position(latLng)
+
+                // Setting the title for the marker.
+                // This will be displayed on taping the marker
+                markerOptions.title(latLng.latitude.toString() + " : " + latLng.longitude)
+
+                // Clears the previously touched position
+                googleMap.clear()
+
+                // Animating to the touched position
+                googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng))
+
+                // Placing a marker on the touched position
+                googleMap.addMarker(markerOptions)
+            }
+
+
+        })
+
+
+
         // val choose_image = getView()?.findViewById(R.id.choose_image) as ImageView
         view.choose_image.setOnClickListener {
             pickImage()
@@ -137,21 +180,14 @@ class FormFragment : Fragment() {
         }
 
         view.description.setOnClickListener {
-
-    appNavigator.navigateToDescription()
-
-
-          //  val nextFrag = DescriptionFragment()
-          /*  requireActivity().supportFragmentManager.beginTransaction()
-
-                .replace(R.id.description_container, nextFrag, "findThisFragment")
-                .addToBackStack(null)
-                .commit()*/
-
-
+            appNavigator.navigateToDescription()
         }
 
 
+        if (args.description!= null){
+           // args.description.take(10)
+ Toast.makeText(requireContext(), args.description , Toast.LENGTH_LONG).show()
+        }
 
 
 
@@ -200,15 +236,21 @@ class FormFragment : Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+
+
+
         if(resultCode == Activity.RESULT_OK){
             //set image captured to image view
             image_view.setImageURI(image_uri)
             Toast.makeText(requireContext(), "tatt bilde skal funke", Toast.LENGTH_SHORT).show()
         }
 
+
+
         if(RequestCode == RequestCode && resultCode == Activity.RESULT_OK && data!!.data != null) run {
             image_uri = data.data
             image_view.setImageURI(image_uri)
+
             Toast.makeText(requireContext(), "uploading", Toast.LENGTH_LONG).show()
 
         }

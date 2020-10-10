@@ -4,31 +4,16 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import com.example.noeTaptNoeFunnetAPP.R
+import kotlinx.android.synthetic.main.fragment_description.*
 
 
 class PostFoundItem : AppCompatActivity(), AppNavigator{
-
+private var descriptionText: String? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_post_found_item)
-/*
-
-
-       val manager: FragmentManager =
-            supportFragmentManager //create an instance of fragment manager
-
-
-        val transaction: FragmentTransaction =
-            manager.beginTransaction() //create an instance of Fragment-transaction
-
-
-       transaction.add(R.id.root, FormFragment(), "Frag_Top_tag")
-        transaction.add(R.id.maps_container, MapsFragment(), "Frag_Middle_tag")
-
-        transaction.commit()
-*/
 
 
     }
@@ -36,29 +21,27 @@ class PostFoundItem : AppCompatActivity(), AppNavigator{
     override fun navigateToDescription() {
         val action = FormFragmentDirections.actionFormFragmentToDescriptionFragment2()
         findNavController(R.id.nav_host_fragment).navigate(action)
-
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
     }
-    override fun navigateToForm() {
+   override fun navigateToForm() {
 
-        if(onSupportNavigateUp()== true) {
-            val action = DescriptionFragmentDirections.actionDescriptionFragmentToFormFragment()
-            findNavController(R.id.nav_host_fragment).navigate(action)
-        }
+             val action = DescriptionFragmentDirections.actionDescriptionFragmentToFormFragment(
+                 descriptionText
+             )
+             findNavController(R.id.nav_host_fragment).navigate(action)
 
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-    onBackPressed()
+    override fun onDescriptionPass(data: String) {
+       descriptionText = data
+    }
+
+    /*override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+
     return true
-    }
-
-
-
-
-
-
+    }*/
 
 
 }
