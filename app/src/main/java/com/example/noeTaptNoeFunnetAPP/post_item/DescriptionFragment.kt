@@ -32,7 +32,13 @@ private var description : String= ""
 
 
         view.done_button.setOnClickListener {
-        val description= view?.findViewById(R.id.description) as? EditText
+            val description= view?.findViewById(R.id.description) as? EditText
+            val descriptionString = description?.text.toString()
+            if (descriptionString != null) {
+
+                passData(descriptionString)
+            }
+
             appNavigator.navigateToForm()
         }
 
@@ -42,12 +48,7 @@ private var description : String= ""
 
    override fun  onStop() {
        super.onStop()
-       val description= view?.findViewById(R.id.description) as? EditText
-       val descriptionString = description?.text.toString()
-       if (descriptionString != null) {
 
-           passData(descriptionString)
-       }
     }
 
     lateinit var dataPasser: AppNavigator

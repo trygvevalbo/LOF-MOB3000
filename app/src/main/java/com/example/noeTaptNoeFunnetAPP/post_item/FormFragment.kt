@@ -14,6 +14,7 @@ import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
@@ -186,6 +187,9 @@ class FormFragment : Fragment() {
 
         if (args.description!= null){
            // args.description.take(10)
+
+            val textView : TextView  = view.findViewById(R.id.description) as TextView
+            textView.text = args.description
  Toast.makeText(requireContext(), args.description , Toast.LENGTH_LONG).show()
         }
 
