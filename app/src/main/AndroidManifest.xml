@@ -42,9 +42,13 @@
 
         <activity
             android:name=".ItemViewActivity"
-            android:parentActivityName=".FrontPage"></activity>
+            android:parentActivityName=".FrontPage">
+
+        </activity>
         <activity android:name=".post_item.PostLostItem" />
         <activity android:name=".post_item.PostFoundItem" />
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".SignupActivity" />
         <activity
             android:name=".FrontPage"
             android:theme="@style/SplashTheme">

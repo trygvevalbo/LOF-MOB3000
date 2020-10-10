@@ -16,37 +16,60 @@ import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.noeTaptNoeFunnetAPP.post_item.PostFoundItem
 import com.example.noeTaptNoeFunnetAPP.post_item.PostLostItem
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_main.*
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
 import java.util.*
 import kotlin.collections.ArrayList
 
 class FrontPage : AppCompatActivity() {
 
-    var isOpen = false
+    private lateinit var auth: FirebaseAuth
 
+    var isOpen = false
     val arrayList = ArrayList<CardModel>()
     val displaList = ArrayList<CardModel>()
     lateinit var myAdapter: RecyclerViewAdapter
     lateinit var preferences: SharedPreferences
+
+
+
+    fun Date.toString(format: String, locale: Locale = Locale.getDefault()): String {
+        val formatter = SimpleDateFormat(format, locale)
+        return formatter.format(this)
+    }
+    fun getCurrentDateTime(): Date {
+        return Calendar.getInstance().time
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setTheme(R.style.AppTheme)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         setContentView(R.layout.activity_main)
+        auth = FirebaseAuth.getInstance()
 
-            arrayList.add(CardModel("Item1", "Funnet","blå", "Funnet ute på bakken", R.drawable.bigusbrainus))
-            arrayList.add(CardModel("Item2","Funnet", "Svart", "Dette er et eksempel på lengere text en passer til Cardviewen. Loreum ipsum dolaro disico nipslandat.", R.drawable.throwup))
-            arrayList.add(CardModel("Katt","Funnet", "svart", "Veldig snill Katt funnet. Snakker Romansk, Heter Vladislav", R.drawable.cat))
-            arrayList.add(CardModel("Esel","Funnet", "blå", "Funnet ute på bakken", R.drawable.donkey))
-            arrayList.add(CardModel("Lommebok","Funnet", "svart", "Funnet ute på bakken", R.drawable.wallet))
-            arrayList.add(CardModel("Hund","Funnet", "Svart", "Snill Hund funnet ute i parken uten eier", R.drawable.dogg))
-            arrayList.add(CardModel("Iphone", "Funnet","hvit", "Funnet ute på bakken", R.drawable.phone))
-            arrayList.add(CardModel("Hatt","Tapt", "hvit", "Jævla støgg hatt funnet utenfor Kroa", R.drawable.hat))
-            arrayList.add(CardModel("Hatt","Tapt", "hvit", "Jævla støgg hatt funnet utenfor Kroa", R.drawable.hat))
-            arrayList.add(CardModel("Hatt","Tapt", "hvit", "Jævla støgg hatt funnet utenfor Kroa", R.drawable.hat))
-            arrayList.add(CardModel("Hatt","Tapt", "hvit", "Jævla støgg hatt funnet utenfor Kroa", R.drawable.hat))
-            arrayList.add(CardModel("Hatt","Tapt", "hvit", "Jævla støgg hatt funnet utenfor Kroa", R.drawable.hat))
+        val date = getCurrentDateTime()
+        val datenow = date.toString("dd/MM/yyyy HH:mm")
+
+            arrayList.add(CardModel("Item1", "Funnet","blå", "Funnet ute på bakken", R.drawable.bigusbrainus, datenow))
+            arrayList.add(CardModel("Item2","Funnet", "Svart", "Dette er et eksempel på lengere text en passer til Cardviewen. Loreum ipsum dolaro disico nipslandat.", R.drawable.throwup, datenow))
+            arrayList.add(CardModel("Katt","Funnet", "svart", "Veldig snill Katt funnet. Snakker Romansk, Heter Vladislav", R.drawable.cat, datenow))
+            arrayList.add(CardModel("Esel","Funnet", "blå", "Funnet ute på bakken", R.drawable.donkey, datenow))
+            arrayList.add(CardModel("Lommebok","Funnet", "svart", "Funnet ute på bakken", R.drawable.wallet, datenow))
+            arrayList.add(CardModel("Hund","Funnet", "Svart", "Snill Hund funnet ute i parken uten eier", R.drawable.dogg, datenow))
+            arrayList.add(CardModel("Iphone", "Funnet","hvit", "Funnet ute på bakken", R.drawable.phone, datenow))
+            arrayList.add(CardModel("Hatt","Tapt", "hvit", "Jævla støgg hatt funnet utenfor Kroa", R.drawable.hat, datenow))
+            arrayList.add(CardModel("Hatt","Tapt", "hvit", "Jævla støgg hatt funnet utenfor Kroa", R.drawable.hat, datenow))
+            arrayList.add(CardModel("Hatt","Tapt", "hvit", "Jævla støgg hatt funnet utenfor Kroa", R.drawable.hat, datenow))
+            arrayList.add(CardModel("Hatt","Tapt", "hvit", "Jævla støgg hatt funnet utenfor Kroa", R.drawable.hat, datenow))
+            arrayList.add(CardModel("Hatt","Tapt", "hvit", "Jævla støgg hatt funnet utenfor Kroa", R.drawable.hat, datenow))
             displaList.addAll(arrayList)
 
         myAdapter = RecyclerViewAdapter(displaList, this)
@@ -55,7 +78,7 @@ class FrontPage : AppCompatActivity() {
         hovedListe.adapter = myAdapter
 
        preferences = getSharedPreferences("My_Pref", Context.MODE_PRIVATE)
-       val mSortSetting = preferences.getString("Sort", "Funnet")
+       val mSortSetting = preferences.getString("Sort", "Alle")
 
         if (mSortSetting == null) {
             sortAlle(myAdapter)
@@ -95,13 +118,27 @@ class FrontPage : AppCompatActivity() {
                 isOpen = true
             }
             taptKnapp.setOnClickListener{
-                val intent1 = Intent(this, PostLostItem::class.java)
-                startActivity(intent1)
+                val user = Firebase.auth.currentUser
+                if (user != null){
+                    val intent1 = Intent(this, PostLostItem::class.java)
+                    startActivity(intent1)
+                } else {
+                    val intent1 = Intent(this, LoginActivity::class.java)
+                    startActivity(intent1)
+
+                }
             }
 
             funnetKnapp.setOnClickListener{
-                val intent1 = Intent(this, PostFoundItem::class.java)
-                startActivity(intent1)
+                val user = Firebase.auth.currentUser
+                if (user != null){
+                    val intent1 = Intent(this, PostFoundItem::class.java)
+                    startActivity(intent1)
+                } else {
+                    val intent1 = Intent(this, LoginActivity::class.java)
+                    startActivity(intent1)
+
+                }
             }
         }
     }
