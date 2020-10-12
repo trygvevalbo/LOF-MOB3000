@@ -43,33 +43,27 @@ import kotlinx.android.synthetic.main.fragment_form.view.*
 class FormFragment : Fragment() {
     private val args: FormFragmentArgs by navArgs()
 
-    private lateinit var appNavigator: AppNavigator
+    private var mUri: Uri? = null //deklarasjon av url til bilde
 
-    private var mUri: Uri? = null
+    private lateinit var appNavigator: AppNavigator //interface til å sende til description fragment
 
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        appNavigator = context as AppNavigator
-    }
+
     lateinit var mapFragment: SupportMapFragment
     lateinit var googleMap: GoogleMap
 
-    private val IMAGE_CAPTURE_CODE  = 1001 // camera funksjon https://www.youtube.com/watch?v=3gkAoF90RZ4
-    private val PERMISSION_CODE  = 1000;
+    private val IMAGE_CAPTURE_CODE = 1001 // camera funksjon https://www.youtube.com/watch?v=3gkAoF90RZ4
+    private val PERMISSION_CODE = 1000
     private val RequestCode = 438
     var image_uri: Uri? = null
     private var storageRef: StorageReference? = null
-
-
     private var coverChecker: String? = ""
+    lateinit var dataPasser: AppNavigator
 
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-
-
+    override fun onAttach(context: Context) { //få context til å senere kunne sende til deskription
+        super.onAttach(context)
+        appNavigator = context as AppNavigator
+        dataPasser = context
     }
 
     override fun onCreateView(
@@ -79,49 +73,74 @@ class FormFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_form, container, false)
 
 
-
-        if (savedInstanceState != null){
+        if (savedInstanceState != null) {
             mUri = savedInstanceState.getParcelable("uri")
             image_view.setImageURI(mUri)
         }
 
+        mapManager()
 
-        storageRef = FirebaseStorage.getInstance().reference.child("User Images")
 
-        //val view.capture_btn = getView()?.findViewById(R.id.capture_btn) as ImageView
-        view.capture_btn.setOnClickListener {
+        clickManager(view)
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA)
-                    == PackageManager.PERMISSION_DENIED ||
-                    ActivityCompat.checkSelfPermission(
-                        requireContext(),
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE
-                    )
-                    == PackageManager.PERMISSION_DENIED
-                ) {
-                    //Permission was not enabled
-                    val permission = arrayOf(
-                        Manifest.permission.CAMERA,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE
-                    )
-                    //show popup ti request permission
-                    requestPermissions(permission, PERMISSION_CODE)
-                } else {
-                    //Permission already granted
-                    openCamera()
-                }
-            }
-            else{
-                //systen is us <marhmallow
-                openCamera()
-            }
+
+        if (args.description != null) {
+            // args.description.take(10)
+
+            val textView: TextView = view.findViewById(R.id.description) as TextView
+            textView.text = args.description
+            Toast.makeText(requireContext(), args.description, Toast.LENGTH_LONG).show()
         }
 
 
+        // Inflate the layout for this fragment
+        return view
+    }
+
+    private fun clickManager(view: View) {
+        view.capture_btn.setOnClickListener {
+
+            cameraManager()
+        }
+
+        view.choose_image.setOnClickListener {
+            pickImage()
+        }
+
+        view.post_button_found_item.setOnClickListener {
+
+            if (image_uri != null) {  //last opp bilde til database
+                uploadImageToDatabase()
+            }
 
 
+            val intent1 = Intent(activity, FrontPage::class.java)
+            startActivity(intent1)
+        }
 
+        view.image_view.setOnClickListener {
+            coverChecker = "cover"
+            pickImage()
+        }
+
+        view.description.setOnClickListener {
+
+            val description= view?.findViewById(R.id.description) as? TextView
+            val descriptionString = description?.text.toString()
+            if (descriptionString != null) {
+
+                passData(descriptionString)
+            }
+
+            appNavigator.navigateToDescription()
+        }
+    }
+
+    fun passData(data: String){
+        dataPasser.onDescriptionPass(data)
+    }
+
+    private fun mapManager() {
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(OnMapReadyCallback {
             googleMap = it
@@ -153,60 +172,41 @@ class FormFragment : Fragment() {
 
 
         })
-
-
-
-        // val choose_image = getView()?.findViewById(R.id.choose_image) as ImageView
-        view.choose_image.setOnClickListener {
-            pickImage()
-        }
-
-
-
-
-
-
-
-
-
-        view.post_button_found_item.setOnClickListener{
-
-            if(image_uri != null) {  //last opp bilde til database
-                uploadImageToDatabase()
-            }
-
-
-
-            val intent1 = Intent(activity, FrontPage::class.java)
-            startActivity(intent1)
-        }
-
-            view.image_view.setOnClickListener {
-            coverChecker = "cover"
-            pickImage()
-        }
-
-        view.description.setOnClickListener {
-            appNavigator.navigateToDescription()
-        }
-
-
-        if (args.description!= null){
-           // args.description.take(10)
-
-            val textView : TextView  = view.findViewById(R.id.description) as TextView
-            textView.text = args.description
- Toast.makeText(requireContext(), args.description , Toast.LENGTH_LONG).show()
-        }
-
-
-
-        // Inflate the layout for this fragment
-        return view
     }
 
+    private fun cameraManager() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA)
+                == PackageManager.PERMISSION_DENIED ||
+                ActivityCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                )
+                == PackageManager.PERMISSION_DENIED
+            ) {
+                //Permission was not enabled
+                val permission = arrayOf(
+                    Manifest.permission.CAMERA,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                )
+                //show popup ti request permission
+                requestPermissions(permission, PERMISSION_CODE)
+            } else {
+                //Permission already granted
+                openCamera()
+            }
+        } else {
+            //systen is us <marhmallow
+            openCamera()
+        }
+    }
 
-
+    private fun pickImage() {
+        val intent = Intent()
+        intent.type = "image/*"
+        intent.action = Intent.ACTION_GET_CONTENT
+        startActivityForResult(intent, RequestCode)
+    }
 
     private fun openCamera() {
         val values = ContentValues()
@@ -228,7 +228,7 @@ class FormFragment : Fragment() {
         grantResults: IntArray
     ) {
         // called when user presses ALLOW or DENY from Permission Request Popup
-        when(requestCode){
+        when (requestCode) {
             PERMISSION_CODE -> {
                 if (grantResults.isNotEmpty() && grantResults[0] ==
                     PackageManager.PERMISSION_GRANTED
@@ -249,7 +249,7 @@ class FormFragment : Fragment() {
 
 
 
-        if(resultCode == Activity.RESULT_OK){
+        if (resultCode == Activity.RESULT_OK) {
             //set image captured to image view
             image_view.setImageURI(image_uri)
             Toast.makeText(requireContext(), "tatt bilde skal funke", Toast.LENGTH_SHORT).show()
@@ -257,7 +257,7 @@ class FormFragment : Fragment() {
 
 
 
-        if(RequestCode == RequestCode && resultCode == Activity.RESULT_OK && data!!.data != null) run {
+        if (RequestCode == RequestCode && resultCode == Activity.RESULT_OK && data!!.data != null) run {
             image_uri = data.data
             image_view.setImageURI(image_uri)
 
@@ -267,9 +267,9 @@ class FormFragment : Fragment() {
     }
 
     private fun uploadImageToDatabase() {
+        storageRef = FirebaseStorage.getInstance().reference.child("User Images")
 
-
-        if(image_uri!= null){
+        if (image_uri != null) {
             val fileRef = storageRef!!.child(System.currentTimeMillis().toString() + ".jpg")
             var uploadTask: StorageTask<*>
             uploadTask = fileRef.putFile(image_uri!!)
@@ -279,13 +279,12 @@ class FormFragment : Fragment() {
                     task.exception?.let {
                         throw it
                     }
-
-
                 }
                 return@Continuation fileRef.downloadUrl
             }).addOnCompleteListener { task ->
-                if(task.isSuccessful){
-                    Toast.makeText(requireContext(), "Bildet er lastet opp", Toast.LENGTH_LONG).show()
+                if (task.isSuccessful) {
+                    Toast.makeText(requireContext(), "Bildet er lastet opp", Toast.LENGTH_LONG)
+                        .show()
 
                 }
 
@@ -293,29 +292,21 @@ class FormFragment : Fragment() {
         }
     }
 
-
-    private fun pickImage(){
-        val intent  = Intent()
-        intent.type="image/*"
-        intent.action = Intent.ACTION_GET_CONTENT
-        startActivityForResult(intent, RequestCode)
-    }
-
- lateinit var itemDescription: TextView
-    lateinit var  itemColor : EditText
-    lateinit var  itemTime : EditText
-    lateinit var itemContact : EditText
+    lateinit var itemDescription: TextView
+    lateinit var itemColor: EditText
+    lateinit var itemTime: EditText
+    lateinit var itemContact: EditText
 
 
-    private fun UploadAttributesToDB(){
+    private fun UploadAttributesToDB() {
         itemDescription = view?.findViewById(R.id.description) as TextView
         itemColor = view?.findViewById(R.id.colordescription) as EditText
         itemTime = view?.findViewById(R.id.timewhenfound) as EditText
         //ItemLocation = view.findViewById(R.id.l)
         itemContact = view?.findViewById(R.id.contactinformation) as EditText
 
-        if(itemDescription.text.toString().isEmpty()){
-            itemDescription.error ="Plesase enter description"
+        if (itemDescription.text.toString().isEmpty()) {
+            itemDescription.error = "Plesase enter description"
         }
 
 

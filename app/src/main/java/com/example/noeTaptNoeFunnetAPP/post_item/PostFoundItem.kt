@@ -21,7 +21,7 @@ class PostFoundItem : AppCompatActivity(), AppNavigator{
     }
 
     override fun navigateToDescription() {
-        val action = FormFragmentDirections.actionFormFragmentToDescriptionFragment2()
+        val action = FormFragmentDirections.actionFormFragmentToDescriptionFragment2(descriptionText)
         findNavController(R.id.nav_host_fragment).navigate(action)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
