@@ -14,6 +14,7 @@ import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
@@ -29,6 +30,8 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.tasks.Continuation
 import com.google.android.gms.tasks.Task
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.StorageTask
@@ -171,6 +174,9 @@ class FormFragment : Fragment() {
             if(image_uri != null) {  //last opp bilde til database
                 uploadImageToDatabase()
             }
+
+
+
             val intent1 = Intent(activity, FrontPage::class.java)
             startActivity(intent1)
         }
@@ -295,6 +301,26 @@ class FormFragment : Fragment() {
         startActivityForResult(intent, RequestCode)
     }
 
+ lateinit var itemDescription: TextView
+    lateinit var  itemColor : EditText
+    lateinit var  itemTime : EditText
+    lateinit var itemContact : EditText
 
+
+    private fun UploadAttributesToDB(){
+        itemDescription = view?.findViewById(R.id.description) as TextView
+        itemColor = view?.findViewById(R.id.colordescription) as EditText
+        itemTime = view?.findViewById(R.id.timewhenfound) as EditText
+        //ItemLocation = view.findViewById(R.id.l)
+        itemContact = view?.findViewById(R.id.contactinformation) as EditText
+
+        if(itemDescription.text.toString().isEmpty()){
+            itemDescription.error ="Plesase enter description"
+        }
+
+
+        val ref = FirebaseDatabase.getInstance().getReference("test")
+
+    }
 
 }
