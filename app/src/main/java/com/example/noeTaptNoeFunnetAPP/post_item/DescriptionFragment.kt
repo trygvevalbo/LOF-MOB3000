@@ -9,6 +9,7 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.fragment.navArgs
 import com.example.noeTaptNoeFunnetAPP.R
 import kotlinx.android.synthetic.main.fragment_description.view.*
@@ -27,6 +28,10 @@ private var description : String= ""
     ): View? {
         val view =inflater.inflate(R.layout.fragment_description, container, false)
 
+
+
+
+
         val description= args.description
         if (description != "") {
             val textEdit: EditText = view.findViewById(R.id.description) as EditText
@@ -34,11 +39,6 @@ private var description : String= ""
                 textEdit.setText(description, TextView.BufferType.EDITABLE)
             }
         }
-
-
-
-
-
 
         view.done_button.setOnClickListener {
             val description= view?.findViewById(R.id.description) as? EditText

@@ -18,6 +18,9 @@
             app:argType="string"
             app:nullable="true"
             android:defaultValue="@null"/>
+        <action
+            android:id="@+id/action_formFragment_to_dateFragment"
+            app:destination="@id/dateFragment" />
     </fragment>
     <fragment
         android:id="@+id/descriptionFragment"
@@ -32,5 +35,14 @@
             app:argType="string"
             app:nullable="true"
             android:defaultValue="@null"/>
+    </fragment>
+    <fragment
+        android:id="@+id/dateFragment"
+        android:name="com.example.noeTaptNoeFunnetAPP.post_item.dateFragment"
+        android:label="fragment_date"
+        tools:layout="@layout/fragment_date" >
+        <action
+            android:id="@+id/action_dateFragment_to_formFragment"
+            app:destination="@id/formFragment" />
     </fragment>
 </navigation>

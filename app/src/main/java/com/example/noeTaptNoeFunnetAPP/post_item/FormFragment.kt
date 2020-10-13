@@ -19,6 +19,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.fragment.navArgs
 import com.example.noeTaptNoeFunnetAPP.FrontPage
 import com.example.noeTaptNoeFunnetAPP.R
@@ -30,7 +32,6 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.tasks.Continuation
 import com.google.android.gms.tasks.Task
-import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
@@ -60,10 +61,33 @@ class FormFragment : Fragment() {
     private var coverChecker: String? = ""
     lateinit var dataPasser: AppNavigator
 
+    private var savedDescription: String = ""
+
     override fun onAttach(context: Context) { //få context til å senere kunne sende til deskription
         super.onAttach(context)
         appNavigator = context as AppNavigator
         dataPasser = context
+    }
+
+
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString(DESCRIPTION_KEY, savedDescription)
+        //outState.putParcelable(LOCATION_KEY, location)
+    }
+
+
+
+    companion object {
+        private const val DESCRIPTION_KEY = "DESCRIPTION_KEY"
+        val REQUEST_KEY = "FragmentB_REQUEST_KEY"
+
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
     }
 
     override fun onCreateView(
@@ -84,18 +108,34 @@ class FormFragment : Fragment() {
         clickManager(view)
 
 
-        if (args.description != null) {
-            // args.description.take(10)
 
-            val textView: TextView = view.findViewById(R.id.description) as TextView
-            textView.text = args.description
-            Toast.makeText(requireContext(), args.description, Toast.LENGTH_LONG).show()
+
+     savedInstanceState?.run {  savedDescription = getString(DESCRIPTION_KEY) ?:"" }
+
+
+        setFragmentResultListener("requestKey") { key, bundle ->
+            // We use a String here, but any type that can be put in a Bundle is supported
+            val result = bundle.getString("bundleKey")
+            // Do something with the result...
         }
 
 
-        // Inflate the layout for this fragment
+        if (args.description != null || savedDescription != null) {
+            if (args.description != null){
+            savedDescription= args.description!!
+            }
+            val textView: TextView = view.findViewById(R.id.description) as TextView
+            textView.text = savedDescription
+
+        }
+
+
+
+
         return view
     }
+
+
 
     private fun clickManager(view: View) {
         view.capture_btn.setOnClickListener {
@@ -126,13 +166,18 @@ class FormFragment : Fragment() {
         view.description.setOnClickListener {
 
             val description= view?.findViewById(R.id.description) as? TextView
-            val descriptionString = description?.text.toString()
-            if (descriptionString != null) {
+            val descriptionString = description?.text.toString()// hent skrevet tekst
+            if (descriptionString != null) { //dersom det er skrevet noe fra før send sring til frag description
 
                 passData(descriptionString)
             }
 
-            appNavigator.navigateToDescription()
+            appNavigator.navigateToDescription() // naviger til fragmentDescription
+        }
+
+        view.timewhenfound.setOnClickListener {
+
+            appNavigator.navigateToSelectDate()
         }
     }
 

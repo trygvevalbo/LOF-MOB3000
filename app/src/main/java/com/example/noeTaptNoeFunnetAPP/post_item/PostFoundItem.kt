@@ -2,6 +2,7 @@ package com.example.noeTaptNoeFunnetAPP.post_item
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentManager
 import androidx.navigation.findNavController
 import com.example.noeTaptNoeFunnetAPP.R
 import com.google.firebase.database.FirebaseDatabase
@@ -16,8 +17,6 @@ class PostFoundItem : AppCompatActivity(), AppNavigator{
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_post_found_item)
 
-        var database = FirebaseDatabase.getInstance().reference
-        database.setValue("elvis")
     }
 
     override fun navigateToDescription() {
@@ -34,6 +33,17 @@ class PostFoundItem : AppCompatActivity(), AppNavigator{
              findNavController(R.id.nav_host_fragment).navigate(action)
 
     }
+
+    override fun navigateToSelectDate(){
+        val action = FormFragmentDirections.actionFormFragmentToDateFragment()
+        findNavController(R.id.nav_host_fragment).navigate(action)
+    }
+
+    override fun navigateFromDateToForm(){
+        val action = dateFragmentDirections.actionDateFragmentToFormFragment()
+        findNavController(R.id.nav_host_fragment).navigate(action)
+    }
+
 
     override fun onDescriptionPass(data: String) {
 

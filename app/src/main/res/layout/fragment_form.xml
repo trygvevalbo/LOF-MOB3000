@@ -115,7 +115,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/description" />
 
-        <EditText
+        <TextView
             android:id="@+id/timewhenfound"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -123,6 +123,8 @@
             android:ems="10"
             android:hint="@string/date_found"
             android:inputType="textPersonName"
+            android:textSize="18sp"
+            android:background="?attr/editTextBackground"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -170,7 +172,5 @@
             app:layout_constraintTop_toBottomOf="@+id/map" />
 
 
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
