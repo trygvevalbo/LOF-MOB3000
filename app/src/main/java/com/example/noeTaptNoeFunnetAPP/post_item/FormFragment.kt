@@ -71,6 +71,7 @@ class FormFragment : Fragment() {
 
 
 
+
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putString(DESCRIPTION_KEY, savedDescription)
@@ -81,12 +82,7 @@ class FormFragment : Fragment() {
 
     companion object {
         private const val DESCRIPTION_KEY = "DESCRIPTION_KEY"
-        val REQUEST_KEY = "FragmentB_REQUEST_KEY"
 
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
 
     }
 
@@ -110,16 +106,21 @@ class FormFragment : Fragment() {
 
 
 
-     savedInstanceState?.run {  savedDescription = getString(DESCRIPTION_KEY) ?:"" }
 
 
-        setFragmentResultListener("requestKey") { key, bundle ->
+
+        setFragmentResultListener("DESCRIPTION_KEY") { key, bundle ->
             // We use a String here, but any type that can be put in a Bundle is supported
-            val result = bundle.getString("bundleKey")
+            val savedDescription = bundle.getString("description")
             // Do something with the result...
+
+            if(savedDescription != null){
+                val textView: TextView = view.findViewById(R.id.description) as TextView
+                textView.text = savedDescription
+            }
         }
 
-
+/*
         if (args.description != null || savedDescription != null) {
             if (args.description != null){
             savedDescription= args.description!!
@@ -127,7 +128,7 @@ class FormFragment : Fragment() {
             val textView: TextView = view.findViewById(R.id.description) as TextView
             textView.text = savedDescription
 
-        }
+        }*/
 
 
 
@@ -148,6 +149,8 @@ class FormFragment : Fragment() {
         }
 
         view.post_button_found_item.setOnClickListener {
+
+           textToString()
 
             if (image_uri != null) {  //last opp bilde til database
                 uploadImageToDatabase()
@@ -297,7 +300,6 @@ class FormFragment : Fragment() {
         if (resultCode == Activity.RESULT_OK) {
             //set image captured to image view
             image_view.setImageURI(image_uri)
-            Toast.makeText(requireContext(), "tatt bilde skal funke", Toast.LENGTH_SHORT).show()
         }
 
 
@@ -305,9 +307,6 @@ class FormFragment : Fragment() {
         if (RequestCode == RequestCode && resultCode == Activity.RESULT_OK && data!!.data != null) run {
             image_uri = data.data
             image_view.setImageURI(image_uri)
-
-            Toast.makeText(requireContext(), "uploading", Toast.LENGTH_LONG).show()
-
         }
     }
 
@@ -315,7 +314,8 @@ class FormFragment : Fragment() {
         storageRef = FirebaseStorage.getInstance().reference.child("User Images")
 
         if (image_uri != null) {
-            val fileRef = storageRef!!.child(System.currentTimeMillis().toString() + ".jpg")
+
+            val fileRef = storageRef!!.child( System.currentTimeMillis().toString() + ".jpg")
             var uploadTask: StorageTask<*>
             uploadTask = fileRef.putFile(image_uri!!)
 
@@ -328,6 +328,7 @@ class FormFragment : Fragment() {
                 return@Continuation fileRef.downloadUrl
             }).addOnCompleteListener { task ->
                 if (task.isSuccessful) {
+                   
                     Toast.makeText(requireContext(), "Bildet er lastet opp", Toast.LENGTH_LONG)
                         .show()
 
@@ -343,19 +344,28 @@ class FormFragment : Fragment() {
     lateinit var itemContact: EditText
 
 
-    private fun UploadAttributesToDB() {
+    private fun textToString() {
         itemDescription = view?.findViewById(R.id.description) as TextView
         itemColor = view?.findViewById(R.id.colordescription) as EditText
-        itemTime = view?.findViewById(R.id.timewhenfound) as EditText
+        //itemTime = view?.findViewById(R.id.timewhenfound) as EditText
         //ItemLocation = view.findViewById(R.id.l)
         itemContact = view?.findViewById(R.id.contactinformation) as EditText
 
-        if (itemDescription.text.toString().isEmpty()) {
-            itemDescription.error = "Plesase enter description"
-        }
+
+        val descriptionOfFound = itemDescription.text.toString()
+        val colorOfFound = itemColor.text.toString()
+//        val time = itemTime.text.toString()
+        val contact = itemContact.text.toString()
 
 
-        val ref = FirebaseDatabase.getInstance().getReference("test")
+        var database = FirebaseDatabase.getInstance().reference.child("Posts")
+
+
+             database.push().setValue(FormValue(descriptionOfFound,colorOfFound, contact))
+
+
+
+
 
     }
 

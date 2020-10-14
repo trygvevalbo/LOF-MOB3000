@@ -17,6 +17,8 @@ class PostFoundItem : AppCompatActivity(), AppNavigator{
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_post_found_item)
 
+
+
     }
 
     override fun navigateToDescription() {

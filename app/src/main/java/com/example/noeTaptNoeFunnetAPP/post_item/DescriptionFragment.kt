@@ -8,7 +8,9 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.fragment.navArgs
 import com.example.noeTaptNoeFunnetAPP.R
@@ -43,10 +45,11 @@ private var description : String= ""
         view.done_button.setOnClickListener {
             val description= view?.findViewById(R.id.description) as? EditText
             val descriptionString = description?.text.toString()
-            if (descriptionString != null) {
+            setFragmentResult("DESCRIPTION_KEY", bundleOf("description" to descriptionString))
+            /* if (descriptionString != null) {
 
                 passData(descriptionString)
-            }
+            }*/
 
             appNavigator.navigateToForm()
         }
@@ -60,17 +63,17 @@ private var description : String= ""
 
     }
 
-    lateinit var dataPasser: AppNavigator
+   // lateinit var dataPasser: AppNavigator
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        dataPasser = context as AppNavigator
-        appNavigator = context as AppNavigator
+       // dataPasser = context as AppNavigator
+       appNavigator = context as AppNavigator
     }
-
+/*
     fun passData(data: String){
         dataPasser.onDescriptionPass(data)
-    }
+    }*/
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
