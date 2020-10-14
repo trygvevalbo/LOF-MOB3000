@@ -1,62 +1,89 @@
 package com.example.noeTaptNoeFunnetAPP.post_item
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.TextView
+import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResult
+import androidx.fragment.app.setFragmentResultListener
+import androidx.navigation.fragment.navArgs
 import com.example.noeTaptNoeFunnetAPP.R
+import kotlinx.android.synthetic.main.fragment_description.view.*
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [DescriptionFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class DescriptionFragment : Fragment() {
+    private val args: FormFragmentArgs by navArgs()
+private var description : String= ""
+    private lateinit var appNavigator: AppNavigator
+
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        val view =inflater.inflate(R.layout.fragment_description, container, false)
 
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_description, container, false)
+
+
+
+
+        val description= args.description
+        if (description != "") {
+            val textEdit: EditText = view.findViewById(R.id.description) as EditText
+            if (textEdit != null) {
+                textEdit.setText(description, TextView.BufferType.EDITABLE)
+            }
+        }
+
+        view.done_button.setOnClickListener {
+            val description= view?.findViewById(R.id.description) as? EditText
+            val descriptionString = description?.text.toString()
+            setFragmentResult("DESCRIPTION_KEY", bundleOf("description" to descriptionString))
+            /* if (descriptionString != null) {
+
+                passData(descriptionString)
+            }*/
+
+            appNavigator.navigateToForm()
+        }
+
+        return view
     }
+
+
+   override fun  onStop() {
+       super.onStop()
+
+    }
+
+   // lateinit var dataPasser: AppNavigator
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+       // dataPasser = context as AppNavigator
+       appNavigator = context as AppNavigator
+    }
+/*
+    fun passData(data: String){
+        dataPasser.onDescriptionPass(data)
+    }*/
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-       
+
     }
 
 
 
 
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment DescriptionFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic fun newInstance(param1: String, param2: String) =
-                DescriptionFragment().apply {
-                    arguments = Bundle().apply {
-                        putString(ARG_PARAM1, param1)
-                        putString(ARG_PARAM2, param2)
-                    }
-                }
-
-        fun newInstance(): DescriptionFragment? {
-            return DescriptionFragment()
-        }
-    }
 
 }
