@@ -39,6 +39,7 @@ import com.google.firebase.storage.StorageTask
 import com.google.firebase.storage.UploadTask
 import kotlinx.android.synthetic.main.fragment_form.*
 import kotlinx.android.synthetic.main.fragment_form.view.*
+import java.util.*
 
 
 class FormFragment : Fragment() {
@@ -60,6 +61,7 @@ class FormFragment : Fragment() {
     private var storageRef: StorageReference? = null
     private var coverChecker: String? = ""
     lateinit var dataPasser: AppNavigator
+    private var primaryKey :String? =""
 
     private var savedDescription: String = ""
 
@@ -150,12 +152,12 @@ class FormFragment : Fragment() {
 
         view.post_button_found_item.setOnClickListener {
 
-           textToString()
+
 
             if (image_uri != null) {  //last opp bilde til database
                 uploadImageToDatabase()
             }
-
+            uploadTextToDatabase()
 
             val intent1 = Intent(activity, FrontPage::class.java)
             startActivity(intent1)
@@ -311,11 +313,11 @@ class FormFragment : Fragment() {
     }
 
     private fun uploadImageToDatabase() {
-        storageRef = FirebaseStorage.getInstance().reference.child("User Images")
+        storageRef = FirebaseStorage.getInstance().reference.child("PostImages")
 
         if (image_uri != null) {
-
-            val fileRef = storageRef!!.child( System.currentTimeMillis().toString() + ".jpg")
+             primaryKey =  UUID.randomUUID().toString()
+            val fileRef = storageRef!!.child("$primaryKey.jpg")
             var uploadTask: StorageTask<*>
             uploadTask = fileRef.putFile(image_uri!!)
 
@@ -328,8 +330,8 @@ class FormFragment : Fragment() {
                 return@Continuation fileRef.downloadUrl
             }).addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                   
-                    Toast.makeText(requireContext(), "Bildet er lastet opp", Toast.LENGTH_LONG)
+
+                    Toast.makeText(requireContext(), primaryKey, Toast.LENGTH_LONG)
                         .show()
 
                 }
@@ -337,31 +339,50 @@ class FormFragment : Fragment() {
             }
         }
     }
-
+    lateinit var itemName: EditText
     lateinit var itemDescription: TextView
     lateinit var itemColor: EditText
     lateinit var itemTime: EditText
     lateinit var itemContact: EditText
 
 
-    private fun textToString() {
+    private fun uploadTextToDatabase() {
+        itemName= view?.findViewById(R.id.nameOfItem) as EditText
         itemDescription = view?.findViewById(R.id.description) as TextView
         itemColor = view?.findViewById(R.id.colordescription) as EditText
         //itemTime = view?.findViewById(R.id.timewhenfound) as EditText
         //ItemLocation = view.findViewById(R.id.l)
         itemContact = view?.findViewById(R.id.contactinformation) as EditText
 
-
+        val nameOfItem = itemName.text.toString()
         val descriptionOfFound = itemDescription.text.toString()
         val colorOfFound = itemColor.text.toString()
 //        val time = itemTime.text.toString()
+       // val lat = itemLocation.text.toString
+       // val long = itemLat.text.toString()
+       // val brukernavn=
+        val typeOfPost = "FoundItem"
+
         val contact = itemContact.text.toString()
+
 
 
         var database = FirebaseDatabase.getInstance().reference.child("Posts")
 
-
-             database.push().setValue(FormValue(descriptionOfFound,colorOfFound, contact))
+        if(primaryKey==""){
+            primaryKey =  UUID.randomUUID().toString()
+        }
+            primaryKey?.let {
+                database.child(it).setValue(
+                    FormValue(
+                        nameOfItem,
+                        descriptionOfFound,
+                        colorOfFound,
+                        contact,
+                        typeOfPost
+                    )
+                )
+            }
 
 
 

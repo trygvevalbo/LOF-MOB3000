@@ -4,6 +4,7 @@
     <string name="app_name">                        Noe Tapt, Noe Funnet</string>
     <string name="submit_button">                   Lag Anonnse</string>
     <string name="header_make_post_found_item">     Lag en kort beskrivelse av hva du har funnet</string>
+    <string name="nameOfItem">                      Navn på gjenstand</string>
     <string name="item_descripstion">               Beskrivelse</string>
     <string name="color_of_item">                   Hvilken farge er den?</string>
     <string name="date_found">                      Når var den funnet?</string>
