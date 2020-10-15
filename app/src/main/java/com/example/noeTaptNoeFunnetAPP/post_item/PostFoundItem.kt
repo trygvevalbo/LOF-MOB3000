@@ -51,6 +51,11 @@ class PostFoundItem : AppCompatActivity(), AppNavigator{
         findNavController(R.id.nav_host_fragment).navigate(action)
     }
 
+    override fun navigateToMapFullScreen() {
+        val action = FormFragmentDirections.actionFormFragmentToMapsFullScreenFragment()
+        findNavController(R.id.nav_host_fragment).navigate(action)
+    }
+
     override fun storeFormvalues(){
 
         descriptionText?.let { viewModel?.setDescription(it) }

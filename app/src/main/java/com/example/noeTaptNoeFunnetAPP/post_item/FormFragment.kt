@@ -37,6 +37,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.StorageTask
 import com.google.firebase.storage.UploadTask
+import kotlinx.android.synthetic.main.activity_item_view.view.*
 import kotlinx.android.synthetic.main.fragment_form.*
 import kotlinx.android.synthetic.main.fragment_form.view.*
 import java.util.*
@@ -159,9 +160,6 @@ class FormFragment : Fragment() {
         }
 
         view.post_button_found_item.setOnClickListener {
-
-
-
             if (image_uri != null) {  //last opp bilde til database
                 uploadImageToDatabase()
             }
@@ -176,7 +174,7 @@ class FormFragment : Fragment() {
             pickImage()
         }
 
-        view.
+
 
         view.description.setOnClickListener {
 
@@ -227,7 +225,10 @@ class FormFragment : Fragment() {
                 // Placing a marker on the touched position
                 googleMap.addMarker(markerOptions)
             }
+            googleMap.setOnMapClickListener{
+                appNavigator.navigateToMapFullScreen()
 
+            }
 
         })
     }
