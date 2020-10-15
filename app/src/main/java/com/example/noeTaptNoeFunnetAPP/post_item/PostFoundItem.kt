@@ -1,21 +1,25 @@
 package com.example.noeTaptNoeFunnetAPP.post_item
 
 import android.os.Bundle
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.setFragmentResultListener
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
 import com.example.noeTaptNoeFunnetAPP.R
-import com.google.firebase.database.FirebaseDatabase
-
 
 
 class PostFoundItem : AppCompatActivity(), AppNavigator{
     private var descriptionText: String? = null
-
+    private var viewModel: FormViewModel? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_post_found_item)
+
+        viewModel = ViewModelProviders.of(this)[FormViewModel::class.java]
+
 
 
 
@@ -28,6 +32,7 @@ class PostFoundItem : AppCompatActivity(), AppNavigator{
 
     }
    override fun navigateToForm() {
+       storeFormvalues()
 
              val action = DescriptionFragmentDirections.actionDescriptionFragmentToFormFragment(
                  descriptionText
@@ -42,13 +47,17 @@ class PostFoundItem : AppCompatActivity(), AppNavigator{
     }
 
     override fun navigateFromDateToForm(){
-        val action = dateFragmentDirections.actionDateFragmentToFormFragment()
+        val action = dateFragmentDirections.actionDateFragmentToFormFragment(descriptionText)
         findNavController(R.id.nav_host_fragment).navigate(action)
     }
 
+    override fun storeFormvalues(){
 
-    override fun onDescriptionPass(data: String) {
+        descriptionText?.let { viewModel?.setDescription(it) }
+        val descriptionText = viewModel?.getDescription()
 
+    }
+    override fun onDataPass(data: String) {
         descriptionText = data
 
     }

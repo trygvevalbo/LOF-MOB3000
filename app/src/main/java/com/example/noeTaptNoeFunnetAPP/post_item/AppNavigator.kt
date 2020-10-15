@@ -7,6 +7,6 @@ interface AppNavigator {
     fun navigateToForm()
     fun navigateToSelectDate()
     fun navigateFromDateToForm()
-    fun onDescriptionPass(data: String)
-
+    fun onDataPass(data: String) //https://stackoverflow.com/questions/9343241/passing-data-between-a-fragment-and-its-container-activity
+    fun storeFormvalues()
 }

@@ -22,6 +22,7 @@ class DescriptionFragment : Fragment() {
 private var description : String= ""
     private lateinit var appNavigator: AppNavigator
 
+    lateinit var dataPasser: AppNavigator
 
 
     override fun onCreateView(
@@ -46,11 +47,8 @@ private var description : String= ""
             val description= view?.findViewById(R.id.description) as? EditText
             val descriptionString = description?.text.toString()
             setFragmentResult("DESCRIPTION_KEY", bundleOf("description" to descriptionString))
-            /* if (descriptionString != null) {
 
-                passData(descriptionString)
-            }*/
-
+            passData(descriptionString)
             appNavigator.navigateToForm()
         }
 
@@ -58,32 +56,19 @@ private var description : String= ""
     }
 
 
-   override fun  onStop() {
-       super.onStop()
 
-    }
 
-   // lateinit var dataPasser: AppNavigator
+
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-       // dataPasser = context as AppNavigator
        appNavigator = context as AppNavigator
+        dataPasser = context
     }
-/*
+
     fun passData(data: String){
-        dataPasser.onDescriptionPass(data)
-    }*/
-
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
+        dataPasser.onDataPass(data)
     }
-
-
-
-
 
 
 }

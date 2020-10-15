@@ -19,8 +19,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.setFragmentResultListener
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import com.example.noeTaptNoeFunnetAPP.FrontPage
 import com.example.noeTaptNoeFunnetAPP.R
@@ -68,17 +68,11 @@ class FormFragment : Fragment() {
     override fun onAttach(context: Context) { //få context til å senere kunne sende til deskription
         super.onAttach(context)
         appNavigator = context as AppNavigator
-        dataPasser = context
     }
 
 
 
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putString(DESCRIPTION_KEY, savedDescription)
-        //outState.putParcelable(LOCATION_KEY, location)
-    }
 
 
 
@@ -105,32 +99,46 @@ class FormFragment : Fragment() {
 
         clickManager(view)
 
-
-
-
-
-
-
+       /* var viewModel = ViewModelProvider(this).get(FormViewModel::class.java)
         setFragmentResultListener("DESCRIPTION_KEY") { key, bundle ->
             // We use a String here, but any type that can be put in a Bundle is supported
             val savedDescription = bundle.getString("description")
             // Do something with the result...
-
-            if(savedDescription != null){
-                val textView: TextView = view.findViewById(R.id.description) as TextView
-                textView.text = savedDescription
+            if (savedDescription != null) {
+                viewModel.setDescription(savedDescription)
             }
-        }
+*/
+        //var viewModel = ViewModelProvider(action).get(FormViewModel::class.java)
+               // val textView: TextView = view.findViewById(R.id.description) as TextView
+                //textView.text = savedDescription
 
-/*
+
+
+
+
+
+
+
+
+     /*   if(savedDescription==""){
+           savedDescription = viewModel.getDescription().toString()
+        }else{
+            viewModel.setDescription(savedDescription)
+        }*/
+
+
+
+
+
         if (args.description != null || savedDescription != null) {
+
             if (args.description != null){
             savedDescription= args.description!!
             }
             val textView: TextView = view.findViewById(R.id.description) as TextView
             textView.text = savedDescription
 
-        }*/
+        }
 
 
 
@@ -168,13 +176,15 @@ class FormFragment : Fragment() {
             pickImage()
         }
 
+        view.
+
         view.description.setOnClickListener {
 
             val description= view?.findViewById(R.id.description) as? TextView
             val descriptionString = description?.text.toString()// hent skrevet tekst
             if (descriptionString != null) { //dersom det er skrevet noe fra før send sring til frag description
 
-                passData(descriptionString)
+
             }
 
             appNavigator.navigateToDescription() // naviger til fragmentDescription
@@ -186,9 +196,7 @@ class FormFragment : Fragment() {
         }
     }
 
-    fun passData(data: String){
-        dataPasser.onDescriptionPass(data)
-    }
+
 
     private fun mapManager() {
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
