@@ -25,7 +25,7 @@ class DescriptionFragment : Fragment() {
     private lateinit var appNavigator: AppNavigator
     private var model: FormViewModel?=null
 
-   // lateinit var dataPasser: AppNavigator
+
 
 
     override fun onCreateView(

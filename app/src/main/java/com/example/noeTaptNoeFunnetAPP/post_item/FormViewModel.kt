@@ -1,7 +1,9 @@
 package com.example.noeTaptNoeFunnetAPP.post_item
 
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.noeTaptNoeFunnetAPP.R
 
 
 class FormViewModel : ViewModel() {
@@ -10,26 +12,30 @@ class FormViewModel : ViewModel() {
      var savedDescription = MutableLiveData<String>()
     var savedColor = MutableLiveData<String>()
     var savedLocation = MutableLiveData<String>()
+    var savedTime = MutableLiveData<String>()
     var savedContact = MutableLiveData<String>()
 
-    fun setNameItem(desc: String) {
-        savedDescription.setValue(desc)
+
+
+
+    fun setNameItem(data: String) {
+        savedNameItem.setValue(data)
     }
 
-    fun setDescription(desc: String) {
-       savedDescription.setValue(desc)
+    fun setDescription(data: String) {
+       savedDescription.setValue(data)
     }
 
-    fun setColor(desc: String) {
-        savedDescription.setValue(desc)
+    fun setColor(data: String) {
+        savedColor.setValue(data)
     }
 
-    fun setLocation(desc: String) {
-        savedDescription.setValue(desc)
+    fun setLocation(data: String) {
+        savedLocation.setValue(data)
     }
 
-    fun setContact(desc: String) {
-        savedDescription.setValue(desc)
+    fun setContact(data: String) {
+        savedContact.setValue(data)
     }
 
 }

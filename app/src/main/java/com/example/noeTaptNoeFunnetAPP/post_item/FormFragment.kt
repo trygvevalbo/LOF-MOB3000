@@ -18,14 +18,12 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.setFragmentResultListener
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.fragment.navArgs
 import com.example.noeTaptNoeFunnetAPP.FrontPage
 import com.example.noeTaptNoeFunnetAPP.R
+import com.example.noeTaptNoeFunnetAPP.databinding.FragmentFormBinding
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -39,10 +37,10 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.StorageTask
 import com.google.firebase.storage.UploadTask
-import kotlinx.android.synthetic.main.activity_item_view.view.*
 import kotlinx.android.synthetic.main.fragment_form.*
 import kotlinx.android.synthetic.main.fragment_form.view.*
 import java.util.*
+
 
 
 class FormFragment : Fragment() {
@@ -66,63 +64,81 @@ class FormFragment : Fragment() {
     private var primaryKey :String? =""
 
 
+
+
+
     override fun onAttach(context: Context) { //få context til å senere kunne sende til deskription
         super.onAttach(context)
         appNavigator = context as AppNavigator
     }
 
-    override fun onPause() {
-        super.onPause()
 
-        model.setNameItem()
-        model!!.setDescription(description?.text.toString()) // set verdi
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        model = activity?.run {
+            ViewModelProviders.of(this)[FormViewModel::class.java]
+        } ?: throw Exception("Invalid Activity")
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_form, container, false)
+        //val view = inflater.inflate(R.layout.fragment_form, container, false)
 
-        
+        val binding = DataBindingUtil.inflate<FragmentFormBinding>(inflater, R.layout.fragment_form,
+            container, false)
 
+       // binding.viewModel = model//attach your viewModel to xml
 
         if (savedInstanceState != null) {
             mUri = savedInstanceState.getParcelable("uri")
             image_view.setImageURI(mUri)
         }
 
-        //mapManager()
+        mapManager()
 
 
-        clickManager(view)
+        clickManager(binding)
 
+        setFormValues(model)
 
-        val textView: TextView = view.findViewById(R.id.description) as TextView
         model= ViewModelProviders.of(requireActivity()).get(FormViewModel::class.java)
 
 
         model!!.savedDescription.observe(viewLifecycleOwner,
-            { o -> textView.text = o!!.toString() }) //motta description
+            { o -> binding.description.text = o!!.toString() }) //motta description
+
+        model!!.savedNameItem.observe(viewLifecycleOwner,
+            { o -> binding.nameOfItem?.setText(o!!.toString())}) // ta imot husket verdi for beskrivelse
 
 
 
-        return view
+
+
+
+        return binding.root
     }
 
+   private fun setFormValues(model: FormViewModel){
+
+   }
 
 
-    private fun clickManager(view: View) {
-        view.capture_btn.setOnClickListener {
+
+
+    private fun clickManager(binding: FragmentFormBinding) {
+        binding.captureBtn.setOnClickListener {
 
             cameraManager()
         }
 
-        view.choose_image.setOnClickListener {
+        binding.chooseImage.setOnClickListener {
             pickImage()
         }
 
-        view.post_button_found_item.setOnClickListener {
+        binding.postButtonFoundItem.setOnClickListener {
             if (image_uri != null) {  //last opp bilde til database
                 uploadImageToDatabase()
             }
@@ -132,26 +148,20 @@ class FormFragment : Fragment() {
             startActivity(intent1)
         }
 
-        view.image_view.setOnClickListener {
+        binding.imageView.setOnClickListener {
             coverChecker = "cover"
             pickImage()
         }
 
 
 
-        view.description.setOnClickListener {
-
-            val description= view?.findViewById(R.id.description) as? TextView
-            val descriptionString = description?.text.toString()// hent skrevet tekst
-            if (descriptionString != null) { //dersom det er skrevet noe fra før send sring til frag description
-
-
-            }
+        binding.description.setOnClickListener {
 
             appNavigator.navigateToDescription() // naviger til fragmentDescription
+
         }
 
-        view.timewhenfound.setOnClickListener {
+        binding.timewhenfound.setOnClickListener {
 
             appNavigator.navigateToSelectDate()
         }
@@ -159,11 +169,13 @@ class FormFragment : Fragment() {
 
 
 
-  /*  private fun mapManager() {
+
+
+    private fun mapManager() {
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(OnMapReadyCallback {
             googleMap = it
-            if(args.itemLocation) {
+
 
                 val location1 = LatLng(62.479386, 6.819220)
                 googleMap.addMarker(MarkerOptions().position(location1).title("My location"))
@@ -174,8 +186,10 @@ class FormFragment : Fragment() {
 
                 }
 
+
             })
-    }*/
+    }
+
 
     private fun cameraManager() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -336,10 +350,6 @@ class FormFragment : Fragment() {
                     )
                 )
             }
-
-
-
-
 
     }
 
