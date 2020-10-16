@@ -26,17 +26,15 @@ class PostFoundItem : AppCompatActivity(), AppNavigator{
     }
 
     override fun navigateToDescription() {
-        val action = FormFragmentDirections.actionFormFragmentToDescriptionFragment2(descriptionText)
+        val action = FormFragmentDirections.actionFormFragmentToDescriptionFragment2()
         findNavController(R.id.nav_host_fragment).navigate(action)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
     }
    override fun navigateToForm() {
-       storeFormvalues()
+      // storeFormvalues()
 
-             val action = DescriptionFragmentDirections.actionDescriptionFragmentToFormFragment(
-                 descriptionText
-             )
+             val action = DescriptionFragmentDirections.actionDescriptionFragmentToFormFragment()
              findNavController(R.id.nav_host_fragment).navigate(action)
 
     }
@@ -47,7 +45,7 @@ class PostFoundItem : AppCompatActivity(), AppNavigator{
     }
 
     override fun navigateFromDateToForm(){
-        val action = dateFragmentDirections.actionDateFragmentToFormFragment(descriptionText)
+        val action = dateFragmentDirections.actionDateFragmentToFormFragment()
         findNavController(R.id.nav_host_fragment).navigate(action)
     }
 
@@ -57,12 +55,12 @@ class PostFoundItem : AppCompatActivity(), AppNavigator{
     }
 
     override fun navigateFromMapToForm(){
-        val action = MapsFullScreenFragmentDirections.actionMapsFullScreenFragmentToFormFragment(descriptionText,itemLocation)
+        val action = MapsFullScreenFragmentDirections.actionMapsFullScreenFragmentToFormFragment()
         findNavController(R.id.nav_host_fragment).navigate(action)
 
     }
 
-    override fun storeFormvalues(){
+    /*override fun storeFormvalues(){
 
         descriptionText?.let { viewModel?.setDescription(it) }
         val descriptionText = viewModel?.getDescription()
@@ -75,7 +73,7 @@ class PostFoundItem : AppCompatActivity(), AppNavigator{
 
     override fun onLocationPass(data: LatLng) {
         itemLocation = data
-    }
+    }*/
 
     /*override fun onSupportNavigateUp(): Boolean {
         onBackPressed()

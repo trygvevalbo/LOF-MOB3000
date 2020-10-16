@@ -10,7 +10,7 @@ interface AppNavigator {
     fun navigateFromDateToForm()
     fun navigateToMapFullScreen()
     fun navigateFromMapToForm()
-    fun onDataPass(data: String) //https://stackoverflow.com/questions/9343241/passing-data-between-a-fragment-and-its-container-activity
-    fun onLocationPass(data: LatLng)
-    fun storeFormvalues()
+    //fun onDataPass(data: String) //https://stackoverflow.com/questions/9343241/passing-data-between-a-fragment-and-its-container-activity
+  //  fun onLocationPass(data: LatLng)
+    //fun storeFormvalues()
 }

@@ -37,7 +37,7 @@ class MapsFullScreenFragment : Fragment() {
     private var PERMISSION_ID  : Int= 1000
 
     private lateinit var appNavigator: AppNavigator
-    lateinit var dataPasser: AppNavigator
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -86,7 +86,7 @@ class MapsFullScreenFragment : Fragment() {
         })
 
         view.done_button.setOnClickListener {
-            itemLocation?.let { passData(it) }
+            //itemLocation?.let { passData(it) }
             appNavigator.navigateFromMapToForm()
         }
         return view
@@ -95,11 +95,7 @@ class MapsFullScreenFragment : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         appNavigator = context as AppNavigator
-        dataPasser = context
-    }
 
-    private fun passData(data: LatLng){
-        dataPasser.onLocationPass(data)
     }
 
 

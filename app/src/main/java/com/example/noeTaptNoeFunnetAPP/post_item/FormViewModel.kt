@@ -1,19 +1,35 @@
 package com.example.noeTaptNoeFunnetAPP.post_item
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
+
 class FormViewModel : ViewModel() {
-    
 
-    private var savedDescription : String =""
+    var savedNameItem = MutableLiveData<String>()
+     var savedDescription = MutableLiveData<String>()
+    var savedColor = MutableLiveData<String>()
+    var savedLocation = MutableLiveData<String>()
+    var savedContact = MutableLiveData<String>()
 
-
-    fun getDescription(): String? {
-        return savedDescription
+    fun setNameItem(desc: String) {
+        savedDescription.setValue(desc)
     }
 
-    fun setDescription(savedDescription: String) {
-        this.savedDescription = savedDescription
+    fun setDescription(desc: String) {
+       savedDescription.setValue(desc)
+    }
+
+    fun setColor(desc: String) {
+        savedDescription.setValue(desc)
+    }
+
+    fun setLocation(desc: String) {
+        savedDescription.setValue(desc)
+    }
+
+    fun setContact(desc: String) {
+        savedDescription.setValue(desc)
     }
 
 }

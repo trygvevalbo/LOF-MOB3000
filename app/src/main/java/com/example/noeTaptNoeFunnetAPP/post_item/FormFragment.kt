@@ -20,6 +20,7 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.navArgs
@@ -45,13 +46,12 @@ import java.util.*
 
 
 class FormFragment : Fragment() {
-    private val args: FormFragmentArgs by navArgs()
 
     private var mUri: Uri? = null //deklarasjon av url til bilde
 
     private lateinit var appNavigator: AppNavigator //interface til å sende til description fragment
 
-
+    private var model: FormViewModel?=null
 
     lateinit var mapFragment: SupportMapFragment
     lateinit var googleMap: GoogleMap
@@ -62,16 +62,21 @@ class FormFragment : Fragment() {
     var image_uri: Uri? = null
     private var storageRef: StorageReference? = null
     private var coverChecker: String? = ""
-    lateinit var dataPasser: AppNavigator
+
     private var primaryKey :String? =""
 
-    private var savedDescription: String = ""
 
     override fun onAttach(context: Context) { //få context til å senere kunne sende til deskription
         super.onAttach(context)
         appNavigator = context as AppNavigator
     }
 
+    override fun onPause() {
+        super.onPause()
+
+        model.setNameItem()
+        model!!.setDescription(description?.text.toString()) // set verdi
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -79,27 +84,28 @@ class FormFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_form, container, false)
 
+        
+
 
         if (savedInstanceState != null) {
             mUri = savedInstanceState.getParcelable("uri")
             image_view.setImageURI(mUri)
         }
 
-        mapManager()
+        //mapManager()
 
 
         clickManager(view)
 
-            FormViewModel. activity?.run {
-                ViewModelProviders.of
-        if (args.description != null || savedDescription != null) {
-            if (args.description != null){
-            savedDescription= args.description!!
-            }
-            val textView: TextView = view.findViewById(R.id.description) as TextView
-            textView.text = savedDescription
 
-        }
+        val textView: TextView = view.findViewById(R.id.description) as TextView
+        model= ViewModelProviders.of(requireActivity()).get(FormViewModel::class.java)
+
+
+        model!!.savedDescription.observe(viewLifecycleOwner,
+            { o -> textView.text = o!!.toString() }) //motta description
+
+
 
         return view
     }
@@ -153,23 +159,23 @@ class FormFragment : Fragment() {
 
 
 
-    private fun mapManager() {
+  /*  private fun mapManager() {
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(OnMapReadyCallback {
             googleMap = it
-            if(args.itemLocation)
+            if(args.itemLocation) {
 
-            val location1 = LatLng(62.479386, 6.819220)
-            googleMap.addMarker(MarkerOptions().position(location1).title("My location"))
-            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(location1, 10f))
+                val location1 = LatLng(62.479386, 6.819220)
+                googleMap.addMarker(MarkerOptions().position(location1).title("My location"))
+                googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(location1, 10f))
 
-            googleMap.setOnMapClickListener{
-                appNavigator.navigateToMapFullScreen()
+                googleMap.setOnMapClickListener {
+                    appNavigator.navigateToMapFullScreen()
 
-            }
+                }
 
-        })
-    }
+            })
+    }*/
 
     private fun cameraManager() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
