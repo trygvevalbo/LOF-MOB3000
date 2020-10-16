@@ -15,20 +15,29 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import com.example.noeTaptNoeFunnetAPP.R
+import com.example.noeTaptNoeFunnetAPP.post_item.AppNavigator
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
-import com.google.type.LatLng
+import com.google.android.gms.maps.MapFragment
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
+import kotlinx.android.synthetic.main.fragment_description.view.*
 
 
 class MapsFullScreenFragment : Fragment() {
 
     lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     lateinit var locationRequest : LocationRequest
-    private var userLocation = ""
+    private var itemLocation : LatLng? = null
 
     private lateinit var mMap: GoogleMap
     private var PERMISSION_ID  : Int= 1000
+
+    private lateinit var appNavigator: AppNavigator
+    lateinit var dataPasser: AppNavigator
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,10 +47,7 @@ class MapsFullScreenFragment : Fragment() {
 
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
 
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,14 +57,50 @@ class MapsFullScreenFragment : Fragment() {
 
         getLastLocation() // https://www.youtube.com/watch?v=vard0CUTLbA
 
-        Toast.makeText(requireContext(), userLocation, Toast.LENGTH_LONG).show()
 
-        val latlng = LatLng(lastLocation.latitude, lastLocation.longitude)
+
+        val mapFragment = childFragmentManager.findFragmentById(R.id.map_fragment) as SupportMapFragment?
+        mapFragment?.getMapAsync(OnMapReadyCallback {
+            //https://stackoverflow.com/questions/41254834/add-marker-on-google-map-on-touching-the-screen-using-android/41254877
+            mMap = it
+            mMap.setOnMapClickListener { latLng -> // Creating a marker
+                val markerOptions = MarkerOptions()
+                itemLocation =latLng
+                        // Setting the position for the marker
+                markerOptions.position(latLng)
+
+                // Setting the title for the marker.
+                // This will be displayed on taping the marker
+                markerOptions.title(latLng.latitude.toString() + " : " + latLng.longitude)
+
+                // Clears the previously touched position
+                mMap.clear()
+
+                // Animating to the touched position
+                mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng))
+
+                // Placing a marker on the touched position
+                mMap.addMarker(markerOptions)
+
+            }
+        })
+
+        view.done_button.setOnClickListener {
+            itemLocation?.let { passData(it) }
+            appNavigator.navigateFromMapToForm()
+        }
         return view
-
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        appNavigator = context as AppNavigator
+        dataPasser = context
+    }
 
+    private fun passData(data: LatLng){
+        dataPasser.onLocationPass(data)
+    }
 
 
     private fun checkPermission(): Boolean{
@@ -85,6 +127,7 @@ class MapsFullScreenFragment : Fragment() {
                 Manifest.permission.ACCESS_COARSE_LOCATION
             ), PERMISSION_ID
         )
+
     }
 
 
@@ -106,20 +149,15 @@ class MapsFullScreenFragment : Fragment() {
                 Log.d("Debug", "You have permission")
             }
         }
+
     }
 
     private fun getLastLocation(){
         if(checkPermission()){
             if(isLocationEnabeled()){
-                fusedLocationProviderClient.lastLocation.addOnCompleteListener { task ->
-                    var location = task.result
-                    if(location == null){
-                        getNewLocation()
-                    }else{
-                    if (location != null) {
-                        userLocation = "din lokasjon er:\nLat:"+ location.latitude +"; Long:"+ location.longitude
-                    }
-                    }
+                fusedLocationProviderClient.lastLocation.addOnCompleteListener {
+                    getNewLocation()
+
                 }
             }else{
                 Toast.makeText(
@@ -130,6 +168,7 @@ class MapsFullScreenFragment : Fragment() {
             }
         }else{
             requestPermission()
+            getNewLocation()
         }
     }
 
@@ -145,13 +184,16 @@ class MapsFullScreenFragment : Fragment() {
         )
     }
     private val locationCallback = object : LocationCallback(){
-        fun OnLocationResult(p0: LocationResult){
+        override fun onLocationResult(p0: LocationResult){
             var lastLocation =p0.lastLocation
             val zoomLevel = 10
+            val latlng = LatLng(lastLocation.latitude, lastLocation.longitude)
+            val mapFragment = childFragmentManager.findFragmentById(R.id.map_fragment) as SupportMapFragment?
+            mapFragment?.getMapAsync(OnMapReadyCallback {
+                mMap = it
 
-            userLocation = "din lokasjon er:\nLat:"+ lastLocation.latitude +"; Long:"+ lastLocation.longitude
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(lastLocation, zoomLevel.toFloat()))
-
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latlng, zoomLevel.toFloat()))
+                })
         }
     }
 

@@ -21,6 +21,7 @@ import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.navArgs
 import com.example.noeTaptNoeFunnetAPP.FrontPage
 import com.example.noeTaptNoeFunnetAPP.R
@@ -72,17 +73,6 @@ class FormFragment : Fragment() {
     }
 
 
-
-
-
-
-
-    companion object {
-        private const val DESCRIPTION_KEY = "DESCRIPTION_KEY"
-
-
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -100,39 +90,9 @@ class FormFragment : Fragment() {
 
         clickManager(view)
 
-       /* var viewModel = ViewModelProvider(this).get(FormViewModel::class.java)
-        setFragmentResultListener("DESCRIPTION_KEY") { key, bundle ->
-            // We use a String here, but any type that can be put in a Bundle is supported
-            val savedDescription = bundle.getString("description")
-            // Do something with the result...
-            if (savedDescription != null) {
-                viewModel.setDescription(savedDescription)
-            }
-*/
-        //var viewModel = ViewModelProvider(action).get(FormViewModel::class.java)
-               // val textView: TextView = view.findViewById(R.id.description) as TextView
-                //textView.text = savedDescription
-
-
-
-
-
-
-
-
-
-     /*   if(savedDescription==""){
-           savedDescription = viewModel.getDescription().toString()
-        }else{
-            viewModel.setDescription(savedDescription)
-        }*/
-
-
-
-
-
+            FormViewModel. activity?.run {
+                ViewModelProviders.of
         if (args.description != null || savedDescription != null) {
-
             if (args.description != null){
             savedDescription= args.description!!
             }
@@ -140,9 +100,6 @@ class FormFragment : Fragment() {
             textView.text = savedDescription
 
         }
-
-
-
 
         return view
     }
@@ -200,31 +157,12 @@ class FormFragment : Fragment() {
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(OnMapReadyCallback {
             googleMap = it
-            //googleMap.isMyLocationEnabled = true
+            if(args.itemLocation)
+
             val location1 = LatLng(62.479386, 6.819220)
             googleMap.addMarker(MarkerOptions().position(location1).title("My location"))
             googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(location1, 10f))
 
-            //https://stackoverflow.com/questions/41254834/add-marker-on-google-map-on-touching-the-screen-using-android/41254877
-            googleMap.setOnMapClickListener { latLng -> // Creating a marker
-                val markerOptions = MarkerOptions()
-
-                // Setting the position for the marker
-                markerOptions.position(latLng)
-
-                // Setting the title for the marker.
-                // This will be displayed on taping the marker
-                markerOptions.title(latLng.latitude.toString() + " : " + latLng.longitude)
-
-                // Clears the previously touched position
-                googleMap.clear()
-
-                // Animating to the touched position
-                googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng))
-
-                // Placing a marker on the touched position
-                googleMap.addMarker(markerOptions)
-            }
             googleMap.setOnMapClickListener{
                 appNavigator.navigateToMapFullScreen()
 
