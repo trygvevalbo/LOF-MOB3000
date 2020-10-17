@@ -85,7 +85,7 @@ class MapsFullScreenFragment : Fragment() {
             }
         })
 
-        view.done_button.setOnClickListener {
+        binding.done_button.setOnClickListener {
             //itemLocation?.let { passData(it) }
             appNavigator.navigateFromMapToForm()
         }

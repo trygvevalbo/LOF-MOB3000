@@ -103,17 +103,15 @@ class FormFragment : Fragment() {
 
         clickManager(binding)
 
-        setFormValues()
+
 
         model= ViewModelProviders.of(requireActivity()).get(FormViewModel::class.java)
 
-        getFormValues(binding, model!!)
+
 
         model!!.savedDescription.observe(viewLifecycleOwner,
             { o -> binding.description.text = o!!.toString() }) //motta description
 
-       /* model!!.savedNameItem.observe(viewLifecycleOwner,
-           { o -> binding.nameOfItem.setText(o!!.toString()) }) // ta imot husket verdi for beskrivelse*/
 
 
 
@@ -123,13 +121,7 @@ class FormFragment : Fragment() {
 
 
 
-    private fun getFormValues(binding: FragmentFormBinding, viewModel: FormViewModel){
 
-    }
-
-   private fun setFormValues(){
-
-   }
 
 
 

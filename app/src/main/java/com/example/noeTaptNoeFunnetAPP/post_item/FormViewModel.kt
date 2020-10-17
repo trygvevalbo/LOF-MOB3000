@@ -1,5 +1,6 @@
 package com.example.noeTaptNoeFunnetAPP.post_item
 
+import android.text.Editable
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -18,31 +19,24 @@ class FormViewModel : ViewModel() {
     var savedNameItem = MutableLiveData<String>()
 
 
-    fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-        savedNameItem.setValue(s.toString())
-
-    }
-
-
-
-    fun setNameItem(data: String) {
-        savedNameItem.setValue(data)
+    fun setNameItem(s: CharSequence, start: Int, before: Int, count: Int) {
+        savedNameItem.value = s.toString()
     }
 
     fun setDescription(data: String) {
        savedDescription.setValue(data)
     }
 
-    fun setColor(data: String) {
-        savedColor.setValue(data)
+    fun setColor(s: CharSequence, start: Int, before: Int, count: Int) {
+        savedColor.value = s.toString()
     }
 
     fun setLocation(data: String) {
-        savedLocation.setValue(data)
+        savedLocation.value = data
     }
 
-    fun setContact(data: String) {
-        savedContact.setValue(data)
+    fun setContact(s: CharSequence, start: Int, before: Int, count: Int) {
+        savedContact.value = s.toString()
     }
 
 
