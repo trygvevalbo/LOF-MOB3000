@@ -89,8 +89,9 @@ class FormFragment : Fragment() {
 
         val binding = DataBindingUtil.inflate<FragmentFormBinding>(inflater, R.layout.fragment_form,
             container, false)
+        binding.lifecycleOwner = activity
 
-       // binding.viewModel = model//attach your viewModel to xml
+       binding.viewModel = model//attach your viewModel to xml
 
         if (savedInstanceState != null) {
             mUri = savedInstanceState.getParcelable("uri")
@@ -102,18 +103,17 @@ class FormFragment : Fragment() {
 
         clickManager(binding)
 
-        setFormValues(model)
+        setFormValues()
 
         model= ViewModelProviders.of(requireActivity()).get(FormViewModel::class.java)
 
+        getFormValues(binding, model!!)
 
         model!!.savedDescription.observe(viewLifecycleOwner,
             { o -> binding.description.text = o!!.toString() }) //motta description
 
-        model!!.savedNameItem.observe(viewLifecycleOwner,
-            { o -> binding.nameOfItem?.setText(o!!.toString())}) // ta imot husket verdi for beskrivelse
-
-
+       /* model!!.savedNameItem.observe(viewLifecycleOwner,
+           { o -> binding.nameOfItem.setText(o!!.toString()) }) // ta imot husket verdi for beskrivelse*/
 
 
 
@@ -121,7 +121,13 @@ class FormFragment : Fragment() {
         return binding.root
     }
 
-   private fun setFormValues(model: FormViewModel){
+
+
+    private fun getFormValues(binding: FragmentFormBinding, viewModel: FormViewModel){
+
+    }
+
+   private fun setFormValues(){
 
    }
 

@@ -4,6 +4,7 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
 apply plugin: "androidx.navigation.safeargs.kotlin"
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 30
@@ -102,5 +103,7 @@ dependencies {
 
     //modelview
     implementation    "android.arch.lifecycle:extensions:$lifecycle_version"
+
+
 
 }

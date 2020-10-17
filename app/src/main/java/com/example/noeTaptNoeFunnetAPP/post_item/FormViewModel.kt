@@ -1,20 +1,27 @@
 package com.example.noeTaptNoeFunnetAPP.post_item
 
-import androidx.databinding.DataBindingUtil
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.noeTaptNoeFunnetAPP.R
 
 
 class FormViewModel : ViewModel() {
 
-    var savedNameItem = MutableLiveData<String>()
+
      var savedDescription = MutableLiveData<String>()
     var savedColor = MutableLiveData<String>()
     var savedLocation = MutableLiveData<String>()
     var savedTime = MutableLiveData<String>()
     var savedContact = MutableLiveData<String>()
 
+
+    var savedNameItem = MutableLiveData<String>()
+
+
+    fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+        savedNameItem.setValue(s.toString())
+
+    }
 
 
 
@@ -37,5 +44,6 @@ class FormViewModel : ViewModel() {
     fun setContact(data: String) {
         savedContact.setValue(data)
     }
+
 
 }
