@@ -151,7 +151,7 @@
                 android:ems="10"
                 android:hint="@string/date_found"
                 android:inputType="textPersonName"
-
+                android:text="@{viewModel.savedTime}"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
