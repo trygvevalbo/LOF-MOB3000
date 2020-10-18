@@ -38,7 +38,6 @@ import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.StorageTask
 import com.google.firebase.storage.UploadTask
 import kotlinx.android.synthetic.main.fragment_form.*
-import kotlinx.android.synthetic.main.fragment_form.view.*
 import java.util.*
 
 
@@ -53,6 +52,8 @@ class FormFragment : Fragment() {
 
     lateinit var mapFragment: SupportMapFragment
     lateinit var googleMap: GoogleMap
+
+    var selectedLocation: LatLng? = null
 
     private val IMAGE_CAPTURE_CODE = 1001 // camera funksjon https://www.youtube.com/watch?v=3gkAoF90RZ4
     private val PERMISSION_CODE = 1000
@@ -89,32 +90,24 @@ class FormFragment : Fragment() {
 
         val binding = DataBindingUtil.inflate<FragmentFormBinding>(inflater, R.layout.fragment_form,
             container, false)
+        model= ViewModelProviders.of(requireActivity()).get(FormViewModel::class.java)
         binding.lifecycleOwner = activity
 
        binding.viewModel = model//attach your viewModel to xml
+
+
+        model!!.savedDescription.observe(viewLifecycleOwner,
+            { o -> binding.description.text = o!!.toString() }) //motta description
 
         if (savedInstanceState != null) {
             mUri = savedInstanceState.getParcelable("uri")
             image_view.setImageURI(mUri)
         }
 
-        mapManager()
+        mapManager(model)
 
 
         clickManager(binding)
-
-
-
-        model= ViewModelProviders.of(requireActivity()).get(FormViewModel::class.java)
-
-
-
-        model!!.savedDescription.observe(viewLifecycleOwner,
-            { o -> binding.description.text = o!!.toString() }) //motta description
-
-
-
-
 
         return binding.root
     }
@@ -169,15 +162,23 @@ class FormFragment : Fragment() {
 
 
 
-    private fun mapManager() {
+    private fun mapManager(model: FormViewModel?) {
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
+
+
+
         mapFragment?.getMapAsync(OnMapReadyCallback {
             googleMap = it
-
-
-                val location1 = LatLng(62.479386, 6.819220)
-                googleMap.addMarker(MarkerOptions().position(location1).title("My location"))
-                googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(location1, 10f))
+            if (model != null) {
+                if(model.savedLatitude.value!=null && model.savedLongitude.value!= null) {
+                    selectedLocation = LatLng(model.savedLatitude.value!!, model.savedLongitude.value!!) // hent det bruker har skrevet inn
+                }
+                else {
+                    selectedLocation = LatLng(43.434,44.4343) // bare bruk lokasjon til bruker
+                }
+            }
+                googleMap.addMarker(selectedLocation?.let { it1 -> MarkerOptions().position(it1).title("My location") })
+                googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(selectedLocation, 10f))
 
                 googleMap.setOnMapClickListener {
                     appNavigator.navigateToMapFullScreen()

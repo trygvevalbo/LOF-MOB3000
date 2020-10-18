@@ -13,9 +13,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
 import com.example.noeTaptNoeFunnetAPP.R
+import com.example.noeTaptNoeFunnetAPP.databinding.FragmentFormBinding
+import com.example.noeTaptNoeFunnetAPP.databinding.FragmentMapsFullScreenBinding
 import com.example.noeTaptNoeFunnetAPP.post_item.AppNavigator
+import com.example.noeTaptNoeFunnetAPP.post_item.FormViewModel
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -38,6 +43,8 @@ class MapsFullScreenFragment : Fragment() {
 
     private lateinit var appNavigator: AppNavigator
 
+    private var model: FormViewModel?=null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,10 +60,15 @@ class MapsFullScreenFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-       val view = inflater.inflate(R.layout.fragment_maps_full_screen, container, false)
+
 
         getLastLocation() // https://www.youtube.com/watch?v=vard0CUTLbA
+        val binding = DataBindingUtil.inflate<FragmentMapsFullScreenBinding>(inflater, R.layout.fragment_maps_full_screen,
+            container, false)
+        model= ViewModelProviders.of(requireActivity()).get(FormViewModel::class.java)
+        binding.lifecycleOwner = activity
 
+        binding.viewModel = model//attach your viewModel to xml
 
 
         val mapFragment = childFragmentManager.findFragmentById(R.id.map_fragment) as SupportMapFragment?
@@ -65,7 +77,10 @@ class MapsFullScreenFragment : Fragment() {
             mMap = it
             mMap.setOnMapClickListener { latLng -> // Creating a marker
                 val markerOptions = MarkerOptions()
-                itemLocation =latLng
+
+                binding.viewModel?.setLocation(latLng.latitude, latLng.longitude)
+
+
                         // Setting the position for the marker
                 markerOptions.position(latLng)
 
@@ -85,11 +100,11 @@ class MapsFullScreenFragment : Fragment() {
             }
         })
 
-        binding.done_button.setOnClickListener {
+        binding.locationDone.setOnClickListener {
             //itemLocation?.let { passData(it) }
             appNavigator.navigateFromMapToForm()
         }
-        return view
+        return binding.root
     }
 
     override fun onAttach(context: Context) {

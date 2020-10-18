@@ -37,12 +37,8 @@ class DescriptionFragment : Fragment() {
         model= ViewModelProviders.of(requireActivity()).get(FormViewModel::class.java)
         val description= view?.findViewById(R.id.description) as? EditText
 
-        model!!.savedDescription.observe(viewLifecycleOwner, object: Observer<Any> {
-            override fun onChanged(o: Any?) {
-
-                description?.setText(o!!.toString())
-            }
-        })
+        model!!.savedDescription.observe(viewLifecycleOwner,
+            { o -> description?.setText(o!!.toString()) })
 
 
 

@@ -9,8 +9,11 @@ import android.view.ViewGroup
 import android.widget.DatePicker
 import android.widget.TextView
 import android.widget.Toast
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.example.noeTaptNoeFunnetAPP.R
+import com.example.noeTaptNoeFunnetAPP.databinding.FragmentDateBinding
+import com.example.noeTaptNoeFunnetAPP.databinding.FragmentMapsFullScreenBinding
 import com.google.android.material.datepicker.MaterialDatePicker.Builder.datePicker
 import kotlinx.android.synthetic.main.fragment_date.view.*
 import java.util.*
@@ -32,22 +35,15 @@ class dateFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val  view = inflater.inflate(R.layout.fragment_date, container, false)
-        view.selected_date_button.setOnClickListener {
-            val datePicker: DatePicker= view.findViewById(R.id.DatePicker) as DatePicker
-            val getDate  = Calendar.getInstance()
-            datePicker.init(getDate.get(Calendar.DAY_OF_MONTH),getDate.get(Calendar.MONDAY),getDate.get(Calendar.YEAR))
+        val binding = DataBindingUtil.inflate<FragmentDateBinding>(inflater, R.layout.fragment_date,
+            container, false)
+        binding.selectedDateButton.setOnClickListener {
 
-            { view, year, month, day ->
-                val month = month + 1
-                val msg = "You selected: $day/$month/$year"
-                Toast.makeText(requireContext(), msg, Toast.LENGTH_LONG).show()
-            }
-
+        Toast.makeText(requireContext(), "hei", Toast.LENGTH_SHORT).show()
 
             appNavigator.navigateFromDateToForm()
         }
-        return  view
+        return  binding.root
     }
 
     override fun onAttach(context: Context) { //få context til å senere kunne sende til description

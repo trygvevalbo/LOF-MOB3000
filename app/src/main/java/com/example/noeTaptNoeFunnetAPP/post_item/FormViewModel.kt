@@ -4,6 +4,7 @@ import android.text.Editable
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.google.android.gms.maps.model.LatLng
 
 
 class FormViewModel : ViewModel() {
@@ -11,7 +12,8 @@ class FormViewModel : ViewModel() {
 
      var savedDescription = MutableLiveData<String>()
     var savedColor = MutableLiveData<String>()
-    var savedLocation = MutableLiveData<String>()
+    var savedLatitude = MutableLiveData<Double>()
+    var savedLongitude = MutableLiveData<Double>()
     var savedTime = MutableLiveData<String>()
     var savedContact = MutableLiveData<String>()
 
@@ -31,8 +33,10 @@ class FormViewModel : ViewModel() {
         savedColor.value = s.toString()
     }
 
-    fun setLocation(data: String) {
-        savedLocation.value = data
+    fun setLocation(latitude: Double, longitude : Double) {
+
+        savedLatitude.value = latitude
+         savedLongitude.value  = longitude
     }
 
     fun setContact(s: CharSequence, start: Int, before: Int, count: Int) {
