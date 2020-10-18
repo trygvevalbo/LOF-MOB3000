@@ -13,14 +13,12 @@
         <action
             android:id="@+id/action_formFragment_to_descriptionFragment2"
             app:destination="@id/descriptionFragment" />
-        <argument
-            android:name="description"
-            app:argType="string"
-            app:nullable="true"
-            android:defaultValue="@null"/>
         <action
             android:id="@+id/action_formFragment_to_dateFragment"
             app:destination="@id/dateFragment" />
+        <action
+            android:id="@+id/action_formFragment_to_mapsFullScreenFragment"
+            app:destination="@id/mapsFullScreenFragment" />
     </fragment>
     <fragment
         android:id="@+id/descriptionFragment"
@@ -30,11 +28,6 @@
         <action
             android:id="@+id/action_descriptionFragment_to_formFragment"
             app:destination="@id/formFragment" />
-        <argument
-            android:name="description"
-            app:argType="string"
-            app:nullable="true"
-            android:defaultValue="@null"/>
     </fragment>
     <fragment
         android:id="@+id/dateFragment"
@@ -43,6 +36,15 @@
         tools:layout="@layout/fragment_date" >
         <action
             android:id="@+id/action_dateFragment_to_formFragment"
+            app:destination="@id/formFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mapsFullScreenFragment"
+        android:name="com.example.noeTaptNoeFunnetAPP.post_item.location.MapsFullScreenFragment"
+        android:label="fragment_maps_full_screen"
+        tools:layout="@layout/fragment_maps_full_screen" >
+        <action
+            android:id="@+id/action_mapsFullScreenFragment_to_formFragment"
             app:destination="@id/formFragment" />
     </fragment>
 </navigation>

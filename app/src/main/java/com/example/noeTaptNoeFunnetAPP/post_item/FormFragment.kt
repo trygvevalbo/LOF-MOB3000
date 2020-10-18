@@ -14,16 +14,14 @@ import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.setFragmentResultListener
-import androidx.navigation.fragment.navArgs
+import androidx.lifecycle.ViewModelProviders
 import com.example.noeTaptNoeFunnetAPP.FrontPage
 import com.example.noeTaptNoeFunnetAPP.R
+import com.example.noeTaptNoeFunnetAPP.databinding.FragmentFormBinding
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -38,21 +36,22 @@ import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.StorageTask
 import com.google.firebase.storage.UploadTask
 import kotlinx.android.synthetic.main.fragment_form.*
-import kotlinx.android.synthetic.main.fragment_form.view.*
 import java.util.*
 
 
-class FormFragment : Fragment() {
-    private val args: FormFragmentArgs by navArgs()
 
-    private var mUri: Uri? = null //deklarasjon av url til bilde
+class FormFragment : Fragment() {
+
+    //private var mUri: Uri? = null //deklarasjon av url til bilde
 
     private lateinit var appNavigator: AppNavigator //interface til å sende til description fragment
 
-
+    private var model: FormViewModel?=null
 
     lateinit var mapFragment: SupportMapFragment
     lateinit var googleMap: GoogleMap
+
+    var selectedLocation: LatLng? = null
 
     private val IMAGE_CAPTURE_CODE = 1001 // camera funksjon https://www.youtube.com/watch?v=3gkAoF90RZ4
     private val PERMISSION_CODE = 1000
@@ -60,169 +59,138 @@ class FormFragment : Fragment() {
     var image_uri: Uri? = null
     private var storageRef: StorageReference? = null
     private var coverChecker: String? = ""
-    lateinit var dataPasser: AppNavigator
+
     private var primaryKey :String? =""
 
-    private var savedDescription: String = ""
+
+
+
 
     override fun onAttach(context: Context) { //få context til å senere kunne sende til deskription
         super.onAttach(context)
         appNavigator = context as AppNavigator
-        dataPasser = context
     }
 
 
 
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putString(DESCRIPTION_KEY, savedDescription)
-        //outState.putParcelable(LOCATION_KEY, location)
-    }
-
-
-
-    companion object {
-        private const val DESCRIPTION_KEY = "DESCRIPTION_KEY"
-
-
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        model = activity?.run {
+            ViewModelProviders.of(this)[FormViewModel::class.java]
+        } ?: throw Exception("Invalid Activity")
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_form, container, false)
+
+        val binding = DataBindingUtil.inflate<FragmentFormBinding>(inflater, R.layout.fragment_form,
+            container, false)
+        model= ViewModelProviders.of(requireActivity()).get(FormViewModel::class.java)
+        binding.lifecycleOwner = activity
+
+       binding.viewModel = model//attach your viewModel to xml
 
 
+        model!!.savedDescription.observe(viewLifecycleOwner,
+            { o -> binding.description.text = o!!.toString() }) //motta description
+
+        model!!.savedDescription.observe(viewLifecycleOwner,
+            { o -> binding.description.text = o!!.toString() })
+
+    /*if(binding.viewModel?.mUri!=null || savedInstanceState != null) {
         if (savedInstanceState != null) {
-            mUri = savedInstanceState.getParcelable("uri")
-            image_view.setImageURI(mUri)
+            binding.viewModel?.mUri = savedInstanceState.getParcelable("uri")!!
+
         }
-
-        mapManager()
-
-
-        clickManager(view)
+        binding.image.setImageURI(binding.viewModel?.mUri)
+    }*/
+        mapManager(model)
 
 
+        clickManager(binding)
 
-
-
-
-
-        setFragmentResultListener("DESCRIPTION_KEY") { key, bundle ->
-            // We use a String here, but any type that can be put in a Bundle is supported
-            val savedDescription = bundle.getString("description")
-            // Do something with the result...
-
-            if(savedDescription != null){
-                val textView: TextView = view.findViewById(R.id.description) as TextView
-                textView.text = savedDescription
-            }
-        }
-
-/*
-        if (args.description != null || savedDescription != null) {
-            if (args.description != null){
-            savedDescription= args.description!!
-            }
-            val textView: TextView = view.findViewById(R.id.description) as TextView
-            textView.text = savedDescription
-
-        }*/
-
-
-
-
-        return view
+        return binding.root
     }
 
 
 
-    private fun clickManager(view: View) {
-        view.capture_btn.setOnClickListener {
+
+
+
+
+
+    private fun clickManager(binding: FragmentFormBinding) {
+        binding.captureBtn.setOnClickListener {
 
             cameraManager()
         }
 
-        view.choose_image.setOnClickListener {
+        binding.chooseImage.setOnClickListener {
             pickImage()
         }
 
-        view.post_button_found_item.setOnClickListener {
-
-
-
+        binding.postButtonFoundItem.setOnClickListener {
             if (image_uri != null) {  //last opp bilde til database
                 uploadImageToDatabase()
             }
-            uploadTextToDatabase()
+            uploadTextToDatabase(binding, model)
 
             val intent1 = Intent(activity, FrontPage::class.java)
             startActivity(intent1)
         }
 
-        view.image_view.setOnClickListener {
+        binding.image.setOnClickListener {
             coverChecker = "cover"
             pickImage()
         }
 
-        view.description.setOnClickListener {
 
-            val description= view?.findViewById(R.id.description) as? TextView
-            val descriptionString = description?.text.toString()// hent skrevet tekst
-            if (descriptionString != null) { //dersom det er skrevet noe fra før send sring til frag description
 
-                passData(descriptionString)
-            }
+        binding.description.setOnClickListener {
 
             appNavigator.navigateToDescription() // naviger til fragmentDescription
+
         }
 
-        view.timewhenfound.setOnClickListener {
+        binding.timewhenfound.setOnClickListener {
 
             appNavigator.navigateToSelectDate()
         }
     }
 
-    fun passData(data: String){
-        dataPasser.onDescriptionPass(data)
-    }
 
-    private fun mapManager() {
+
+
+
+    private fun mapManager(model: FormViewModel?) {
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
+
+
+
         mapFragment?.getMapAsync(OnMapReadyCallback {
             googleMap = it
-            //googleMap.isMyLocationEnabled = true
-            val location1 = LatLng(62.479386, 6.819220)
-            googleMap.addMarker(MarkerOptions().position(location1).title("My location"))
-            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(location1, 10f))
-
-            //https://stackoverflow.com/questions/41254834/add-marker-on-google-map-on-touching-the-screen-using-android/41254877
-            googleMap.setOnMapClickListener { latLng -> // Creating a marker
-                val markerOptions = MarkerOptions()
-
-                // Setting the position for the marker
-                markerOptions.position(latLng)
-
-                // Setting the title for the marker.
-                // This will be displayed on taping the marker
-                markerOptions.title(latLng.latitude.toString() + " : " + latLng.longitude)
-
-                // Clears the previously touched position
-                googleMap.clear()
-
-                // Animating to the touched position
-                googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng))
-
-                // Placing a marker on the touched position
-                googleMap.addMarker(markerOptions)
+            if (model != null) {
+                if(model.savedLatitude.value!=null && model.savedLongitude.value!= null) {
+                    selectedLocation = LatLng(model.savedLatitude.value!!, model.savedLongitude.value!!) // hent det bruker har skrevet inn
+                }
+                else {
+                    selectedLocation = LatLng(43.434,44.4343) // bare bruk lokasjon til bruker
+                }
             }
+                googleMap.addMarker(selectedLocation?.let { it1 -> MarkerOptions().position(it1).title("My location") })
+                googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(selectedLocation, 10f))
+
+                googleMap.setOnMapClickListener {
+                    appNavigator.navigateToMapFullScreen()
+
+                }
 
 
-        })
+            })
     }
+
 
     private fun cameraManager() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -297,18 +265,19 @@ class FormFragment : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-
-
         if (resultCode == Activity.RESULT_OK) {
             //set image captured to image view
-            image_view.setImageURI(image_uri)
+
+            image.setImageURI(image_uri)
+            model!!.setImage(image_uri) // set verdi
+
         }
-
-
 
         if (RequestCode == RequestCode && resultCode == Activity.RESULT_OK && data!!.data != null) run {
             image_uri = data.data
-            image_view.setImageURI(image_uri)
+            image.setImageURI(image_uri)
+            model!!.setImage(image_uri)
+
         }
     }
 
@@ -339,33 +308,18 @@ class FormFragment : Fragment() {
             }
         }
     }
-    lateinit var itemName: EditText
-    lateinit var itemDescription: TextView
-    lateinit var itemColor: EditText
-    lateinit var itemTime: EditText
-    lateinit var itemContact: EditText
 
+    private fun uploadTextToDatabase(binding: FragmentFormBinding, model: FormViewModel?) {
 
-    private fun uploadTextToDatabase() {
-        itemName= view?.findViewById(R.id.nameOfItem) as EditText
-        itemDescription = view?.findViewById(R.id.description) as TextView
-        itemColor = view?.findViewById(R.id.colordescription) as EditText
-        //itemTime = view?.findViewById(R.id.timewhenfound) as EditText
-        //ItemLocation = view.findViewById(R.id.l)
-        itemContact = view?.findViewById(R.id.contactinformation) as EditText
-
-        val nameOfItem = itemName.text.toString()
-        val descriptionOfFound = itemDescription.text.toString()
-        val colorOfFound = itemColor.text.toString()
-//        val time = itemTime.text.toString()
-       // val lat = itemLocation.text.toString
-       // val long = itemLat.text.toString()
+        val nameOfItem = binding.viewModel?.savedNameItem?.value.toString()
+        val descriptionOfFound = binding.viewModel?.savedDescription?.value.toString()
+        val colorOfFound = binding.viewModel?.savedColor?.value.toString()
+      val time = binding.viewModel?.savedTime?.value.toString()
+        val lat = binding.viewModel?.savedLatitude?.value.toString()
+        val lng = binding.viewModel?.savedLongitude?.value.toString()
        // val brukernavn=
         val typeOfPost = "FoundItem"
-
-        val contact = itemContact.text.toString()
-
-
+        val contact = binding.viewModel?.savedContact?.value.toString()
 
         var database = FirebaseDatabase.getInstance().reference.child("Posts")
 
@@ -374,19 +328,11 @@ class FormFragment : Fragment() {
         }
             primaryKey?.let {
                 database.child(it).setValue(
-                    FormValue(
-                        nameOfItem,
-                        descriptionOfFound,
-                        colorOfFound,
-                        contact,
-                        typeOfPost
+                    FormValue(nameOfItem, descriptionOfFound, colorOfFound, time, lat,
+                        lng, contact, typeOfPost
                     )
                 )
             }
-
-
-
-
 
     }
 

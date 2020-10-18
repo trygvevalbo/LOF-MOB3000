@@ -2,21 +2,22 @@ package com.example.noeTaptNoeFunnetAPP.post_item
 
 import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
-import androidx.fragment.app.setFragmentResult
-import androidx.fragment.app.setFragmentResultListener
+import android.widget.Toast
+import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
 import com.example.noeTaptNoeFunnetAPP.R
-import kotlinx.android.synthetic.main.fragment_date.view.*
-import kotlinx.android.synthetic.main.fragment_form.view.*
+import com.example.noeTaptNoeFunnetAPP.databinding.FragmentDateBinding
+import com.google.android.material.datepicker.MaterialDatePicker.Builder.datePicker
 
 
 class dateFragment : Fragment() {
 
     private lateinit var appNavigator: AppNavigator
+    private var model: FormViewModel?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,18 +31,22 @@ class dateFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val  view = inflater.inflate(R.layout.fragment_date, container, false)
-        view.selected_date_button.setOnClickListener {
+        val binding = DataBindingUtil.inflate<FragmentDateBinding>(
+            inflater, R.layout.fragment_date,
+            container, false
+        )
+        binding.selectedDateButton.setOnClickListener {
 
 
-
-
+            model= ViewModelProviders.of(requireActivity()).get(FormViewModel::class.java)
+            binding.viewModel = model//attach your viewModel to xml
+            binding.viewModel?.savedTime?.value = binding.datePicker.dayOfMonth.toString() +"/"+(binding.datePicker.month+1).toString() +"/"+ binding.datePicker.year.toString()
             appNavigator.navigateFromDateToForm()
         }
-        return  view
+        return  binding.root
     }
 
-    override fun onAttach(context: Context) { //få context til å senere kunne sende til deskription
+    override fun onAttach(context: Context) { //få context til å senere kunne sende til description
         super.onAttach(context)
         appNavigator = context as AppNavigator
     }
