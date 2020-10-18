@@ -36,7 +36,7 @@
 
 
             <ImageView
-                android:id="@+id/image_view"
+                android:id="@+id/image"
                 android:layout_width="336dp"
                 android:layout_height="249dp"
                 android:layout_marginTop="32dp"
@@ -44,7 +44,8 @@
                 app:layout_constraintHorizontal_bias="0.493"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/found_header"
-                app:srcCompat="@drawable/stock_image_before_upload" />
+                app:srcCompat="@drawable/stock_image_before_upload"
+                android:src="@{viewModel.image}"/>
 
             <RelativeLayout
                 android:id="@+id/image_button_container"
@@ -53,7 +54,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginTop="16dp"
                 android:background="@color/ContainerPostDark"
-                app:layout_constraintTop_toBottomOf="@+id/image_view"
+                app:layout_constraintTop_toBottomOf="@+id/image"
                 tools:ignore="MissingConstraints">
 
                 <androidx.constraintlayout.widget.ConstraintLayout

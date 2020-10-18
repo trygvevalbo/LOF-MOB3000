@@ -14,8 +14,6 @@ import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
@@ -44,7 +42,7 @@ import java.util.*
 
 class FormFragment : Fragment() {
 
-    private var mUri: Uri? = null //deklarasjon av url til bilde
+    //private var mUri: Uri? = null //deklarasjon av url til bilde
 
     private lateinit var appNavigator: AppNavigator //interface til å sende til description fragment
 
@@ -86,7 +84,6 @@ class FormFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        //val view = inflater.inflate(R.layout.fragment_form, container, false)
 
         val binding = DataBindingUtil.inflate<FragmentFormBinding>(inflater, R.layout.fragment_form,
             container, false)
@@ -99,11 +96,16 @@ class FormFragment : Fragment() {
         model!!.savedDescription.observe(viewLifecycleOwner,
             { o -> binding.description.text = o!!.toString() }) //motta description
 
-        if (savedInstanceState != null) {
-            mUri = savedInstanceState.getParcelable("uri")
-            image_view.setImageURI(mUri)
-        }
+        model!!.savedDescription.observe(viewLifecycleOwner,
+            { o -> binding.description.text = o!!.toString() })
 
+    /*if(binding.viewModel?.mUri!=null || savedInstanceState != null) {
+        if (savedInstanceState != null) {
+            binding.viewModel?.mUri = savedInstanceState.getParcelable("uri")!!
+
+        }
+        binding.image.setImageURI(binding.viewModel?.mUri)
+    }*/
         mapManager(model)
 
 
@@ -133,13 +135,13 @@ class FormFragment : Fragment() {
             if (image_uri != null) {  //last opp bilde til database
                 uploadImageToDatabase()
             }
-            uploadTextToDatabase()
+            uploadTextToDatabase(binding, model)
 
             val intent1 = Intent(activity, FrontPage::class.java)
             startActivity(intent1)
         }
 
-        binding.imageView.setOnClickListener {
+        binding.image.setOnClickListener {
             coverChecker = "cover"
             pickImage()
         }
@@ -263,18 +265,19 @@ class FormFragment : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-
-
         if (resultCode == Activity.RESULT_OK) {
             //set image captured to image view
-            image_view.setImageURI(image_uri)
+
+            image.setImageURI(image_uri)
+            model!!.setImage(image_uri) // set verdi
+
         }
-
-
 
         if (RequestCode == RequestCode && resultCode == Activity.RESULT_OK && data!!.data != null) run {
             image_uri = data.data
-            image_view.setImageURI(image_uri)
+            image.setImageURI(image_uri)
+            model!!.setImage(image_uri)
+
         }
     }
 
@@ -305,33 +308,18 @@ class FormFragment : Fragment() {
             }
         }
     }
-    lateinit var itemName: EditText
-    lateinit var itemDescription: TextView
-    lateinit var itemColor: EditText
-    lateinit var itemTime: EditText
-    lateinit var itemContact: EditText
 
+    private fun uploadTextToDatabase(binding: FragmentFormBinding, model: FormViewModel?) {
 
-    private fun uploadTextToDatabase() {
-        itemName= view?.findViewById(R.id.nameOfItem) as EditText
-        itemDescription = view?.findViewById(R.id.description) as TextView
-        itemColor = view?.findViewById(R.id.colordescription) as EditText
-        //itemTime = view?.findViewById(R.id.timewhenfound) as EditText
-        //ItemLocation = view.findViewById(R.id.l)
-        itemContact = view?.findViewById(R.id.contactinformation) as EditText
-
-        val nameOfItem = itemName.text.toString()
-        val descriptionOfFound = itemDescription.text.toString()
-        val colorOfFound = itemColor.text.toString()
-//        val time = itemTime.text.toString()
-       // val lat = itemLocation.text.toString
-       // val long = itemLat.text.toString()
+        val nameOfItem = binding.viewModel?.savedNameItem?.value.toString()
+        val descriptionOfFound = binding.viewModel?.savedDescription?.value.toString()
+        val colorOfFound = binding.viewModel?.savedColor?.value.toString()
+      val time = binding.viewModel?.savedTime?.value.toString()
+        val lat = binding.viewModel?.savedLatitude?.value.toString()
+        val lng = binding.viewModel?.savedLongitude?.value.toString()
        // val brukernavn=
         val typeOfPost = "FoundItem"
-
-        val contact = itemContact.text.toString()
-
-
+        val contact = binding.viewModel?.savedContact?.value.toString()
 
         var database = FirebaseDatabase.getInstance().reference.child("Posts")
 
@@ -340,12 +328,8 @@ class FormFragment : Fragment() {
         }
             primaryKey?.let {
                 database.child(it).setValue(
-                    FormValue(
-                        nameOfItem,
-                        descriptionOfFound,
-                        colorOfFound,
-                        contact,
-                        typeOfPost
+                    FormValue(nameOfItem, descriptionOfFound, colorOfFound, time, lat,
+                        lng, contact, typeOfPost
                     )
                 )
             }
