@@ -19,6 +19,8 @@ import com.example.noeTaptNoeFunnetAPP.post_item.PostLostItem
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_main.*
 import java.text.SimpleDateFormat
@@ -55,8 +57,10 @@ class FrontPage : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         auth = FirebaseAuth.getInstance()
 
+
         val date = getCurrentDateTime()
         val datenow = date.toString("dd/MM/yyyy HH:mm")
+
 
             arrayList.add(CardModel("Item1", "Funnet","blå", "Funnet ute på bakken", R.drawable.bigusbrainus, datenow))
             arrayList.add(CardModel("Item2","Funnet", "Svart", "Dette er et eksempel på lengere text en passer til Cardviewen. Loreum ipsum dolaro disico nipslandat.", R.drawable.throwup, datenow))
