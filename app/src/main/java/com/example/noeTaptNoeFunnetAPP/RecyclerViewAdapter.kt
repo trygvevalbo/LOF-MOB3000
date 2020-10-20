@@ -5,7 +5,12 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.liste.view.*
 
 class RecyclerViewAdapter(val arrayList: ArrayList<CardModel>, val context: Context) :
@@ -14,6 +19,7 @@ class RecyclerViewAdapter(val arrayList: ArrayList<CardModel>, val context: Cont
 
 
     class ViewHolder (itemView: View) : RecyclerView.ViewHolder(itemView) {
+
 
         fun bindItems(model: CardModel) {
             itemView.textIC_Navn.text = model.navn
@@ -59,4 +65,6 @@ class RecyclerViewAdapter(val arrayList: ArrayList<CardModel>, val context: Cont
             context.startActivity(intent)
         }
     }
+
+
 }
