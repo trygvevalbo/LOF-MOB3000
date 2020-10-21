@@ -1,5 +1,7 @@
 package com.example.noeTaptNoeFunnetAPP
 
+import android.icu.text.UnicodeSet.EMPTY
+
 class Item {
     var nameOfItem: String= " "
     var colorOfFound: String= " "
@@ -9,7 +11,8 @@ class Item {
     var let: String= " "
     var time: String= " "
     var typeOfPost: String= " "
-    constructor(): this("","","","","","","","")
+    var postImage: String= ""
+    constructor(): this("","","","","","","","", "")
     constructor(
         nameOfItem: String,
         colorOfFound: String,
@@ -18,7 +21,8 @@ class Item {
         lat: String,
         let: String,
         time: String,
-        typeOfPost: String
+        typeOfPost: String,
+        postImage: String
     ) {
         this.nameOfItem = nameOfItem
         this.colorOfFound = colorOfFound
@@ -28,6 +32,7 @@ class Item {
         this.let = let
         this.time = time
         this.typeOfPost = typeOfPost
+        this.postImage = postImage
     }
 
 

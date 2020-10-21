@@ -86,13 +86,13 @@
             />
 
         <TextView
-            android:id="@+id/textIC_dato"
+            android:id="@+id/textIC_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textIC_Navn"
             android:layout_toRightOf="@+id/textIC_Type"
             android:layout_marginLeft="20dp"
-            android:text="DATO"
+            android:text="TIME"
             android:textStyle="bold"
             android:textColor="@color/AlmostWhite"
             />

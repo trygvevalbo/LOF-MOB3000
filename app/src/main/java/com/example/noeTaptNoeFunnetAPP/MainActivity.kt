@@ -14,8 +14,8 @@ import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
 
-    val arrayList = ArrayList<CardModel>()
-    val displaList = ArrayList<CardModel>()
+    val arrayList = ArrayList<Item>()
+    val displaList = ArrayList<Item>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,8 +32,6 @@ class MainActivity : AppCompatActivity() {
 
         hovedListe.layoutManager = LinearLayoutManager(this)
         hovedListe.adapter = myAdapter
-
-
 
     }
 
@@ -60,7 +58,7 @@ class MainActivity : AppCompatActivity() {
                         val search = newText.toLowerCase(Locale.getDefault())
                         arrayList.forEach {
 
-                            if (it.navn.toLowerCase(Locale.getDefault()).contains(search) or (it.farge.toLowerCase(Locale.getDefault()).contains(search))){
+                            if (it.nameOfItem.toLowerCase(Locale.getDefault()).contains(search) or (it.colorOfFound.toLowerCase(Locale.getDefault()).contains(search))){
                                 displaList.add(it)
                             }
                         }
