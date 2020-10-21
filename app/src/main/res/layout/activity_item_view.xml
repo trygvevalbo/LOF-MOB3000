@@ -14,7 +14,7 @@
     tools:context=".ItemViewActivity">
 
     <ImageView
-        android:id="@+id/imageIW"
+        android:id="@+id/imageIC"
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:src="@mipmap/ic_launcher_round"
@@ -24,7 +24,7 @@
         />
 
     <TextView
-        android:id="@+id/textIW_Navn"
+        android:id="@+id/textIC_Navn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/Navn"
@@ -37,65 +37,54 @@
         />
 
     <TextView
-        android:id="@+id/textIW_Type"
+        android:id="@+id/textIC_Type"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TYPE"
         android:textStyle="bold"
         android:layout_margin="5dp"
         android:textColor="@color/LightGray"
-        android:layout_below="@+id/imageIW"
+        android:layout_below="@+id/imageIC"
         />
     <TextView
-        android:id="@+id/textIW_Time"
+        android:id="@+id/textIC_dato"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="DATO"
         android:textStyle="bold"
         android:layout_margin="5dp"
         android:textColor="@color/LightGray"
-        android:layout_below="@+id/textIW_Type"
+        android:layout_below="@+id/textIC_Type"
         />
 
 
     <TextView
-        android:id="@+id/textIW_Farge"
+        android:id="@+id/textIC_Farge"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/Farge"
         android:textSize="22sp"
         android:layout_margin="5dp"
         android:textColor="@color/AlmostWhite"
-        android:layout_below="@id/textIW_Navn"
+        android:layout_below="@id/textIC_Navn"
 
         />
     <TextView
-        android:id="@+id/textIW_Besk"
+        android:id="@+id/textIC_Besk"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/Besk"
         android:textSize="22sp"
         android:layout_margin="5dp"
         android:textColor="@color/AlmostWhite"
-        android:layout_below="@id/textIW_Farge"
-        />
-
-    <TextView
-        android:id="@+id/textIW_Contact"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Kontakt Informasjon"
-        android:textSize="22sp"
-        android:layout_margin="5dp"
-        android:textColor="@color/AlmostWhite"
-        android:layout_below="@id/textIW_Besk"
+        android:layout_below="@id/textIC_Farge"
         />
 
     <com.google.android.gms.maps.MapView
         android:id="@+id/mapView"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:layout_below="@id/textIW_Contact"
+        android:layout_below="@id/textIC_Besk"
         android:apiKey="@string/google_maps_key"
         android:clickable="true"
         android:enabled="true"
@@ -107,7 +96,7 @@
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:layout_marginBottom="13dp"
-        android:layout_below="@id/textIW_Contact"
+        android:layout_below="@id/textIC_Besk"
         android:apiKey="@string/google_maps_key"
         android:clickable="true"
         android:enabled="true"/>

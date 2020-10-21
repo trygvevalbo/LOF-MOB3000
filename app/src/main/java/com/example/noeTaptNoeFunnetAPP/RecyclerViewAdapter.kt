@@ -14,16 +14,15 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+<<<<<<< HEAD
 
 import kotlinx.android.synthetic.main.activity_item_view.view.*
 
+=======
+>>>>>>> parent of 3e9582d... cardmodel gone
 import kotlinx.android.synthetic.main.liste.view.*
-import kotlinx.android.synthetic.main.liste.view.imageIC
-import kotlinx.android.synthetic.main.liste.view.textIC_Besk
-import kotlinx.android.synthetic.main.liste.view.textIC_Farge
-import kotlinx.android.synthetic.main.liste.view.textIC_Navn
 
-class RecyclerViewAdapter(val arrayList: ArrayList<Item>, val context: Context) :
+class RecyclerViewAdapter(val arrayList: ArrayList<CardModel>, val context: Context) :
     RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>() {
 
 
@@ -31,6 +30,7 @@ class RecyclerViewAdapter(val arrayList: ArrayList<Item>, val context: Context) 
     class ViewHolder (itemView: View) : RecyclerView.ViewHolder(itemView) {
 
 
+<<<<<<< HEAD
 
         fun bindItems(model: Item) {
             itemView.textIC_Navn.text    = model.nameOfItem
@@ -40,6 +40,15 @@ class RecyclerViewAdapter(val arrayList: ArrayList<Item>, val context: Context) 
             itemView.textIC_Type.text    = model.typeOfPost
             itemView.imageIC.setImageResource(R.drawable.bigusbrainus)
 
+=======
+        fun bindItems(model: CardModel) {
+            itemView.textIC_Navn.text = model.navn
+            itemView.textIC_Type.text = model.type
+            itemView.textIC_dato.text = model.dato
+            itemView.textIC_Farge.text = model.farge
+            itemView.textIC_Besk.text = model.besk
+            itemView.imageIC.setImageResource(model.image)
+>>>>>>> parent of 3e9582d... cardmodel gone
         }
     }
 
@@ -58,23 +67,20 @@ class RecyclerViewAdapter(val arrayList: ArrayList<Item>, val context: Context) 
 
         holder.itemView.setOnClickListener {
             val model = arrayList.get(position)
-            var gNavn   : String = model.nameOfItem
-            var gFarge  : String = model.colorOfFound
-            var gBesk   : String = model.descriptionOfFound
-            var gTime   : String = model.time
-            var gType   : String = model.typeOfPost
-            var gImage  : String = model.postImage
-
-
-
+            var gNavn   : String = model.navn
+            var gType   : String = model.type
+            var gDato   : String = model.dato
+            var gFarge  : String = model.farge
+            var gBesk   : String = model.besk
+            var gImage  : Int    = model.image
 
             val intent = Intent(context, ItemViewActivity::class.java)
 
             intent.putExtra("iNavn",  gNavn)
+            intent.putExtra("iType",  gType)
+            intent.putExtra("iDato",  gDato)
             intent.putExtra("iFarge", gFarge)
             intent.putExtra("iBesk",  gBesk)
-            intent.putExtra("iTime",  gTime)
-            intent.putExtra("iType",  gType)
             intent.putExtra("iImage", gImage)
 
             context.startActivity(intent)
