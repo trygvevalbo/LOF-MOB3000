@@ -20,9 +20,6 @@ class PostFoundItem : AppCompatActivity(), AppNavigator{
 
         viewModel = ViewModelProviders.of(this)[FormViewModel::class.java]
 
-
-
-
     }
 
     override fun navigateToDescription() {

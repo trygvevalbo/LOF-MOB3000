@@ -1,6 +1,7 @@
 package com.example.noeTaptNoeFunnetAPP
 
 class Item {
+    var imageUrl: String = " "
     var nameOfItem: String= " "
     var colorOfFound: String= " "
     var descriptionOfFound: String= " "
@@ -9,8 +10,9 @@ class Item {
     var let: String= " "
     var time: String= " "
     var typeOfPost: String= " "
-    constructor(): this("","","","","","","","")
+    constructor(): this(" ","","","","","","","","")
     constructor(
+        imageUrl: String,
         nameOfItem: String,
         colorOfFound: String,
         descriptionOfFound: String,
@@ -20,6 +22,7 @@ class Item {
         time: String,
         typeOfPost: String
     ) {
+        this.imageUrl=imageUrl
         this.nameOfItem = nameOfItem
         this.colorOfFound = colorOfFound
         this.descriptionOfFound = descriptionOfFound
