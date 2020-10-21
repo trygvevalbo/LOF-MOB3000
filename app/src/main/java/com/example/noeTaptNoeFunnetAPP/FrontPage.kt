@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.noeTaptNoeFunnetAPP.post_item.PostFoundItem
 import com.example.noeTaptNoeFunnetAPP.post_item.PostLostItem
 import com.firebase.ui.database.FirebaseRecyclerAdapter
@@ -27,6 +28,8 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.StorageReference
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.liste.*
+import kotlinx.android.synthetic.main.liste.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -90,11 +93,12 @@ class FrontPage : AppCompatActivity() {
                         holder.rDescriptionOfFound.text = model.descriptionOfFound
                         holder.rTime.text = model.time
                         holder.rTypeOfPost.text = model.typeOfPost
-
-                     //       Picasso.get().load(model.imageUrl).into(holder.rImage)
-
+                       // holder.rImage = model.imageUrl
+                        Picasso.get().load(model.imageUrl).into(holder.rImage)
+                        //       Picasso.get().load(model.imageUrl).into(holder.rImage)
 
                     }
+
                 })
             }
         }
@@ -206,6 +210,7 @@ class FrontPage : AppCompatActivity() {
         //var rLet: TextView =itemView.findViewById(R.id.textIC_Navn)
         var rTime: TextView =itemView.findViewById(R.id.textIC_dato)
         var rTypeOfPost: TextView =itemView.findViewById(R.id.textIC_Type)
+
 
     }
 

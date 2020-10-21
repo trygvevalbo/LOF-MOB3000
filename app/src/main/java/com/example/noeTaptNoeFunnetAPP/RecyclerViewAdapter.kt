@@ -1,5 +1,6 @@
 package com.example.noeTaptNoeFunnetAPP
 
+import android.app.PendingIntent.getActivity
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
@@ -7,11 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.liste.view.*
 
 class RecyclerViewAdapter(val arrayList: ArrayList<CardModel>, val context: Context) :
@@ -29,6 +32,8 @@ class RecyclerViewAdapter(val arrayList: ArrayList<CardModel>, val context: Cont
             itemView.textIC_Farge.text = model.farge
             itemView.textIC_Besk.text = model.besk
             itemView.imageIC.setImageResource(model.image)
+
+
         }
     }
 
