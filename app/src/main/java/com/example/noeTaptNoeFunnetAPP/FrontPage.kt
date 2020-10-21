@@ -1,8 +1,11 @@
 package com.example.noeTaptNoeFunnetAPP
 
+import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.*
+import android.view.animation.AnimationUtils
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
@@ -12,10 +15,14 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.noeTaptNoeFunnetAPP.post_item.PostFoundItem
+import com.example.noeTaptNoeFunnetAPP.post_item.PostLostItem
 import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.*
+import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_main.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -27,6 +34,7 @@ class FrontPage : AppCompatActivity() {
 
     lateinit var recyclerView: RecyclerView
     lateinit var ref:DatabaseReference
+
 
     var isOpen = false
     val arrayList = ArrayList<CardModel>()
@@ -73,6 +81,12 @@ class FrontPage : AppCompatActivity() {
 
                     override fun onDataChange(snapshot: DataSnapshot) {
                         holder.rNameOfItem.text = model.nameOfItem
+                        holder.rColorOfFound.text = model.colorOfFound
+                        //holder.rContact.text = model.contact
+                        holder.rDescriptionOfFound.text = model.descriptionOfFound
+                        holder.rTime.text = model.time
+                        holder.rTypeOfPost.text = model.typeOfPost
+
 
                     }
                 })
@@ -80,7 +94,7 @@ class FrontPage : AppCompatActivity() {
         }
         recyclerView.adapter=firebaseRecyclerAdapter
         firebaseRecyclerAdapter.startListening()
-    }
+
 /*
         val date = getCurrentDateTime()
         val datenow = date.toString("dd/MM/yyyy HH:mm")
@@ -107,21 +121,22 @@ class FrontPage : AppCompatActivity() {
 
      //   hovedListe.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
        // mUserDatabase = FirebaseDatabase.getInstance().reference.child("Posts")
+        */
 
        preferences = getSharedPreferences("My_Pref", Context.MODE_PRIVATE)
        val mSortSetting = preferences.getString("Sort", "Alle")
 
         if (mSortSetting == null) {
-            sortAlle(mRecyclerView)
+            sortAlle(firebaseRecyclerAdapter)
 
         } else if (mSortSetting == "Funnet") {
-            sortFunnet(mRecyclerView)
+            sortFunnet(firebaseRecyclerAdapter)
 
         } else if (mSortSetting == "Tapt"){
-            sortTapt(mRecyclerView)
+            sortTapt(firebaseRecyclerAdapter)
 
         } else if (mSortSetting == "Alle"){
-            sortAlle(mRecyclerView)
+            sortAlle(firebaseRecyclerAdapter)
         }
 
 
@@ -171,26 +186,34 @@ class FrontPage : AppCompatActivity() {
 
                 //}
             }
-        }*/
+        }
 
+    }
 
     class ItemViewHolder(itemView: View):RecyclerView.ViewHolder(itemView) {
 
         var rNameOfItem: TextView =itemView.findViewById(R.id.textIC_Navn)
+        var rColorOfFound: TextView =itemView.findViewById(R.id.textIC_Farge)
+        var rDescriptionOfFound: TextView =itemView.findViewById(R.id.textIC_Besk)
+        //var rContact: TextView =itemView.findViewById(R.id.te)
+        //var rLat: TextView =itemView.findViewById(R.id.textIC_Navn)
+        //var rLet: TextView =itemView.findViewById(R.id.textIC_Navn)
+        var rTime: TextView =itemView.findViewById(R.id.textIC_dato)
+        var rTypeOfPost: TextView =itemView.findViewById(R.id.textIC_Type)
 
     }
 
 
 
 
-    private fun sortAlle(myAdapter: RecyclerViewAdapter) {
+    private fun sortAlle(myAdapter: FirebaseRecyclerAdapter<Item, ItemViewHolder>) {
         displaList.clear()
         displaList.addAll(arrayList)
         myAdapter.notifyDataSetChanged()
 
     }
 
-    private fun sortTapt(myAdapter: RecyclerViewAdapter) {
+    private fun sortTapt(myAdapter: FirebaseRecyclerAdapter<Item, ItemViewHolder>) {
         displaList.clear()
         arrayList.forEach {
             if (it.type == "Tapt")
@@ -199,7 +222,7 @@ class FrontPage : AppCompatActivity() {
         myAdapter.notifyDataSetChanged()
     }
 
-    private fun sortFunnet(myAdapter: RecyclerViewAdapter) {
+    private fun sortFunnet(myAdapter: FirebaseRecyclerAdapter<Item, ItemViewHolder>) {
         displaList.clear()
         arrayList.forEach {
             if (it.type.contains("Funnet"))
@@ -258,17 +281,17 @@ class FrontPage : AppCompatActivity() {
 
         return super.onCreateOptionsMenu(menu)
     }
-/*
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         val id = item.itemId
         if (id == R.id.sorting) {
-            sortDialog()
+            //sortDialog()
         }
         return super.onOptionsItemSelected(item)
     }
 
-    private fun sortDialog() {
+   /* private fun sortDialog() {
         val options = arrayOf("Alle", "Funnet", "Tapt")
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Vis")
@@ -278,14 +301,14 @@ class FrontPage : AppCompatActivity() {
                 val editor : SharedPreferences.Editor = preferences.edit()
                 editor.putString("Vis", "Alle")
                 editor.apply()
-                sortAlle(mRecyclerView)
+                sortAlle(firebaseRecyclerAdapter)
                 Toast.makeText(this@FrontPage, "Alle", Toast.LENGTH_LONG).show()
             }
             if (wich == 1){
                 val editor : SharedPreferences.Editor = preferences.edit()
                 editor.putString("Vis", "Funnet")
                 editor.apply()
-                sortFunnet(mRecyclerView)
+                sortFunnet(recyclerView.adapter as RecyclerViewAdapter)
                 Toast.makeText(this@FrontPage, "Funnet", Toast.LENGTH_LONG).show()
 
             }
@@ -293,7 +316,7 @@ class FrontPage : AppCompatActivity() {
                 val editor : SharedPreferences.Editor = preferences.edit()
                 editor.putString("Vis", "Tapt")
                 editor.apply()
-                sortTapt(mRecyclerView)
+                sortTapt(recyclerView.adapter as RecyclerViewAdapter)
                 Toast.makeText(this@FrontPage, "Tapt", Toast.LENGTH_LONG).show()
 
             }
