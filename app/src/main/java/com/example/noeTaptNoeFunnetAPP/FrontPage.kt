@@ -19,6 +19,7 @@ import com.example.noeTaptNoeFunnetAPP.post_item.PostLostItem
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_main.*
 import java.text.SimpleDateFormat
@@ -40,14 +41,6 @@ class FrontPage : AppCompatActivity() {
 
 
 
-    fun Date.toString(format: String, locale: Locale = Locale.getDefault()): String {
-        val formatter = SimpleDateFormat(format, locale)
-        return formatter.format(this)
-    }
-    fun getCurrentDateTime(): Date {
-        return Calendar.getInstance().time
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setTheme(R.style.AppTheme)
@@ -55,22 +48,13 @@ class FrontPage : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         auth = FirebaseAuth.getInstance()
 
-        val date = getCurrentDateTime()
-        val datenow = date.toString("dd/MM/yyyy HH:mm")
+        fun getData() {
+            var items = 
+            FirebaseDatabase.getInstance().reference
+                .child("Posts")
 
-            arrayList.add(CardModel("Item1", "Funnet","blå", "Funnet ute på bakken", R.drawable.bigusbrainus, datenow))
-            arrayList.add(CardModel("Item2","Funnet", "Svart", "Dette er et eksempel på lengere text en passer til Cardviewen. Loreum ipsum dolaro disico nipslandat.", R.drawable.throwup, datenow))
-            arrayList.add(CardModel("Katt","Funnet", "svart", "Veldig snill Katt funnet. Snakker Romansk, Heter Vladislav", R.drawable.cat, datenow))
-            arrayList.add(CardModel("Esel","Funnet", "blå", "Funnet ute på bakken", R.drawable.donkey, datenow))
-            arrayList.add(CardModel("Lommebok","Funnet", "svart", "Funnet ute på bakken", R.drawable.wallet, datenow))
-            arrayList.add(CardModel("Hund","Funnet", "Svart", "Snill Hund funnet ute i parken uten eier", R.drawable.dogg, datenow))
-            arrayList.add(CardModel("Iphone", "Funnet","hvit", "Funnet ute på bakken", R.drawable.phone, datenow))
-            arrayList.add(CardModel("Hatt","Tapt", "hvit", "Jævla støgg hatt funnet utenfor Kroa", R.drawable.hat, datenow))
-            arrayList.add(CardModel("Hatt","Tapt", "hvit", "Jævla støgg hatt funnet utenfor Kroa", R.drawable.hat, datenow))
-            arrayList.add(CardModel("Hatt","Tapt", "hvit", "Jævla støgg hatt funnet utenfor Kroa", R.drawable.hat, datenow))
-            arrayList.add(CardModel("Hatt","Tapt", "hvit", "Jævla støgg hatt funnet utenfor Kroa", R.drawable.hat, datenow))
-            arrayList.add(CardModel("Hatt","Tapt", "hvit", "Jævla støgg hatt funnet utenfor Kroa", R.drawable.hat, datenow))
-            displaList.addAll(arrayList)
+        }
+
 
         myAdapter = RecyclerViewAdapter(displaList, this)
 
