@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.*
 import android.view.animation.AnimationUtils
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -23,6 +24,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.*
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.StorageReference
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_main.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -56,6 +59,7 @@ class FrontPage : AppCompatActivity() {
         ref= FirebaseDatabase.getInstance().reference.child("Posts")
         recyclerView.layoutManager=LinearLayoutManager(this)
 
+
         val option=FirebaseRecyclerOptions.Builder<Item>().setQuery(ref,Item::class.java).build()
 
         val firebaseRecyclerAdapter= object :FirebaseRecyclerAdapter<Item,ItemViewHolder>(option) {
@@ -78,6 +82,8 @@ class FrontPage : AppCompatActivity() {
                         holder.rDescriptionOfFound.text = model.descriptionOfFound
                         holder.rTime.text               = model.time
                         holder.rTypeOfPost.text         = model.typeOfPost
+
+                     //       Picasso.get().load(model.imageUrl).into(holder.rImage)
 
 
                     }
@@ -167,7 +173,7 @@ class FrontPage : AppCompatActivity() {
     }
 
     class ItemViewHolder(itemView: View):RecyclerView.ViewHolder(itemView) {
-
+        var rImage: ImageView = itemView.findViewById(R.id.imageIC)
         var rNameOfItem: TextView =itemView.findViewById(R.id.textIC_Navn)
         var rColorOfFound: TextView =itemView.findViewById(R.id.textIC_Farge)
         var rDescriptionOfFound: TextView =itemView.findViewById(R.id.textIC_Besk)

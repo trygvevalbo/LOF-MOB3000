@@ -62,7 +62,7 @@ class FormFragment : Fragment() {
 
     private var primaryKey :String? =""
 
-
+    private var downloadUri : Uri? = null
 
 
 
@@ -85,8 +85,10 @@ class FormFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        val binding = DataBindingUtil.inflate<FragmentFormBinding>(inflater, R.layout.fragment_form,
-            container, false)
+        val binding = DataBindingUtil.inflate<FragmentFormBinding>(
+            inflater, R.layout.fragment_form,
+            container, false
+        )
         model= ViewModelProviders.of(requireActivity()).get(FormViewModel::class.java)
         binding.lifecycleOwner = activity
 
@@ -172,23 +174,29 @@ class FormFragment : Fragment() {
         mapFragment?.getMapAsync(OnMapReadyCallback {
             googleMap = it
             if (model != null) {
-                if(model.savedLatitude.value!=null && model.savedLongitude.value!= null) {
-                    selectedLocation = LatLng(model.savedLatitude.value!!, model.savedLongitude.value!!) // hent det bruker har skrevet inn
-                }
-                else {
-                    selectedLocation = LatLng(43.434,44.4343) // bare bruk lokasjon til bruker
+                if (model.savedLatitude.value != null && model.savedLongitude.value != null) {
+                    selectedLocation = LatLng(
+                        model.savedLatitude.value!!,
+                        model.savedLongitude.value!!
+                    ) // hent det bruker har skrevet inn
+                } else {
+                    selectedLocation = LatLng(43.434, 44.4343) // bare bruk lokasjon til bruker
                 }
             }
-                googleMap.addMarker(selectedLocation?.let { it1 -> MarkerOptions().position(it1).title("My location") })
-                googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(selectedLocation, 10f))
-
-                googleMap.setOnMapClickListener {
-                    appNavigator.navigateToMapFullScreen()
-
-                }
-
-
+            googleMap.addMarker(selectedLocation?.let { it1 ->
+                MarkerOptions().position(it1).title(
+                    "My location"
+                )
             })
+            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(selectedLocation, 10f))
+
+            googleMap.setOnMapClickListener {
+                appNavigator.navigateToMapFullScreen()
+
+            }
+
+
+        })
     }
 
 
@@ -295,14 +303,21 @@ class FormFragment : Fragment() {
                     task.exception?.let {
                         throw it
                     }
+
                 }
                 return@Continuation fileRef.downloadUrl
             }).addOnCompleteListener { task ->
                 if (task.isSuccessful) {
 
-                    Toast.makeText(requireContext(), primaryKey, Toast.LENGTH_LONG)
-                        .show()
+                     downloadUri = task.result
 
+                }
+                else{
+                    Toast.makeText(
+                        requireContext(),
+                        "Feilet med å laste opp bilde",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
 
             }
@@ -310,7 +325,7 @@ class FormFragment : Fragment() {
     }
 
     private fun uploadTextToDatabase(binding: FragmentFormBinding, model: FormViewModel?) {
-
+        val imageUrl = downloadUri.toString()
         val nameOfItem = binding.viewModel?.savedNameItem?.value.toString()
         val descriptionOfFound = binding.viewModel?.savedDescription?.value.toString()
         val colorOfFound = binding.viewModel?.savedColor?.value.toString()
@@ -318,7 +333,7 @@ class FormFragment : Fragment() {
         val lat = binding.viewModel?.savedLatitude?.value.toString()
         val lng = binding.viewModel?.savedLongitude?.value.toString()
        // val brukernavn=
-        val typeOfPost = "FoundItem"
+        val typeOfPost = "Funnet"
         val contact = binding.viewModel?.savedContact?.value.toString()
 
         var database = FirebaseDatabase.getInstance().reference.child("Posts")
@@ -328,7 +343,9 @@ class FormFragment : Fragment() {
         }
             primaryKey?.let {
                 database.child(it).setValue(
-                    FormValue(nameOfItem, descriptionOfFound, colorOfFound, time, lat,
+                    FormValue(
+                        imageUrl,
+                        nameOfItem, descriptionOfFound, colorOfFound, time, lat,
                         lng, contact, typeOfPost
                     )
                 )
