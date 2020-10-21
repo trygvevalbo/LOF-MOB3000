@@ -62,7 +62,9 @@ class FormFragment : Fragment() {
 
     private var primaryKey :String? =""
 
-    private var downloadUri : Uri? = null
+    private var downloadUri : String? = null
+
+
 
 
 
@@ -134,10 +136,12 @@ class FormFragment : Fragment() {
         }
 
         binding.postButtonFoundItem.setOnClickListener {
-            if (image_uri != null) {  //last opp bilde til database
-                uploadImageToDatabase()
+            if (model?.image?.value  != null) {  //last opp bilde til database
+                uploadImageToDatabase(binding, model)
+            }else{
+                uploadTextToDatabase(binding, model)
             }
-            uploadTextToDatabase(binding, model)
+
 
             val intent1 = Intent(activity, FrontPage::class.java)
             startActivity(intent1)
@@ -180,7 +184,7 @@ class FormFragment : Fragment() {
                         model.savedLongitude.value!!
                     ) // hent det bruker har skrevet inn
                 } else {
-                    selectedLocation = LatLng(43.434, 44.4343) // bare bruk lokasjon til bruker
+                    selectedLocation = LatLng(59.913868, 10.752245) // bare bruk lokasjon til bruker
                 }
             }
             googleMap.addMarker(selectedLocation?.let { it1 ->
@@ -283,24 +287,26 @@ class FormFragment : Fragment() {
 
         if (RequestCode == RequestCode && resultCode == Activity.RESULT_OK && data!!.data != null) run {
             image_uri = data.data
+            model?.image?.value = data.data
             image.setImageURI(image_uri)
             model!!.setImage(image_uri)
 
         }
     }
 
-    private fun uploadImageToDatabase() {
+    private fun uploadImageToDatabase(binding: FragmentFormBinding, model: FormViewModel?) {
         storageRef = FirebaseStorage.getInstance().reference.child("PostImages")
 
-        if (image_uri != null) {
+        if (model?.image?.value  != null) {
              primaryKey =  UUID.randomUUID().toString()
             val fileRef = storageRef!!.child("$primaryKey.jpg")
             var uploadTask: StorageTask<*>
-            uploadTask = fileRef.putFile(image_uri!!)
+            uploadTask = fileRef.putFile(model?.image?.value!!)
 
             uploadTask.continueWithTask(Continuation<UploadTask.TaskSnapshot, Task<Uri>> { task ->
                 if (!task.isSuccessful) {
                     task.exception?.let {
+
                         throw it
                     }
 
@@ -309,7 +315,8 @@ class FormFragment : Fragment() {
             }).addOnCompleteListener { task ->
                 if (task.isSuccessful) {
 
-                     downloadUri = task.result
+                     downloadUri = task.result.toString()
+                    uploadTextToDatabase(binding, model)
 
                 }
                 else{
@@ -325,7 +332,7 @@ class FormFragment : Fragment() {
     }
 
     private fun uploadTextToDatabase(binding: FragmentFormBinding, model: FormViewModel?) {
-        val imageUrl = downloadUri.toString()
+        val postImage = downloadUri.toString()
         val nameOfItem = binding.viewModel?.savedNameItem?.value.toString()
         val descriptionOfFound = binding.viewModel?.savedDescription?.value.toString()
         val colorOfFound = binding.viewModel?.savedColor?.value.toString()
@@ -344,7 +351,7 @@ class FormFragment : Fragment() {
             primaryKey?.let {
                 database.child(it).setValue(
                     FormValue(
-                        imageUrl,
+                        postImage,
                         nameOfItem, descriptionOfFound, colorOfFound, time, lat,
                         lng, contact, typeOfPost
                     )

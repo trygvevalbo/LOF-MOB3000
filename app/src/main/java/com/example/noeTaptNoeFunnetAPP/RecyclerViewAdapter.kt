@@ -14,12 +14,8 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-<<<<<<< HEAD
 
-import kotlinx.android.synthetic.main.activity_item_view.view.*
 
-=======
->>>>>>> parent of 3e9582d... cardmodel gone
 import kotlinx.android.synthetic.main.liste.view.*
 
 class RecyclerViewAdapter(val arrayList: ArrayList<CardModel>, val context: Context) :
@@ -30,17 +26,7 @@ class RecyclerViewAdapter(val arrayList: ArrayList<CardModel>, val context: Cont
     class ViewHolder (itemView: View) : RecyclerView.ViewHolder(itemView) {
 
 
-<<<<<<< HEAD
 
-        fun bindItems(model: Item) {
-            itemView.textIC_Navn.text    = model.nameOfItem
-            itemView.textIC_Farge.text   = model.colorOfFound
-            itemView.textIC_Besk.text    = model.descriptionOfFound
-            itemView.textIC_time.text    = model.time
-            itemView.textIC_Type.text    = model.typeOfPost
-            itemView.imageIC.setImageResource(R.drawable.bigusbrainus)
-
-=======
         fun bindItems(model: CardModel) {
             itemView.textIC_Navn.text = model.navn
             itemView.textIC_Type.text = model.type
@@ -48,7 +34,6 @@ class RecyclerViewAdapter(val arrayList: ArrayList<CardModel>, val context: Cont
             itemView.textIC_Farge.text = model.farge
             itemView.textIC_Besk.text = model.besk
             itemView.imageIC.setImageResource(model.image)
->>>>>>> parent of 3e9582d... cardmodel gone
         }
     }
 

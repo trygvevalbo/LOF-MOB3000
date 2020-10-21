@@ -9,8 +9,6 @@ import android.view.animation.AnimationUtils
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.SearchView
@@ -21,15 +19,13 @@ import com.example.noeTaptNoeFunnetAPP.post_item.PostFoundItem
 import com.example.noeTaptNoeFunnetAPP.post_item.PostLostItem
 import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.firebase.ui.database.FirebaseRecyclerOptions
+import com.firebase.ui.storage.images.FirebaseImageLoader
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.*
 import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.StorageReference
-import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.liste.*
-import kotlinx.android.synthetic.main.liste.view.*
+import java.security.AccessController.getContext
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -70,9 +66,9 @@ class FrontPage : AppCompatActivity() {
         recyclerView.layoutManager=LinearLayoutManager(this)
 
 
-        val option=FirebaseRecyclerOptions.Builder<Item>().setQuery(ref,Item::class.java).build()
+        val option=FirebaseRecyclerOptions.Builder<Item>().setQuery(ref, Item::class.java).build()
 
-        val firebaseRecyclerAdapter= object :FirebaseRecyclerAdapter<Item,ItemViewHolder>(option) {
+        val firebaseRecyclerAdapter= object :FirebaseRecyclerAdapter<Item, ItemViewHolder>(option) {
             override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
                 val itemView =
                     LayoutInflater.from(this@FrontPage).inflate(R.layout.liste, parent, false)
@@ -91,18 +87,13 @@ class FrontPage : AppCompatActivity() {
                         holder.rColorOfFound.text = model.colorOfFound
                         //holder.rContact.text = model.contact
                         holder.rDescriptionOfFound.text = model.descriptionOfFound
-<<<<<<< HEAD
+
 
                         holder.rTime.text = model.time
                         holder.rTypeOfPost.text = model.typeOfPost
-                       // holder.rImage = model.imageUrl
-                        Picasso.get().load(model.imageUrl).into(holder.rImage)
-                        //       Picasso.get().load(model.imageUrl).into(holder.rImage)
-=======
-                        holder.rTime.text = model.time
-                        holder.rTypeOfPost.text = model.typeOfPost
->>>>>>> parent of 3e9582d... cardmodel gone
+                        //Picasso.with(getContext()).load(model.imageUrl.getImage()).resize(200, 200).into(holder.rImage)
 
+                        Glide.with(holder.itemView.context).load(model.postImage).into(holder.rImage);
 
                     }
 
