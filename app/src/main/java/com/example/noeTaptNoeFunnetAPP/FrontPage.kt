@@ -43,20 +43,11 @@ class FrontPage : AppCompatActivity() {
 
 
     var isOpen = false
-    val arrayList = ArrayList<CardModel>()
-    val displaList = ArrayList<CardModel>()
+    val arrayList = ArrayList<Item>()
+    val displaList = ArrayList<Item>()
 
     lateinit var preferences: SharedPreferences
 
-
-
-    fun Date.toString(format: String, locale: Locale = Locale.getDefault()): String {
-        val formatter = SimpleDateFormat(format, locale)
-        return formatter.format(this)
-    }
-    fun getCurrentDateTime(): Date {
-        return Calendar.getInstance().time
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,6 +55,8 @@ class FrontPage : AppCompatActivity() {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         setContentView(R.layout.activity_main)
         auth = FirebaseAuth.getInstance()
+
+        // GlideHere??
 
         recyclerView=findViewById(R.id.hovedListe)
         ref= FirebaseDatabase.getInstance().reference.child("Posts")
@@ -74,8 +67,7 @@ class FrontPage : AppCompatActivity() {
 
         val firebaseRecyclerAdapter= object :FirebaseRecyclerAdapter<Item,ItemViewHolder>(option) {
             override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
-                val itemView =
-                    LayoutInflater.from(this@FrontPage).inflate(R.layout.liste, parent, false)
+                val itemView = LayoutInflater.from(this@FrontPage).inflate(R.layout.liste, parent, false)
                 return ItemViewHolder(itemView)
             }
 
@@ -87,51 +79,37 @@ class FrontPage : AppCompatActivity() {
                     }
 
                     override fun onDataChange(snapshot: DataSnapshot) {
-                        holder.rNameOfItem.text = model.nameOfItem
-                        holder.rColorOfFound.text = model.colorOfFound
-                        //holder.rContact.text = model.contact
+                        holder.rNameOfItem.text         = model.nameOfItem
+                        holder.rColorOfFound.text       = model.colorOfFound
+                        //holder.rContact.text           = model.contact
                         holder.rDescriptionOfFound.text = model.descriptionOfFound
+
                         holder.rTime.text = model.time
                         holder.rTypeOfPost.text = model.typeOfPost
                        // holder.rImage = model.imageUrl
                         Picasso.get().load(model.imageUrl).into(holder.rImage)
                         //       Picasso.get().load(model.imageUrl).into(holder.rImage)
 
+
                     }
 
                 })
             }
         }
-        recyclerView.adapter=firebaseRecyclerAdapter
-        firebaseRecyclerAdapter.startListening()
-
-/*
-        val date = getCurrentDateTime()
-        val datenow = date.toString("dd/MM/yyyy HH:mm")
+       // recyclerView.adapter=firebaseRecyclerAdapter
+        //firebaseRecyclerAdapter.startListening()
 
 
-            arrayList.add(CardModel("Item1", "Funnet","blå", "Funnet ute på bakken", R.drawable.bigusbrainus, datenow))
-            arrayList.add(CardModel("Item2","Funnet", "Svart", "Dette er et eksempel på lengere text en passer til Cardviewen. Loreum ipsum dolaro disico nipslandat.", R.drawable.throwup, datenow))
-            arrayList.add(CardModel("Katt","Funnet", "svart", "Veldig snill Katt funnet. Snakker Romansk, Heter Vladislav", R.drawable.cat, datenow))
-            arrayList.add(CardModel("Esel","Funnet", "blå", "Funnet ute på bakken", R.drawable.donkey, datenow))
-            arrayList.add(CardModel("Lommebok","Funnet", "svart", "Funnet ute på bakken", R.drawable.wallet, datenow))
-            arrayList.add(CardModel("Hund","Funnet", "Svart", "Snill Hund funnet ute i parken uten eier", R.drawable.dogg, datenow))
-            arrayList.add(CardModel("Iphone", "Funnet","hvit", "Funnet ute på bakken", R.drawable.phone, datenow))
-            arrayList.add(CardModel("Hatt","Tapt", "hvit", "Jævla støgg hatt funnet utenfor Kroa", R.drawable.hat, datenow))
-            arrayList.add(CardModel("Hatt","Tapt", "hvit", "Jævla støgg hatt funnet utenfor Kroa", R.drawable.hat, datenow))
-            arrayList.add(CardModel("Hatt","Tapt", "hvit", "Jævla støgg hatt funnet utenfor Kroa", R.drawable.hat, datenow))
-            arrayList.add(CardModel("Hatt","Tapt", "hvit", "Jævla støgg hatt funnet utenfor Kroa", R.drawable.hat, datenow))
-            arrayList.add(CardModel("Hatt","Tapt", "hvit", "Jævla støgg hatt funnet utenfor Kroa", R.drawable.hat, datenow))
-            displaList.addAll(arrayList)
+
 
         mRecyclerView = RecyclerViewAdapter(displaList, this)
 
         hovedListe.layoutManager = LinearLayoutManager(this)
         hovedListe.adapter = mRecyclerView
 
-     //   hovedListe.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-       // mUserDatabase = FirebaseDatabase.getInstance().reference.child("Posts")
-        */
+        hovedListe.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        mUserDatabase = FirebaseDatabase.getInstance().reference.child("Posts")
+
 
        preferences = getSharedPreferences("My_Pref", Context.MODE_PRIVATE)
        val mSortSetting = preferences.getString("Sort", "Alle")
@@ -205,10 +183,10 @@ class FrontPage : AppCompatActivity() {
         var rNameOfItem: TextView =itemView.findViewById(R.id.textIC_Navn)
         var rColorOfFound: TextView =itemView.findViewById(R.id.textIC_Farge)
         var rDescriptionOfFound: TextView =itemView.findViewById(R.id.textIC_Besk)
-        //var rContact: TextView =itemView.findViewById(R.id.te)
+        //var rContact: TextView =itemView.findViewById(R.id.textIW_Contact)
         //var rLat: TextView =itemView.findViewById(R.id.textIC_Navn)
         //var rLet: TextView =itemView.findViewById(R.id.textIC_Navn)
-        var rTime: TextView =itemView.findViewById(R.id.textIC_dato)
+        var rTime: TextView =itemView.findViewById(R.id.textIC_time)
         var rTypeOfPost: TextView =itemView.findViewById(R.id.textIC_Type)
 
 
@@ -227,7 +205,7 @@ class FrontPage : AppCompatActivity() {
     private fun sortTapt(myAdapter: FirebaseRecyclerAdapter<Item, ItemViewHolder>) {
         displaList.clear()
         arrayList.forEach {
-            if (it.type == "Tapt")
+            if (it.typeOfPost == "Tapt")
                 displaList.add(it)
         }
         myAdapter.notifyDataSetChanged()
@@ -236,7 +214,7 @@ class FrontPage : AppCompatActivity() {
     private fun sortFunnet(myAdapter: FirebaseRecyclerAdapter<Item, ItemViewHolder>) {
         displaList.clear()
         arrayList.forEach {
-            if (it.type.contains("Funnet"))
+            if (it.typeOfPost.contains("Funnet"))
                 displaList.add(it)
         }
         myAdapter.notifyDataSetChanged()
@@ -268,8 +246,8 @@ class FrontPage : AppCompatActivity() {
                         val search = newText.toLowerCase(Locale.getDefault())
                         arrayList.forEach {
                             //Search definitions
-                            if (it.navn.toLowerCase(Locale.getDefault())
-                                    .contains(search) or (it.farge.toLowerCase(
+                            if (it.nameOfItem.toLowerCase(Locale.getDefault())
+                                    .contains(search) or (it.colorOfFound.toLowerCase(
                                     Locale.getDefault()
                                 ).contains(search))
                             ) {
