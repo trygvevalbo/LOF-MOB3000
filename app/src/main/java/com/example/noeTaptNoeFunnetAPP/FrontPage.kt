@@ -84,25 +84,12 @@ class FrontPage : AppCompatActivity() {
                         holder.rTypeOfPost.text         = model.typeOfPost
 
                      //       Picasso.get().load(model.imageUrl).into(holder.rImage)
-
-
                     }
                 })
             }
         }
-       // recyclerView.adapter=firebaseRecyclerAdapter
-        //firebaseRecyclerAdapter.startListening()
-
-
-
-
-        mRecyclerView = RecyclerViewAdapter(displaList, this)
-
-        hovedListe.layoutManager = LinearLayoutManager(this)
-        hovedListe.adapter = mRecyclerView
-
-        hovedListe.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        mUserDatabase = FirebaseDatabase.getInstance().reference.child("Posts")
+        recyclerView.adapter=firebaseRecyclerAdapter
+        firebaseRecyclerAdapter.startListening()
 
 
        preferences = getSharedPreferences("My_Pref", Context.MODE_PRIVATE)
@@ -173,16 +160,15 @@ class FrontPage : AppCompatActivity() {
     }
 
     class ItemViewHolder(itemView: View):RecyclerView.ViewHolder(itemView) {
-        var rImage: ImageView = itemView.findViewById(R.id.imageIC)
-        var rNameOfItem: TextView =itemView.findViewById(R.id.textIC_Navn)
-        var rColorOfFound: TextView =itemView.findViewById(R.id.textIC_Farge)
-        var rDescriptionOfFound: TextView =itemView.findViewById(R.id.textIC_Besk)
+        var rImage: ImageView               = itemView.findViewById(R.id.imageIC)
+        var rNameOfItem: TextView           =itemView.findViewById(R.id.textIC_Navn)
+        var rColorOfFound: TextView         =itemView.findViewById(R.id.textIC_Farge)
+        var rDescriptionOfFound: TextView   =itemView.findViewById(R.id.textIC_Besk)
+        var rTime: TextView                 =itemView.findViewById(R.id.textIC_time)
+        var rTypeOfPost: TextView           =itemView.findViewById(R.id.textIC_Type)
         //var rContact: TextView =itemView.findViewById(R.id.textIW_Contact)
         //var rLat: TextView =itemView.findViewById(R.id.textIC_Navn)
         //var rLet: TextView =itemView.findViewById(R.id.textIC_Navn)
-        var rTime: TextView =itemView.findViewById(R.id.textIC_time)
-        var rTypeOfPost: TextView =itemView.findViewById(R.id.textIC_Type)
-
     }
 
 
@@ -224,7 +210,7 @@ class FrontPage : AppCompatActivity() {
         if (menuItem != null) {
 
             val searchView = menuItem.actionView as SearchView
-            val editText = searchView.findViewById<EditText>(androidx.appcompat.R.id.search_src_text)
+            val editText = searchView.findViewById<EditText>(R.id.search_src_text)
             editText.hint = "Search..."
 
             searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -237,12 +223,11 @@ class FrontPage : AppCompatActivity() {
                     if (newText!!.isNotEmpty()) {
                         displaList.clear()
                         val search = newText.toLowerCase(Locale.getDefault())
+                        // NEDENFOR HER GÅR SORTERING AV CHILD
                         arrayList.forEach {
                             //Search definitions
                             if (it.nameOfItem.toLowerCase(Locale.getDefault())
-                                    .contains(search) or (it.colorOfFound.toLowerCase(
-                                    Locale.getDefault()
-                                ).contains(search))
+                                    .contains(search) or (it.colorOfFound.toLowerCase(Locale.getDefault()).contains(search))
                             ) {
                                 displaList.add(it)
                             }
