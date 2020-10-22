@@ -42,8 +42,6 @@ import java.util.*
 
 class FormFragment : Fragment() {
 
-    //private var mUri: Uri? = null //deklarasjon av url til bilde
-
     private lateinit var appNavigator: AppNavigator //interface til å sende til description fragment
 
     private var model: FormViewModel?=null
@@ -65,15 +63,10 @@ class FormFragment : Fragment() {
     private var downloadUri : String? = null
 
 
-
-
-
     override fun onAttach(context: Context) { //få context til å senere kunne sende til deskription
         super.onAttach(context)
         appNavigator = context as AppNavigator
     }
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -103,13 +96,7 @@ class FormFragment : Fragment() {
         model!!.savedDescription.observe(viewLifecycleOwner,
             { o -> binding.description.text = o!!.toString() })
 
-    /*if(binding.viewModel?.mUri!=null || savedInstanceState != null) {
-        if (savedInstanceState != null) {
-            binding.viewModel?.mUri = savedInstanceState.getParcelable("uri")!!
 
-        }
-        binding.image.setImageURI(binding.viewModel?.mUri)
-    }*/
         mapManager(model)
 
 
@@ -119,12 +106,6 @@ class FormFragment : Fragment() {
     }
 
 
-
-
-
-
-
-
     private fun clickManager(binding: FragmentFormBinding) {
         binding.captureBtn.setOnClickListener {
 
@@ -132,6 +113,11 @@ class FormFragment : Fragment() {
         }
 
         binding.chooseImage.setOnClickListener {
+            pickImage()
+        }
+
+        binding.image.setOnClickListener {
+            coverChecker = "cover"
             pickImage()
         }
 
@@ -147,10 +133,7 @@ class FormFragment : Fragment() {
             startActivity(intent1)
         }
 
-        binding.image.setOnClickListener {
-            coverChecker = "cover"
-            pickImage()
-        }
+
 
 
 
