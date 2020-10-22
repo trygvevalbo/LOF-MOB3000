@@ -1,5 +1,6 @@
 package com.example.noeTaptNoeFunnetAPP
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.os.PersistableBundle
@@ -30,7 +31,7 @@ class LoginActivity: AppCompatActivity() {
 
         buttonListener()
         signup_btn.setOnClickListener{
-            val intent1 = Intent(this, SignupActivity::class.java)
+            val intent1 = Intent(this, Activity::class.java)
             startActivity(intent1)
         }
 
@@ -38,7 +39,7 @@ class LoginActivity: AppCompatActivity() {
 
     private fun buttonListener(){
         login_btn.setOnClickListener {
-       //     loginUser()
+            loginUser()
         }
 
         signup_btn.setOnClickListener{
@@ -47,19 +48,19 @@ class LoginActivity: AppCompatActivity() {
         }
     }
 
-   /* private fun loginUser(){
+    private fun loginUser(){
         val email = login_email.text.toString()
         val password = login_password.text.toString()
 
         if(email.isNotEmpty() && password.isNotEmpty()){
             GlobalScope.launch(Dispatchers.IO){
                 try{
-                    auth.signInWithEmailAndPassword(email,password).await()
+                    auth.signInWithEmailAndPassword(email,password)
 
                withContext(Dispatchers.Main){
                    Toast.makeText(this@LoginActivity,"Du er nå logget inn", Toast.LENGTH_SHORT).show()
 
-                   val i = Intent(this@LoginActivity, ???????::class.java)
+                   val i = Intent(this@LoginActivity, LoginActivity::class.java)
                    startActivity(i)
                    finish()
                }
@@ -68,12 +69,12 @@ class LoginActivity: AppCompatActivity() {
                 }
             }
         }
-    }*/
+    }
 
     public override fun onStart() {
         auth = Firebase.auth
         super.onStart()
-       // checkIfUserIsLoggedIn()
+        checkIfUserIsLoggedIn()
         //Is User signed in check
         val currentUser = auth.currentUser
         updateUI(currentUser)
@@ -82,11 +83,11 @@ class LoginActivity: AppCompatActivity() {
     fun updateUI(currentUser : FirebaseUser?) {
 
     }
-    /*private fun checkIfUserIsLoggedIn(){
+    private fun checkIfUserIsLoggedIn(){
         if(auth.currentUser != null){
-            val i = Intent(this@LoginActivity, ???????::class.java)
+            val i = Intent(this@LoginActivity, LoginActivity::class.java)
             startActivity(i)
             finish()
         }
-    }*/
+    }
 }

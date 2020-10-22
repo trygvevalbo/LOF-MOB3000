@@ -9,6 +9,8 @@ import android.view.animation.AnimationUtils
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.SearchView
@@ -39,20 +41,10 @@ class FrontPage : AppCompatActivity() {
 
 
     var isOpen = false
-    val arrayList = ArrayList<CardModel>()
-    val displaList = ArrayList<CardModel>()
+    val arrayList = ArrayList<Item>()
+    val displaList = ArrayList<Item>()
 
     lateinit var preferences: SharedPreferences
-
-
-
-    fun Date.toString(format: String, locale: Locale = Locale.getDefault()): String {
-        val formatter = SimpleDateFormat(format, locale)
-        return formatter.format(this)
-    }
-    fun getCurrentDateTime(): Date {
-        return Calendar.getInstance().time
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -87,12 +79,8 @@ class FrontPage : AppCompatActivity() {
                         holder.rColorOfFound.text = model.colorOfFound
                         //holder.rContact.text = model.contact
                         holder.rDescriptionOfFound.text = model.descriptionOfFound
-
-
                         holder.rTime.text = model.time
                         holder.rTypeOfPost.text = model.typeOfPost
-                        //Picasso.with(getContext()).load(model.imageUrl.getImage()).resize(200, 200).into(holder.rImage)
-
                         Glide.with(holder.itemView.context).load(model.postImage).into(holder.rImage);
 
                     }
@@ -103,36 +91,11 @@ class FrontPage : AppCompatActivity() {
         recyclerView.adapter=firebaseRecyclerAdapter
         firebaseRecyclerAdapter.startListening()
 
-/*
-        val date = getCurrentDateTime()
-        val datenow = date.toString("dd/MM/yyyy HH:mm")
 
 
-            arrayList.add(CardModel("Item1", "Funnet","blå", "Funnet ute på bakken", R.drawable.bigusbrainus, datenow))
-            arrayList.add(CardModel("Item2","Funnet", "Svart", "Dette er et eksempel på lengere text en passer til Cardviewen. Loreum ipsum dolaro disico nipslandat.", R.drawable.throwup, datenow))
-            arrayList.add(CardModel("Katt","Funnet", "svart", "Veldig snill Katt funnet. Snakker Romansk, Heter Vladislav", R.drawable.cat, datenow))
-            arrayList.add(CardModel("Esel","Funnet", "blå", "Funnet ute på bakken", R.drawable.donkey, datenow))
-            arrayList.add(CardModel("Lommebok","Funnet", "svart", "Funnet ute på bakken", R.drawable.wallet, datenow))
-            arrayList.add(CardModel("Hund","Funnet", "Svart", "Snill Hund funnet ute i parken uten eier", R.drawable.dogg, datenow))
-            arrayList.add(CardModel("Iphone", "Funnet","hvit", "Funnet ute på bakken", R.drawable.phone, datenow))
-            arrayList.add(CardModel("Hatt","Tapt", "hvit", "Jævla støgg hatt funnet utenfor Kroa", R.drawable.hat, datenow))
-            arrayList.add(CardModel("Hatt","Tapt", "hvit", "Jævla støgg hatt funnet utenfor Kroa", R.drawable.hat, datenow))
-            arrayList.add(CardModel("Hatt","Tapt", "hvit", "Jævla støgg hatt funnet utenfor Kroa", R.drawable.hat, datenow))
-            arrayList.add(CardModel("Hatt","Tapt", "hvit", "Jævla støgg hatt funnet utenfor Kroa", R.drawable.hat, datenow))
-            arrayList.add(CardModel("Hatt","Tapt", "hvit", "Jævla støgg hatt funnet utenfor Kroa", R.drawable.hat, datenow))
-            displaList.addAll(arrayList)
 
-        mRecyclerView = RecyclerViewAdapter(displaList, this)
-
-        hovedListe.layoutManager = LinearLayoutManager(this)
-        hovedListe.adapter = mRecyclerView
-
-     //   hovedListe.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-       // mUserDatabase = FirebaseDatabase.getInstance().reference.child("Posts")
-        */
-
-       preferences = getSharedPreferences("My_Pref", Context.MODE_PRIVATE)
-       val mSortSetting = preferences.getString("Sort", "Alle")
+        preferences = getSharedPreferences("My_Pref", Context.MODE_PRIVATE)
+        val mSortSetting = preferences.getString("Sort", "Alle")
 
         if (mSortSetting == null) {
             sortAlle(firebaseRecyclerAdapter)
@@ -184,13 +147,13 @@ class FrontPage : AppCompatActivity() {
             }
 
             funnetKnapp.setOnClickListener{
-               // val user = Firebase.auth.currentUser
+                // val user = Firebase.auth.currentUser
                 //if (user != null){
-                    val intent1 = Intent(this, PostFoundItem::class.java)
-                    startActivity(intent1)
+                val intent1 = Intent(this, PostFoundItem::class.java)
+                startActivity(intent1)
                 //} else {
-                  //  val intent1 = Intent(this, LoginActivity::class.java)
-                    //startActivity(intent1)
+                //  val intent1 = Intent(this, LoginActivity::class.java)
+                //startActivity(intent1)
 
                 //}
             }
@@ -225,7 +188,7 @@ class FrontPage : AppCompatActivity() {
     private fun sortTapt(myAdapter: FirebaseRecyclerAdapter<Item, ItemViewHolder>) {
         displaList.clear()
         arrayList.forEach {
-            if (it.type == "Tapt")
+            if (it.typeOfPost == "Tapt")
                 displaList.add(it)
         }
         myAdapter.notifyDataSetChanged()
@@ -234,7 +197,7 @@ class FrontPage : AppCompatActivity() {
     private fun sortFunnet(myAdapter: FirebaseRecyclerAdapter<Item, ItemViewHolder>) {
         displaList.clear()
         arrayList.forEach {
-            if (it.type.contains("Funnet"))
+            if (it.typeOfPost.contains("Funnet"))
                 displaList.add(it)
         }
         myAdapter.notifyDataSetChanged()
@@ -266,8 +229,8 @@ class FrontPage : AppCompatActivity() {
                         val search = newText.toLowerCase(Locale.getDefault())
                         arrayList.forEach {
                             //Search definitions
-                            if (it.navn.toLowerCase(Locale.getDefault())
-                                    .contains(search) or (it.farge.toLowerCase(
+                            if (it.nameOfItem.toLowerCase(Locale.getDefault())
+                                    .contains(search) or (it.colorOfFound.toLowerCase(
                                     Locale.getDefault()
                                 ).contains(search))
                             ) {
@@ -295,44 +258,12 @@ class FrontPage : AppCompatActivity() {
 
         val id = item.itemId
         if (id == R.id.sorting) {
-            //sortDialog()
+           // sortDialog()
         }
         return super.onOptionsItemSelected(item)
     }
 
-   /* private fun sortDialog() {
-        val options = arrayOf("Alle", "Funnet", "Tapt")
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle("Vis")
 
-        builder.setItems(options) { dialog, wich ->
-            if (wich == 0){
-                val editor : SharedPreferences.Editor = preferences.edit()
-                editor.putString("Vis", "Alle")
-                editor.apply()
-                sortAlle(firebaseRecyclerAdapter)
-                Toast.makeText(this@FrontPage, "Alle", Toast.LENGTH_LONG).show()
-            }
-            if (wich == 1){
-                val editor : SharedPreferences.Editor = preferences.edit()
-                editor.putString("Vis", "Funnet")
-                editor.apply()
-                sortFunnet(recyclerView.adapter as RecyclerViewAdapter)
-                Toast.makeText(this@FrontPage, "Funnet", Toast.LENGTH_LONG).show()
 
-            }
-            if (wich == 2){
-                val editor : SharedPreferences.Editor = preferences.edit()
-                editor.putString("Vis", "Tapt")
-                editor.apply()
-                sortTapt(recyclerView.adapter as RecyclerViewAdapter)
-                Toast.makeText(this@FrontPage, "Tapt", Toast.LENGTH_LONG).show()
-
-            }
-
-        }
-        builder.create().show()
-
-    }*/
 
 }
