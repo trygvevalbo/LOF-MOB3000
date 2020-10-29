@@ -36,6 +36,6 @@
         android:text="Ok"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/DatePicker" />
+        app:layout_constraintTop_toBottomOf="@+id/datePicker" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

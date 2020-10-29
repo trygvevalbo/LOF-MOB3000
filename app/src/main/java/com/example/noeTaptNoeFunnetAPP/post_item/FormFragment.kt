@@ -42,8 +42,6 @@ import java.util.*
 
 class FormFragment : Fragment() {
 
-    //private var mUri: Uri? = null //deklarasjon av url til bilde
-
     private lateinit var appNavigator: AppNavigator //interface til å sende til description fragment
 
     private var model: FormViewModel?=null
@@ -62,16 +60,13 @@ class FormFragment : Fragment() {
 
     private var primaryKey :String? =""
 
-
-
+    private var downloadUri : String? = null
 
 
     override fun onAttach(context: Context) { //få context til å senere kunne sende til deskription
         super.onAttach(context)
         appNavigator = context as AppNavigator
     }
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -85,8 +80,10 @@ class FormFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        val binding = DataBindingUtil.inflate<FragmentFormBinding>(inflater, R.layout.fragment_form,
-            container, false)
+        val binding = DataBindingUtil.inflate<FragmentFormBinding>(
+            inflater, R.layout.fragment_form,
+            container, false
+        )
         model= ViewModelProviders.of(requireActivity()).get(FormViewModel::class.java)
         binding.lifecycleOwner = activity
 
@@ -99,13 +96,7 @@ class FormFragment : Fragment() {
         model!!.savedDescription.observe(viewLifecycleOwner,
             { o -> binding.description.text = o!!.toString() })
 
-    /*if(binding.viewModel?.mUri!=null || savedInstanceState != null) {
-        if (savedInstanceState != null) {
-            binding.viewModel?.mUri = savedInstanceState.getParcelable("uri")!!
 
-        }
-        binding.image.setImageURI(binding.viewModel?.mUri)
-    }*/
         mapManager(model)
 
 
@@ -113,12 +104,6 @@ class FormFragment : Fragment() {
 
         return binding.root
     }
-
-
-
-
-
-
 
 
     private fun clickManager(binding: FragmentFormBinding) {
@@ -131,20 +116,24 @@ class FormFragment : Fragment() {
             pickImage()
         }
 
+        binding.image.setOnClickListener {
+            coverChecker = "cover"
+            pickImage()
+        }
+
         binding.postButtonFoundItem.setOnClickListener {
-            if (image_uri != null) {  //last opp bilde til database
-                uploadImageToDatabase()
+            if (model?.image?.value  != null) {  //last opp bilde til database
+                uploadImageToDatabase(binding, model)
+            }else{
+                uploadTextToDatabase(binding, model)
             }
-            uploadTextToDatabase(binding, model)
+
 
             val intent1 = Intent(activity, FrontPage::class.java)
             startActivity(intent1)
         }
 
-        binding.image.setOnClickListener {
-            coverChecker = "cover"
-            pickImage()
-        }
+
 
 
 
@@ -172,23 +161,29 @@ class FormFragment : Fragment() {
         mapFragment?.getMapAsync(OnMapReadyCallback {
             googleMap = it
             if (model != null) {
-                if(model.savedLatitude.value!=null && model.savedLongitude.value!= null) {
-                    selectedLocation = LatLng(model.savedLatitude.value!!, model.savedLongitude.value!!) // hent det bruker har skrevet inn
-                }
-                else {
-                    selectedLocation = LatLng(43.434,44.4343) // bare bruk lokasjon til bruker
+                if (model.savedLatitude.value != null && model.savedLongitude.value != null) {
+                    selectedLocation = LatLng(
+                        model.savedLatitude.value!!,
+                        model.savedLongitude.value!!
+                    ) // hent det bruker har skrevet inn
+                } else {
+                    selectedLocation = LatLng(59.913868, 10.752245) // bare bruk lokasjon til bruker
                 }
             }
-                googleMap.addMarker(selectedLocation?.let { it1 -> MarkerOptions().position(it1).title("My location") })
-                googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(selectedLocation, 10f))
-
-                googleMap.setOnMapClickListener {
-                    appNavigator.navigateToMapFullScreen()
-
-                }
-
-
+            googleMap.addMarker(selectedLocation?.let { it1 ->
+                MarkerOptions().position(it1).title(
+                    "My location"
+                )
             })
+            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(selectedLocation, 10f))
+
+            googleMap.setOnMapClickListener {
+                appNavigator.navigateToMapFullScreen()
+
+            }
+
+
+        })
     }
 
 
@@ -275,34 +270,44 @@ class FormFragment : Fragment() {
 
         if (RequestCode == RequestCode && resultCode == Activity.RESULT_OK && data!!.data != null) run {
             image_uri = data.data
+            model?.image?.value = data.data
             image.setImageURI(image_uri)
             model!!.setImage(image_uri)
 
         }
     }
 
-    private fun uploadImageToDatabase() {
+    private fun uploadImageToDatabase(binding: FragmentFormBinding, model: FormViewModel?) {
         storageRef = FirebaseStorage.getInstance().reference.child("PostImages")
 
-        if (image_uri != null) {
+        if (model?.image?.value  != null) {
              primaryKey =  UUID.randomUUID().toString()
             val fileRef = storageRef!!.child("$primaryKey.jpg")
             var uploadTask: StorageTask<*>
-            uploadTask = fileRef.putFile(image_uri!!)
+            uploadTask = fileRef.putFile(model?.image?.value!!)
 
             uploadTask.continueWithTask(Continuation<UploadTask.TaskSnapshot, Task<Uri>> { task ->
                 if (!task.isSuccessful) {
                     task.exception?.let {
+
                         throw it
                     }
+
                 }
                 return@Continuation fileRef.downloadUrl
             }).addOnCompleteListener { task ->
                 if (task.isSuccessful) {
 
-                    Toast.makeText(requireContext(), primaryKey, Toast.LENGTH_LONG)
-                        .show()
+                     downloadUri = task.result.toString()
+                    uploadTextToDatabase(binding, model)
 
+                }
+                else{
+                    Toast.makeText(
+                        requireContext(),
+                        "Feilet med å laste opp bilde",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
 
             }
@@ -310,7 +315,7 @@ class FormFragment : Fragment() {
     }
 
     private fun uploadTextToDatabase(binding: FragmentFormBinding, model: FormViewModel?) {
-
+        val postImage = downloadUri.toString()
         val nameOfItem = binding.viewModel?.savedNameItem?.value.toString()
         val descriptionOfFound = binding.viewModel?.savedDescription?.value.toString()
         val colorOfFound = binding.viewModel?.savedColor?.value.toString()
@@ -318,7 +323,7 @@ class FormFragment : Fragment() {
         val lat = binding.viewModel?.savedLatitude?.value.toString()
         val lng = binding.viewModel?.savedLongitude?.value.toString()
        // val brukernavn=
-        val typeOfPost = "FoundItem"
+        val typeOfPost = "Funnet"
         val contact = binding.viewModel?.savedContact?.value.toString()
 
         var database = FirebaseDatabase.getInstance().reference.child("Posts")
@@ -328,7 +333,9 @@ class FormFragment : Fragment() {
         }
             primaryKey?.let {
                 database.child(it).setValue(
-                    FormValue(nameOfItem, descriptionOfFound, colorOfFound, time, lat,
+                    FormValue(
+                        postImage,
+                        nameOfItem, descriptionOfFound, colorOfFound, time, lat,
                         lng, contact, typeOfPost
                     )
                 )

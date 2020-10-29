@@ -13,6 +13,14 @@
         <item name="android:windowBackground">@drawable/thonking</item>
     </style>
 
+    <style name="Materialtheme" parent="Theme.MaterialComponents">
+        <item name="colorPrimary">@color/MainAccent</item>
+        <item name="colorPrimaryDark">@color/MainBackground</item>
+        <item name="colorAccent">@color/SecondaryAccent</item>
+    </style>
+    <style name="AppTextAppearance.Button" parent="TextAppearance.MaterialComponents.Button">
+        <item name="android:textAllCaps">true</item>
+    </style>
 
 
 </resources>

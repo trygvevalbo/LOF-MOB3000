@@ -1,6 +1,7 @@
 package com.example.noeTaptNoeFunnetAPP.post_item
 
 class FormValue {
+    var postImage =""
     var nameOfItem= ""
     var descriptionOfFound = ""
     var colorOfFound = ""
@@ -9,8 +10,10 @@ class FormValue {
     var lng=""
     var contact = ""
    var typeOfPost =""
-    constructor(nameOfItem: String,descriptionOfFound:String, colorOfFound: String,time:String, lat: String,lng:String, contact: String,
-                typeOfPost:String){
+    constructor(
+        postImage: String, nameOfItem: String, descriptionOfFound:String, colorOfFound: String, time:String, lat: String, lng:String, contact: String,
+        typeOfPost:String){
+        this.postImage = postImage
         this.nameOfItem = nameOfItem
         this.descriptionOfFound = descriptionOfFound
         this.colorOfFound = colorOfFound
