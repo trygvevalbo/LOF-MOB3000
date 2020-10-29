@@ -31,6 +31,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.tasks.Continuation
 import com.google.android.gms.tasks.Task
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.StorageTask
@@ -46,7 +47,7 @@ class FormFragment : Fragment() {
 
     private var model: FormViewModel?=null
 
-    lateinit var mapFragment: SupportMapFragment
+
     lateinit var googleMap: GoogleMap
 
     var selectedLocation: LatLng? = null
@@ -80,6 +81,7 @@ class FormFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
+
         val binding = DataBindingUtil.inflate<FragmentFormBinding>(
             inflater, R.layout.fragment_form,
             container, false
@@ -87,7 +89,7 @@ class FormFragment : Fragment() {
         model= ViewModelProviders.of(requireActivity()).get(FormViewModel::class.java)
         binding.lifecycleOwner = activity
 
-       binding.viewModel = model//attach your viewModel to xml
+       binding.viewModel = model//attach viewModel to xml
 
 
         model!!.savedDescription.observe(viewLifecycleOwner,
@@ -96,6 +98,14 @@ class FormFragment : Fragment() {
         model!!.savedDescription.observe(viewLifecycleOwner,
             { o -> binding.description.text = o!!.toString() })
 
+        //set correct headings for type of post
+        if(model!!.postType=="Funnet") {
+            binding.postHeader.text = "Lag en kort beskrivelse av hva du har funnet?"
+            binding.timewhenfound.hint ="Når var den funnet"
+        }else{
+            binding.postHeader.text ="Lag en kort beskrivelse av hva du har mistet?"
+            binding.timewhenfound.hint ="Når var den mistet"
+        }
 
         mapManager(model)
 
@@ -315,31 +325,24 @@ class FormFragment : Fragment() {
     }
 
     private fun uploadTextToDatabase(binding: FragmentFormBinding, model: FormViewModel?) {
-        val postImage = downloadUri.toString()
-        val nameOfItem = binding.viewModel?.savedNameItem?.value.toString()
-        val descriptionOfFound = binding.viewModel?.savedDescription?.value.toString()
-        val colorOfFound = binding.viewModel?.savedColor?.value.toString()
-      val time = binding.viewModel?.savedTime?.value.toString()
-        val lat = binding.viewModel?.savedLatitude?.value.toString()
-        val lng = binding.viewModel?.savedLongitude?.value.toString()
-       // val brukernavn=
-        val typeOfPost = "Funnet"
-        val contact = binding.viewModel?.savedContact?.value.toString()
+        val postmap = HashMap<String, Any>()
+        postmap["postImage"] = downloadUri.toString()
+        postmap["itemName"] = binding.viewModel?.savedNameItem?.value.toString()
+        postmap["itemDesk"] = binding.viewModel?.savedDescription?.value.toString()
+        postmap["itemColor"] = binding.viewModel?.savedColor?.value.toString()
+        postmap["postTime"] = binding.viewModel?.savedTime?.value.toString()
+        postmap["itemLat"] = binding.viewModel?.savedLatitude?.value.toString()
+        postmap["itemLng"] = binding.viewModel?.savedLongitude?.value.toString()
+        postmap["postType"] = binding.viewModel?.postType.toString()
+        postmap["postContact"] = binding.viewModel?.savedContact?.value.toString()
 
-        var database = FirebaseDatabase.getInstance().reference.child("Posts")
+        val mFirestore: FirebaseFirestore = FirebaseFirestore.getInstance()
 
-        if(primaryKey==""){
-            primaryKey =  UUID.randomUUID().toString()
+        mFirestore.collection("Posts").add(postmap).addOnSuccessListener() {
+            Toast.makeText(requireContext(), "Data Stored", Toast.LENGTH_SHORT).show()
+        }.addOnFailureListener() {
+            Toast.makeText(requireContext(), "Data Not Stored", Toast.LENGTH_SHORT).show()
         }
-            primaryKey?.let {
-                database.child(it).setValue(
-                    FormValue(
-                        postImage,
-                        nameOfItem, descriptionOfFound, colorOfFound, time, lat,
-                        lng, contact, typeOfPost
-                    )
-                )
-            }
 
     }
 

@@ -10,8 +10,7 @@ import com.google.android.gms.maps.model.LatLng
 
 
 class PostFoundItem : AppCompatActivity(), AppNavigator{
-    private var descriptionText: String? = null
-    private var itemLocation : LatLng? = null
+
     private var viewModel: FormViewModel? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,7 +18,7 @@ class PostFoundItem : AppCompatActivity(), AppNavigator{
         setContentView(R.layout.activity_post_found_item)
 
         viewModel = ViewModelProviders.of(this)[FormViewModel::class.java]
-
+        viewModel!!.postType = "Funnet"
     }
 
     override fun navigateToDescription() {
@@ -29,7 +28,6 @@ class PostFoundItem : AppCompatActivity(), AppNavigator{
 
     }
    override fun navigateToForm() {
-      // storeFormvalues()
 
              val action = DescriptionFragmentDirections.actionDescriptionFragmentToFormFragment()
              findNavController(R.id.nav_host_fragment).navigate(action)
@@ -56,27 +54,5 @@ class PostFoundItem : AppCompatActivity(), AppNavigator{
         findNavController(R.id.nav_host_fragment).navigate(action)
 
     }
-
-    /*override fun storeFormvalues(){
-
-        descriptionText?.let { viewModel?.setDescription(it) }
-        val descriptionText = viewModel?.getDescription()
-
-    }
-    override fun onDataPass(data: String) {
-        descriptionText = data
-
-    }
-
-    override fun onLocationPass(data: LatLng) {
-        itemLocation = data
-    }*/
-
-    /*override fun onSupportNavigateUp(): Boolean {
-        onBackPressed()
-
-    return true
-    }*/
-
 
 }
