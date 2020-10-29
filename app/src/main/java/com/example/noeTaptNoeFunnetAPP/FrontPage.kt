@@ -19,11 +19,15 @@ import com.example.noeTaptNoeFunnetAPP.post_item.PostLostItem
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+<<<<<<< HEAD
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.Query
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
+=======
+import com.google.firebase.database.FirebaseDatabase
+>>>>>>> master
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
@@ -40,12 +44,27 @@ class FrontPage : AppCompatActivity() {
     var itemAdapter : ItemAdapter? = null;
     var isOpen = false
 
+<<<<<<< HEAD
     lateinit var preferences: SharedPreferences
 
+=======
+>>>>>>> master
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState); setTheme(R.style.AppTheme); AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES); setContentView(R.layout.activity_main)
         auth = FirebaseAuth.getInstance()
 
+<<<<<<< HEAD
+=======
+        fun getData() {
+            var items = 
+            FirebaseDatabase.getInstance().reference
+                .child("Posts")
+
+        }
+
+
+        myAdapter = RecyclerViewAdapter(displaList, this)
+>>>>>>> master
 
         recyclerSetup()
         preferancesSetup()
