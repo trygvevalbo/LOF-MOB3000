@@ -34,12 +34,14 @@ class PostLostItem : AppCompatActivity(), AppNavigator {
 
         viewModel = ViewModelProviders.of(this)[FormViewModel::class.java]
         viewModel!!.postType = "Mistet"
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     override fun navigateToDescription() {
         val action = FormFragmentDirections.actionFormFragmentToDescriptionFragment2()
         findNavController(R.id.nav_host_fragment).navigate(action)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
 
     }
     override fun navigateToForm() {
@@ -69,5 +71,10 @@ class PostLostItem : AppCompatActivity(), AppNavigator {
 
     }
 
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+
+        return true
+    }
 
 }

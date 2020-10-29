@@ -112,6 +112,7 @@ class FormFragment : Fragment() {
 
         clickManager(binding)
 
+        
         return binding.root
     }
 

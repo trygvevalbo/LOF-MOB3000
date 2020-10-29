@@ -19,12 +19,13 @@ class PostFoundItem : AppCompatActivity(), AppNavigator{
 
         viewModel = ViewModelProviders.of(this)[FormViewModel::class.java]
         viewModel!!.postType = "Funnet"
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     override fun navigateToDescription() {
         val action = FormFragmentDirections.actionFormFragmentToDescriptionFragment2()
         findNavController(R.id.nav_host_fragment).navigate(action)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
 
     }
    override fun navigateToForm() {
@@ -53,6 +54,12 @@ class PostFoundItem : AppCompatActivity(), AppNavigator{
         val action = MapsFullScreenFragmentDirections.actionMapsFullScreenFragmentToFormFragment()
         findNavController(R.id.nav_host_fragment).navigate(action)
 
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+
+        return true
     }
 
 }
