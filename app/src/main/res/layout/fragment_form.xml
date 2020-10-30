@@ -22,19 +22,6 @@
             android:layout_height="match_parent">
 
 
-            <TextView
-                android:id="@+id/post_header"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="@string/header_make_post_found_item"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.496"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-
             <ImageView
                 android:id="@+id/image"
                 android:layout_width="336dp"
@@ -43,8 +30,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.493"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/post_header"
-                app:srcCompat="@drawable/stock_image_before_upload"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/placeholder_image"
                 android:src="@{viewModel.image}"/>
 
             <RelativeLayout
@@ -96,94 +83,110 @@
 
             </RelativeLayout>
 
-            <EditText
-                android:id="@+id/nameOfItem"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:ems="10"
-                android:onTextChanged="@{viewModel.setNameItem}"
-                android:text="@{viewModel.savedNameItem}"
-                android:hint="@string/nameOfItem"
-                android:inputType="textPersonName"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/image_button_container"/>
+            <RelativeLayout
+                android:id="@+id/text_field_container"
+                android:layout_width="match_parent"
+                android:layout_height="500dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="16dp"
+                android:background="@color/ContainerPostDark"
+                app:layout_constraintTop_toBottomOf="@+id/image_button_container">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+               >
+
+                <EditText
+                    android:id="@+id/nameOfItem"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:ems="10"
+                    android:hint="@string/nameOfItem"
+                    android:inputType="textPersonName"
+                    android:onTextChanged="@{viewModel.setNameItem}"
+                    android:text="@{viewModel.savedNameItem}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="parent" />
 
 
-            <TextView
-                android:id="@+id/description"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:background="?attr/editTextBackground"
-                android:ems="10"
-                android:hint="@string/item_descripstion"
+                <TextView
+                    android:id="@+id/description"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="?attr/editTextBackground"
+                    android:ems="10"
+                    android:hint="@string/item_descripstion"
 
-                android:includeFontPadding="false"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/nameOfItem" />
+                    android:includeFontPadding="false"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/nameOfItem" />
 
-            <EditText
-                android:id="@+id/colordescription"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:ems="10"
-                android:hint="@string/color_of_item"
-                android:inputType="textPersonName"
-                android:onTextChanged="@{viewModel.setColor}"
-                android:text="@{viewModel.savedColor}"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/description" />
+                <EditText
+                    android:id="@+id/colordescription"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:ems="10"
+                    android:hint="@string/color_of_item"
+                    android:inputType="textPersonName"
+                    android:onTextChanged="@{viewModel.setColor}"
+                    android:text="@{viewModel.savedColor}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/description" />
 
-            <TextView
-                android:id="@+id/timewhenfound"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:background="?attr/editTextBackground"
-                android:ems="10"
-                android:hint="@string/date_found"
-                android:inputType="textPersonName"
-                android:text="@{viewModel.savedTime}"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/colordescription" />
+                <TextView
+                    android:id="@+id/timewhenfound"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="?attr/editTextBackground"
+                    android:ems="10"
+                    android:hint="@string/date_found"
+                    android:inputType="textPersonName"
+                    android:text="@{viewModel.savedTime}"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/colordescription" />
 
-            <EditText
-                android:id="@+id/contactinformation"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:ems="10"
-                android:hint="@string/contact_infromation"
-                android:inputType="textPersonName"
-                android:onTextChanged="@{viewModel.setContact}"
-                android:text="@{viewModel.savedContact}"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/timewhenfound" />
+                <EditText
+                    android:id="@+id/contactinformation"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:ems="10"
+                    android:hint="@string/contact_infromation"
+                    android:inputType="textPersonName"
+                    android:onTextChanged="@{viewModel.setContact}"
+                    android:text="@{viewModel.savedContact}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/timewhenfound" />
 
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            </RelativeLayout>
 
             <fragment
                 android:id="@+id/map"
                 android:name="com.google.android.gms.maps.SupportMapFragment"
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
+                android:layout_height="250dp"
+                android:layout_marginTop="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/contactinformation" />
+                app:layout_constraintTop_toBottomOf="parent" />
 
 
             <Button

@@ -20,6 +20,7 @@ class PostFoundItem : AppCompatActivity(), AppNavigator{
         viewModel = ViewModelProviders.of(this)[FormViewModel::class.java]
         viewModel!!.postType = "Funnet"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = "Ny funnet annonse"
     }
 
     override fun navigateToDescription() {

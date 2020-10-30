@@ -100,10 +100,8 @@ class FormFragment : Fragment() {
 
         //set correct headings for type of post
         if(model!!.postType=="Funnet") {
-            binding.postHeader.text = "Lag en kort beskrivelse av hva du har funnet?"
             binding.timewhenfound.hint ="Når var den funnet"
         }else{
-            binding.postHeader.text ="Lag en kort beskrivelse av hva du har mistet?"
             binding.timewhenfound.hint ="Når var den mistet"
         }
 
@@ -112,7 +110,7 @@ class FormFragment : Fragment() {
 
         clickManager(binding)
 
-        
+
         return binding.root
     }
 

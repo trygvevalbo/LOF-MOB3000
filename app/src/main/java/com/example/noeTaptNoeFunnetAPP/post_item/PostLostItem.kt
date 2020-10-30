@@ -33,9 +33,10 @@ class PostLostItem : AppCompatActivity(), AppNavigator {
         setContentView(R.layout.activity_post_lost_item)
 
         viewModel = ViewModelProviders.of(this)[FormViewModel::class.java]
-        viewModel!!.postType = "Mistet"
+        viewModel!!.postType = "Tapt"
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = "Ny tapt annonse"
     }
 
     override fun navigateToDescription() {
