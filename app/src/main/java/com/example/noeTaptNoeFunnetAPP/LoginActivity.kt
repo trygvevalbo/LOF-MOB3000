@@ -60,7 +60,7 @@ class LoginActivity: AppCompatActivity() {
                withContext(Dispatchers.Main){
                    Toast.makeText(this@LoginActivity,"Du er nå logget inn", Toast.LENGTH_SHORT).show()
 
-                   val i = Intent(this@LoginActivity, LoginActivity::class.java)
+                   val i = Intent(this@LoginActivity, FrontPage::class.java)
                    startActivity(i)
                    finish()
                }

@@ -116,15 +116,15 @@ class FrontPage : AppCompatActivity() {
             }
 
             funnetKnapp.setOnClickListener{
-                // val user = Firebase.auth.currentUser
-                //if (user != null){
+                 val user = Firebase.auth.currentUser
+                if (user != null){
                 val intent1 = Intent(this, PostFoundItem::class.java)
                 startActivity(intent1)
-                //} else {
-                //  val intent1 = Intent(this, LoginActivity::class.java)
-                //startActivity(intent1)
+                } else {
+                  val intent1 = Intent(this, LoginActivity::class.java)
+                startActivity(intent1)
 
-                //}
+                }
             }
         }
     }
