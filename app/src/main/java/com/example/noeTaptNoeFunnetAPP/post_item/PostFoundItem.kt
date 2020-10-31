@@ -1,12 +1,13 @@
 package com.example.noeTaptNoeFunnetAPP.post_item
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
+import com.example.noeTaptNoeFunnetAPP.FrontPage
 import com.example.noeTaptNoeFunnetAPP.R
 import com.example.noeTaptNoeFunnetAPP.post_item.location.MapsFullScreenFragmentDirections
-import com.google.android.gms.maps.model.LatLng
 
 
 class PostFoundItem : AppCompatActivity(), AppNavigator{
@@ -44,6 +45,7 @@ class PostFoundItem : AppCompatActivity(), AppNavigator{
     override fun navigateFromDateToForm(){
         val action = dateFragmentDirections.actionDateFragmentToFormFragment()
         findNavController(R.id.nav_host_fragment).navigate(action)
+
     }
 
     override fun navigateToMapFullScreen() {
@@ -55,12 +57,16 @@ class PostFoundItem : AppCompatActivity(), AppNavigator{
         val action = MapsFullScreenFragmentDirections.actionMapsFullScreenFragmentToFormFragment()
         findNavController(R.id.nav_host_fragment).navigate(action)
 
+
     }
 
+    
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
-
         return true
     }
+
+
+
 
 }

@@ -30,7 +30,6 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.tasks.Continuation
 import com.google.android.gms.tasks.Task
-import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
@@ -38,7 +37,6 @@ import com.google.firebase.storage.StorageTask
 import com.google.firebase.storage.UploadTask
 import kotlinx.android.synthetic.main.fragment_form.*
 import java.util.*
-
 
 
 class FormFragment : Fragment() {
@@ -157,7 +155,6 @@ class FormFragment : Fragment() {
             appNavigator.navigateToSelectDate()
         }
     }
-
 
 
 

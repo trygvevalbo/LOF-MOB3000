@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.noeTaptNoeFunnetAPP">
-
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
          location permissions for the "MyLocation" functionality.
     -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-
-    <!-- Alle rettigheter som trenges for funksjonaliteten av denne appen -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!-- Alle rettigheter som trenges for funksjonaliteten av denne appen -->
     <uses-permission android:name="android.permission.IN TERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.ACCEPT_HANDOVER" />
@@ -27,7 +24,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
+        <activity android:name=".account.MyAccount"></activity>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -42,9 +39,7 @@
 
         <activity
             android:name=".ItemViewActivity"
-            android:parentActivityName=".FrontPage">
-
-        </activity>
+            android:parentActivityName=".FrontPage"></activity>
         <activity android:name=".post_item.PostLostItem" />
         <activity android:name=".post_item.PostFoundItem" />
         <activity android:name=".LoginActivity" />

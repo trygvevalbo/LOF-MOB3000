@@ -6,6 +6,7 @@ import android.os.PersistableBundle
 import android.util.Patterns
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.noeTaptNoeFunnetAPP.post_item.PostFoundItem
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_signup.*
 
@@ -42,18 +43,24 @@ class SignupActivity: AppCompatActivity() {
                 return
             }
 
+       if (signup_password.text.toString().length < 6) {
+           signup_password.error = "Passord må være minst 6 tegn"
+           signup_password.requestFocus()
+           return
+       }
+
        auth.createUserWithEmailAndPassword(signup_email.text.toString(), signup_password.text.toString())
            .addOnCompleteListener(this) { task ->
                if (task.isSuccessful) {
-                  startActivity(Intent(this, LoginActivity::class.java))
-                   finish()
+                   val intent1 = Intent(this, LoginActivity::class.java)
+                   startActivity(intent1)
                } else {
                    // If sign in fails, display a message to the user.
-                   Toast.makeText(baseContext, "Sign-up failed!",
+
+                   Toast.makeText(this, task.exception.toString(),
                        Toast.LENGTH_SHORT).show()
                }
 
-               // ...
            }
 
         }

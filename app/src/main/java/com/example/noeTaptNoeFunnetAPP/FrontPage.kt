@@ -105,15 +105,14 @@ class FrontPage : AppCompatActivity() {
                 isOpen = true
             }
             taptKnapp.setOnClickListener{
-                // val user = Firebase.auth.currentUser
-                //if (user != null){
+                 val user = Firebase.auth.currentUser
+                if (user != null){
                 val intent1 = Intent(this, PostLostItem::class.java)
                 startActivity(intent1)
-                //} else {
-                //  val intent1 = Intent(this, LoginActivity::class.java)
-                //startActivity(intent1)
-
-                //}
+                } else {
+                 val intent1 = Intent(this, LoginActivity::class.java)
+                startActivity(intent1)
+                }
             }
 
             funnetKnapp.setOnClickListener{
