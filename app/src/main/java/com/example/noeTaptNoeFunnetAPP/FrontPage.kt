@@ -9,6 +9,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.animation.AnimationUtils
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.SearchView
@@ -46,11 +47,9 @@ class FrontPage : AppCompatActivity() {
         super.onCreate(savedInstanceState); setTheme(R.style.AppTheme); AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES); setContentView(R.layout.activity_main)
         auth = FirebaseAuth.getInstance()
 
-
-
-
         recyclerSetup()
         preferancesSetup()
+
 
     }
 
@@ -72,7 +71,14 @@ class FrontPage : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         itemAdapter!!.startListening()
+        invalidateOptionsMenu()
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        invalidateOptionsMenu()
+        Toast.makeText(this, "onResume is called!", Toast.LENGTH_LONG).show()
     }
 
     override fun onDestroy() {
@@ -130,10 +136,15 @@ class FrontPage : AppCompatActivity() {
     }
 
     // Search Menu Override
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-
+    override fun  onCreateOptionsMenu(menu: Menu?): Boolean {
+        val user = Firebase.auth.currentUser
 
         menuInflater.inflate(R.menu.searchmenu, menu)
+
+        val accountButton = menu!!.findItem(R.id.accountButton)
+        accountButton.isVisible = user != null
+
+
         val menuItem = menu!!.findItem(R.id.searchBar)
 
         if (menuItem != null) {
@@ -145,6 +156,8 @@ class FrontPage : AppCompatActivity() {
         return false
     }
 
+
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         val id = item.itemId
@@ -153,8 +166,6 @@ class FrontPage : AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
-
-
 
 
 }

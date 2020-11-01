@@ -53,20 +53,24 @@ class LoginActivity: AppCompatActivity() {
         val password = login_password.text.toString()
 
         if(email.isNotEmpty() && password.isNotEmpty()){
-            GlobalScope.launch(Dispatchers.IO){
-                try{
-                    auth.signInWithEmailAndPassword(email,password)
 
-               withContext(Dispatchers.Main){
-                   Toast.makeText(this@LoginActivity,"Du er nå logget inn", Toast.LENGTH_SHORT).show()
+            auth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this) { task ->
+                    if (task.isSuccessful) {
+                        // Sign in success, update UI with the signed-in user's information
+                        val user = auth.currentUser
+                        Toast.makeText(this@LoginActivity,"Du er nå logget inn", Toast.LENGTH_SHORT).show()
+                        val i = Intent(this@LoginActivity, FrontPage::class.java)
+                        startActivity(i)
+                        finish()
 
-                   val i = Intent(this@LoginActivity, FrontPage::class.java)
-                   startActivity(i)
-                   finish()
-               }
-                }catch (e: Exception){
-                    Toast.makeText(this@LoginActivity, e.message.toString(), Toast.LENGTH_LONG).show()
-                }
+                    } else {
+                        // If sign in fails, display a message to the user.
+
+                        Toast.makeText(baseContext, "Authentication failed.",
+                            Toast.LENGTH_SHORT).show()
+
+                    }
             }
         }
     }
