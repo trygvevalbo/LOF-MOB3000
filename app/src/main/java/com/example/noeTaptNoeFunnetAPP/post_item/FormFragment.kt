@@ -45,7 +45,6 @@ class FormFragment : Fragment() {
 
     private var model: FormViewModel?=null
 
-
     lateinit var googleMap: GoogleMap
 
     var selectedLocation: LatLng? = null
@@ -331,6 +330,7 @@ class FormFragment : Fragment() {
         postmap["itemLng"] = binding.viewModel?.savedLongitude?.value.toString()
         postmap["postType"] = binding.viewModel?.postType.toString()
         postmap["postContact"] = binding.viewModel?.savedContact?.value.toString()
+        postmap["userEmail"]= binding.viewModel?.userEmail?.value.toString()
 
         val mFirestore: FirebaseFirestore = FirebaseFirestore.getInstance()
 

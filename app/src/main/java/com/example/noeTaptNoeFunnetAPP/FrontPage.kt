@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.noeTaptNoeFunnetAPP.account.MyAccount
 import com.example.noeTaptNoeFunnetAPP.post_item.PostFoundItem
 import com.example.noeTaptNoeFunnetAPP.post_item.PostLostItem
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
@@ -36,7 +37,7 @@ class FrontPage : AppCompatActivity() {
     private val collectionReference:CollectionReference = database.collection("Posts")
 
 
-    var itemAdapter : ItemAdapter? = null;
+    var itemAdapter : ItemAdapter? = null
     var isOpen = false
 
 
@@ -72,13 +73,11 @@ class FrontPage : AppCompatActivity() {
         super.onStart()
         itemAdapter!!.startListening()
         invalidateOptionsMenu()
-
     }
 
     override fun onResume() {
         super.onResume()
         invalidateOptionsMenu()
-        Toast.makeText(this, "onResume is called!", Toast.LENGTH_LONG).show()
     }
 
     override fun onDestroy() {
@@ -91,6 +90,7 @@ class FrontPage : AppCompatActivity() {
         val fobClose = AnimationUtils.loadAnimation(this, R.anim.fob_close)
         val fobClockwise = AnimationUtils.loadAnimation(this, R.anim.spin_clockwise)
         val fobCounterclockwise = AnimationUtils.loadAnimation(this, R.anim.spin_counterclockwise)
+
 
         submitButton.setOnClickListener {
             if (isOpen) {
@@ -144,13 +144,15 @@ class FrontPage : AppCompatActivity() {
         val accountButton = menu!!.findItem(R.id.accountButton)
         accountButton.isVisible = user != null
 
+        accountButton.setOnMenuItemClickListener{
+            val intent1 = Intent(this, MyAccount::class.java)
+            startActivity(intent1)
+            return@setOnMenuItemClickListener false
+        }
 
         val menuItem = menu!!.findItem(R.id.searchBar)
 
         if (menuItem != null) {
-
-
-
         return super.onCreateOptionsMenu(menu)
         }
         return false

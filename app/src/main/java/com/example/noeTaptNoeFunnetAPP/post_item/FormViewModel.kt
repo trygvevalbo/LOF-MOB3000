@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModel
 class FormViewModel : ViewModel() {
 
     var postType: String? = null
+    var userEmail = MutableLiveData<String>()
      var savedDescription = MutableLiveData<String>()
     var savedColor = MutableLiveData<String>()
     var savedLatitude = MutableLiveData<Double>()

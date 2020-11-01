@@ -22,6 +22,8 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_post_lost_item.*
 
 
@@ -34,6 +36,15 @@ class PostLostItem : AppCompatActivity(), AppNavigator {
 
         viewModel = ViewModelProviders.of(this)[FormViewModel::class.java]
         viewModel!!.postType = "Tapt"
+
+        val user = Firebase.auth.currentUser
+        user?.let {
+            for (profile in it.providerData) {
+
+                viewModel!!.userEmail.value  = profile.email
+
+            }
+        }
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = "Ny tapt annonse"

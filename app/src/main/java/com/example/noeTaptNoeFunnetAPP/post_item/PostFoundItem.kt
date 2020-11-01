@@ -8,6 +8,8 @@ import androidx.navigation.findNavController
 import com.example.noeTaptNoeFunnetAPP.FrontPage
 import com.example.noeTaptNoeFunnetAPP.R
 import com.example.noeTaptNoeFunnetAPP.post_item.location.MapsFullScreenFragmentDirections
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 
 class PostFoundItem : AppCompatActivity(), AppNavigator{
@@ -20,6 +22,16 @@ class PostFoundItem : AppCompatActivity(), AppNavigator{
 
         viewModel = ViewModelProviders.of(this)[FormViewModel::class.java]
         viewModel!!.postType = "Funnet"
+
+        val user = Firebase.auth.currentUser
+        user?.let {
+            for (profile in it.providerData) {
+
+                viewModel!!.userEmail.value  = profile.email
+
+            }
+        }
+
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = "Ny funnet annonse"
     }
@@ -31,10 +43,8 @@ class PostFoundItem : AppCompatActivity(), AppNavigator{
 
     }
    override fun navigateToForm() {
-
              val action = DescriptionFragmentDirections.actionDescriptionFragmentToFormFragment()
              findNavController(R.id.nav_host_fragment).navigate(action)
-
     }
 
     override fun navigateToSelectDate(){
@@ -56,17 +66,11 @@ class PostFoundItem : AppCompatActivity(), AppNavigator{
     override fun navigateFromMapToForm(){
         val action = MapsFullScreenFragmentDirections.actionMapsFullScreenFragmentToFormFragment()
         findNavController(R.id.nav_host_fragment).navigate(action)
-
-
     }
 
-    
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
     }
-
-
-
 
 }

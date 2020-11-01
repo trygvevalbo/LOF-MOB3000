@@ -25,6 +25,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".account.MyAccount"></activity>
+        <activity android:name=".account.test" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -39,7 +40,7 @@
 
         <activity
             android:name=".ItemViewActivity"
-            android:parentActivityName=".FrontPage"></activity>
+            android:parentActivityName=".FrontPage" />
         <activity android:name=".post_item.PostLostItem" />
         <activity android:name=".post_item.PostFoundItem" />
         <activity android:name=".LoginActivity" />
