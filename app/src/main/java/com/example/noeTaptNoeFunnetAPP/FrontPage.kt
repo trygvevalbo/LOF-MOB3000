@@ -35,9 +35,7 @@ class FrontPage : AppCompatActivity() {
     private var postRef = database.collection("Posts")
     private var itemAdapter: ItemAdapter? = null
 
-    var myquery  = postRef.orderBy("postTime")
-
-    var itemAdapter : ItemAdapter? = null
+    var myquery = postRef.orderBy("postTime")
     var isOpen = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -66,16 +64,16 @@ class FrontPage : AppCompatActivity() {
 
         recyclerSetup()
         preferancesSetup()
-      
-
-
     }
 
 
     fun recyclerSetup() {
-        val firestoreRecyclerOptions: FirestoreRecyclerOptions<Item> = FirestoreRecyclerOptions.Builder<Item>()
-            .setQuery(myquery, Item::class.java)
-            .build()
+        val firestoreRecyclerOptions: FirestoreRecyclerOptions<Item> =
+            FirestoreRecyclerOptions.Builder<Item>()
+                .setQuery(myquery, Item::class.java)
+                .build()
+
+
 
 
         itemAdapter = ItemAdapter(firestoreRecyclerOptions, this)
@@ -124,25 +122,25 @@ class FrontPage : AppCompatActivity() {
 
                 isOpen = true
             }
-            taptKnapp.setOnClickListener{
-                 val user = Firebase.auth.currentUser
-                if (user != null){
-                val intent1 = Intent(this, PostLostItem::class.java)
-                startActivity(intent1)
+            taptKnapp.setOnClickListener {
+                val user = Firebase.auth.currentUser
+                if (user != null) {
+                    val intent1 = Intent(this, PostLostItem::class.java)
+                    startActivity(intent1)
                 } else {
-                 val intent1 = Intent(this, LoginActivity::class.java)
-                startActivity(intent1)
+                    val intent1 = Intent(this, LoginActivity::class.java)
+                    startActivity(intent1)
                 }
             }
 
-            funnetKnapp.setOnClickListener{
-                 val user = Firebase.auth.currentUser
-                if (user != null){
-                val intent1 = Intent(this, PostFoundItem::class.java)
-                startActivity(intent1)
+            funnetKnapp.setOnClickListener {
+                val user = Firebase.auth.currentUser
+                if (user != null) {
+                    val intent1 = Intent(this, PostFoundItem::class.java)
+                    startActivity(intent1)
                 } else {
-                  val intent1 = Intent(this, LoginActivity::class.java)
-                startActivity(intent1)
+                    val intent1 = Intent(this, LoginActivity::class.java)
+                    startActivity(intent1)
 
                 }
             }
@@ -167,36 +165,24 @@ class FrontPage : AppCompatActivity() {
     }
 
     // Search Menu Override
-    override fun  onCreateOptionsMenu(menu: Menu?): Boolean {
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val user = Firebase.auth.currentUser
 
         menuInflater.inflate(R.menu.searchmenu, menu)
 
-        if (menuItem != null) {
-            val searchView = menuItem.actionView as SearchView
-            val editText = searchView.findViewById<EditText>(R.id.search_src_text)
-            editText.hint = "Search..."
-
-        }
         val accountButton = menu!!.findItem(R.id.accountButton)
         accountButton.isVisible = user != null
 
-        accountButton.setOnMenuItemClickListener{
+        accountButton.setOnMenuItemClickListener {
             val intent1 = Intent(this, MyAccount::class.java)
             startActivity(intent1)
             return@setOnMenuItemClickListener false
         }
-
-        val menuItem = menu!!.findItem(R.id.searchBar)
-
-        if (menuItem != null) {
-        return super.onCreateOptionsMenu(menu)
-
+        return true
     }
 
+
     // Sorting Menu Override
-
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         val id = item.itemId
