@@ -6,27 +6,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
-import androidx.core.os.bundleOf
+import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.setFragmentResult
-import androidx.fragment.app.setFragmentResultListener
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.fragment.navArgs
 import com.example.noeTaptNoeFunnetAPP.R
 import kotlinx.android.synthetic.main.fragment_description.view.*
 
 
 class DescriptionFragment : Fragment() {
-    //private val args: FormFragmentArgs by navArgs()
-
     private lateinit var appNavigator: AppNavigator
     private var model: FormViewModel?=null
-
-
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,10 +30,7 @@ class DescriptionFragment : Fragment() {
             { o -> description?.setText(o!!.toString()) })
 
 
-
-        view.done_button.setOnClickListener {
-
-
+        val callback = requireActivity().onBackPressedDispatcher.addCallback(this) {
             model= ViewModelProviders.of(requireActivity()).get(FormViewModel::class.java)
 
             model!!.setDescription(description?.text.toString()) // set verdi
@@ -52,11 +38,9 @@ class DescriptionFragment : Fragment() {
             appNavigator.navigateToForm()
         }
 
+
         return view
     }
-
-
-
 
 
 

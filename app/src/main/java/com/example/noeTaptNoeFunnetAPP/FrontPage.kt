@@ -14,6 +14,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.noeTaptNoeFunnetAPP.account.MyAccount
 import com.example.noeTaptNoeFunnetAPP.post_item.PostFoundItem
 import com.example.noeTaptNoeFunnetAPP.post_item.PostLostItem
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
@@ -34,6 +36,8 @@ class FrontPage : AppCompatActivity() {
     private var itemAdapter: ItemAdapter? = null
 
     var myquery  = postRef.orderBy("postTime")
+
+    var itemAdapter : ItemAdapter? = null
     var isOpen = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,6 +66,9 @@ class FrontPage : AppCompatActivity() {
 
         recyclerSetup()
         preferancesSetup()
+      
+
+
     }
 
 
@@ -79,7 +86,12 @@ class FrontPage : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         itemAdapter!!.startListening()
+        invalidateOptionsMenu()
+    }
 
+    override fun onResume() {
+        super.onResume()
+        invalidateOptionsMenu()
     }
 
     override fun onDestroy() {
@@ -93,6 +105,7 @@ class FrontPage : AppCompatActivity() {
         val fobClose = AnimationUtils.loadAnimation(this, R.anim.fob_close)
         val fobClockwise = AnimationUtils.loadAnimation(this, R.anim.spin_clockwise)
         val fobCounterclockwise = AnimationUtils.loadAnimation(this, R.anim.spin_counterclockwise)
+
 
         submitButton.setOnClickListener {
             if (isOpen) {
@@ -111,28 +124,27 @@ class FrontPage : AppCompatActivity() {
 
                 isOpen = true
             }
-            taptKnapp.setOnClickListener {
-                val user = Firebase.auth.currentUser
-                if (user != null) {
-                    val intent1 = Intent(this, PostLostItem::class.java)
-                    startActivity(intent1)
+            taptKnapp.setOnClickListener{
+                 val user = Firebase.auth.currentUser
+                if (user != null){
+                val intent1 = Intent(this, PostLostItem::class.java)
+                startActivity(intent1)
                 } else {
-                    val intent1 = Intent(this, LoginActivity::class.java)
-                    startActivity(intent1)
-
+                 val intent1 = Intent(this, LoginActivity::class.java)
+                startActivity(intent1)
                 }
             }
 
-            funnetKnapp.setOnClickListener {
-                // val user = Firebase.auth.currentUser
-                //if (user != null){
+            funnetKnapp.setOnClickListener{
+                 val user = Firebase.auth.currentUser
+                if (user != null){
                 val intent1 = Intent(this, PostFoundItem::class.java)
                 startActivity(intent1)
-                //} else {
-                //  val intent1 = Intent(this, LoginActivity::class.java)
-                //startActivity(intent1)
+                } else {
+                  val intent1 = Intent(this, LoginActivity::class.java)
+                startActivity(intent1)
 
-                //}
+                }
             }
         }
     }
@@ -155,11 +167,10 @@ class FrontPage : AppCompatActivity() {
     }
 
     // Search Menu Override
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-
+    override fun  onCreateOptionsMenu(menu: Menu?): Boolean {
+        val user = Firebase.auth.currentUser
 
         menuInflater.inflate(R.menu.searchmenu, menu)
-        val menuItem = menu!!.findItem(R.id.searchBar)
 
         if (menuItem != null) {
             val searchView = menuItem.actionView as SearchView
@@ -167,12 +178,25 @@ class FrontPage : AppCompatActivity() {
             editText.hint = "Search..."
 
         }
+        val accountButton = menu!!.findItem(R.id.accountButton)
+        accountButton.isVisible = user != null
 
+        accountButton.setOnMenuItemClickListener{
+            val intent1 = Intent(this, MyAccount::class.java)
+            startActivity(intent1)
+            return@setOnMenuItemClickListener false
+        }
+
+        val menuItem = menu!!.findItem(R.id.searchBar)
+
+        if (menuItem != null) {
         return super.onCreateOptionsMenu(menu)
 
     }
 
     // Sorting Menu Override
+
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         val id = item.itemId

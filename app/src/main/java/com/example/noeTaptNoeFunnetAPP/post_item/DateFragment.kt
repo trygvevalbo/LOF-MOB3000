@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
@@ -35,8 +36,8 @@ class dateFragment : Fragment() {
             inflater, R.layout.fragment_date,
             container, false
         )
-        binding.selectedDateButton.setOnClickListener {
 
+            val callback = requireActivity().onBackPressedDispatcher.addCallback(this) {
 
             model= ViewModelProviders.of(requireActivity()).get(FormViewModel::class.java)
             binding.viewModel = model//attach your viewModel to xml
@@ -45,6 +46,8 @@ class dateFragment : Fragment() {
         }
         return  binding.root
     }
+
+
 
     override fun onAttach(context: Context) { //få context til å senere kunne sende til description
         super.onAttach(context)

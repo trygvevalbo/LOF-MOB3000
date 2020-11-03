@@ -1,17 +1,19 @@
 package com.example.noeTaptNoeFunnetAPP.post_item
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
+import com.example.noeTaptNoeFunnetAPP.FrontPage
 import com.example.noeTaptNoeFunnetAPP.R
 import com.example.noeTaptNoeFunnetAPP.post_item.location.MapsFullScreenFragmentDirections
-import com.google.android.gms.maps.model.LatLng
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 
 class PostFoundItem : AppCompatActivity(), AppNavigator{
-    private var descriptionText: String? = null
-    private var itemLocation : LatLng? = null
+
     private var viewModel: FormViewModel? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,21 +21,28 @@ class PostFoundItem : AppCompatActivity(), AppNavigator{
         setContentView(R.layout.activity_post_found_item)
 
         viewModel = ViewModelProviders.of(this)[FormViewModel::class.java]
+        viewModel!!.postType = "Funnet"
 
+        val user = Firebase.auth.currentUser
+        user?.let {
+            for (profile in it.providerData) {
+
+                viewModel!!.userEmail.value  = profile.email
+
+            }
+        }
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = "Ny funnet annonse"
     }
 
     override fun navigateToDescription() {
         val action = FormFragmentDirections.actionFormFragmentToDescriptionFragment2()
         findNavController(R.id.nav_host_fragment).navigate(action)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
     }
    override fun navigateToForm() {
-      // storeFormvalues()
-
              val action = DescriptionFragmentDirections.actionDescriptionFragmentToFormFragment()
              findNavController(R.id.nav_host_fragment).navigate(action)
-
     }
 
     override fun navigateToSelectDate(){
@@ -44,6 +53,7 @@ class PostFoundItem : AppCompatActivity(), AppNavigator{
     override fun navigateFromDateToForm(){
         val action = dateFragmentDirections.actionDateFragmentToFormFragment()
         findNavController(R.id.nav_host_fragment).navigate(action)
+
     }
 
     override fun navigateToMapFullScreen() {
@@ -54,29 +64,11 @@ class PostFoundItem : AppCompatActivity(), AppNavigator{
     override fun navigateFromMapToForm(){
         val action = MapsFullScreenFragmentDirections.actionMapsFullScreenFragmentToFormFragment()
         findNavController(R.id.nav_host_fragment).navigate(action)
-
     }
 
-    /*override fun storeFormvalues(){
-
-        descriptionText?.let { viewModel?.setDescription(it) }
-        val descriptionText = viewModel?.getDescription()
-
-    }
-    override fun onDataPass(data: String) {
-        descriptionText = data
-
-    }
-
-    override fun onLocationPass(data: LatLng) {
-        itemLocation = data
-    }*/
-
-    /*override fun onSupportNavigateUp(): Boolean {
+    override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
-
-    return true
-    }*/
-
+        return true
+    }
 
 }
