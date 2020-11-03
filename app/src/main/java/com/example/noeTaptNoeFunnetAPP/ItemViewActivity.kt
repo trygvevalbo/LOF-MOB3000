@@ -3,6 +3,8 @@ package com.example.noeTaptNoeFunnetAPP
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.app.ActionBar
+import com.bumptech.glide.Glide
+import kotlinx.android.synthetic.main.fragment_form.*
 import kotlinx.android.synthetic.main.liste.*
 
 class ItemViewActivity : AppCompatActivity() {
@@ -14,19 +16,19 @@ class ItemViewActivity : AppCompatActivity() {
         actionBar!!.setDisplayHomeAsUpEnabled(true)
         actionBar.setDisplayShowHomeEnabled(true)
         var intent  = intent
-        val aNavn   = intent.getStringExtra("iNavn")
+        val aName   = intent.getStringExtra("iName")
         val aType   = intent.getStringExtra("iType")
-        val aDato   = intent.getStringExtra("iDato")
-        val aFarge  = intent.getStringExtra("iFarge")
-        val aBesk   = intent.getStringExtra("iBesk")
-        val aImage  = intent.getIntExtra("iImage", 0)
+        val aTime   = intent.getStringExtra("iTime")
+        val aColor  = intent.getStringExtra("iColor")
+        val aDesk   = intent.getStringExtra("iDesk")
+        val aImage  = intent.getStringExtra("iImage")
 
-        actionBar.setTitle(aNavn)
-        textIC_Navn.text  = aNavn
+        actionBar.setTitle(aName)
+        textIC_Navn.text  = aName
         textIC_Type.text  = aType
-        textIC_dato.text  = aDato
-        textIC_Farge.text = aFarge
-        textIC_Besk.text  = aBesk
-        imageIC.setImageResource(aImage)
+        textIC_dato.text  = aTime
+        textIC_Farge.text = aColor
+        textIC_Besk.text  = aDesk
+        Glide.with(this).load(aImage).into(imageIC)
     }
 }
