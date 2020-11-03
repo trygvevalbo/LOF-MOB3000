@@ -9,11 +9,13 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.animation.AnimationUtils
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.noeTaptNoeFunnetAPP.account.MyAccount
 import com.example.noeTaptNoeFunnetAPP.post_item.PostFoundItem
 import com.example.noeTaptNoeFunnetAPP.post_item.PostLostItem
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
@@ -35,7 +37,7 @@ class FrontPage : AppCompatActivity() {
     private val collectionReference:CollectionReference = database.collection("Posts")
 
 
-    var itemAdapter : ItemAdapter? = null;
+    var itemAdapter : ItemAdapter? = null
     var isOpen = false
 
 
@@ -46,11 +48,9 @@ class FrontPage : AppCompatActivity() {
         super.onCreate(savedInstanceState); setTheme(R.style.AppTheme); AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES); setContentView(R.layout.activity_main)
         auth = FirebaseAuth.getInstance()
 
-
-
-
         recyclerSetup()
         preferancesSetup()
+
 
     }
 
@@ -72,7 +72,12 @@ class FrontPage : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         itemAdapter!!.startListening()
+        invalidateOptionsMenu()
+    }
 
+    override fun onResume() {
+        super.onResume()
+        invalidateOptionsMenu()
     }
 
     override fun onDestroy() {
@@ -85,6 +90,7 @@ class FrontPage : AppCompatActivity() {
         val fobClose = AnimationUtils.loadAnimation(this, R.anim.fob_close)
         val fobClockwise = AnimationUtils.loadAnimation(this, R.anim.spin_clockwise)
         val fobCounterclockwise = AnimationUtils.loadAnimation(this, R.anim.spin_counterclockwise)
+
 
         submitButton.setOnClickListener {
             if (isOpen) {
@@ -105,46 +111,54 @@ class FrontPage : AppCompatActivity() {
                 isOpen = true
             }
             taptKnapp.setOnClickListener{
-                val user = Firebase.auth.currentUser
+                 val user = Firebase.auth.currentUser
                 if (user != null){
-                    val intent1 = Intent(this, PostLostItem::class.java)
-                    startActivity(intent1)
+                val intent1 = Intent(this, PostLostItem::class.java)
+                startActivity(intent1)
                 } else {
-                    val intent1 = Intent(this, LoginActivity::class.java)
-                    startActivity(intent1)
-
+                 val intent1 = Intent(this, LoginActivity::class.java)
+                startActivity(intent1)
                 }
             }
 
             funnetKnapp.setOnClickListener{
-                // val user = Firebase.auth.currentUser
-                //if (user != null){
+                 val user = Firebase.auth.currentUser
+                if (user != null){
                 val intent1 = Intent(this, PostFoundItem::class.java)
                 startActivity(intent1)
-                //} else {
-                //  val intent1 = Intent(this, LoginActivity::class.java)
-                //startActivity(intent1)
+                } else {
+                  val intent1 = Intent(this, LoginActivity::class.java)
+                startActivity(intent1)
 
-                //}
+                }
             }
         }
     }
 
     // Search Menu Override
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-
+    override fun  onCreateOptionsMenu(menu: Menu?): Boolean {
+        val user = Firebase.auth.currentUser
 
         menuInflater.inflate(R.menu.searchmenu, menu)
+
+        val accountButton = menu!!.findItem(R.id.accountButton)
+        accountButton.isVisible = user != null
+
+        accountButton.setOnMenuItemClickListener{
+            val intent1 = Intent(this, MyAccount::class.java)
+            startActivity(intent1)
+            return@setOnMenuItemClickListener false
+        }
+
         val menuItem = menu!!.findItem(R.id.searchBar)
 
         if (menuItem != null) {
-
-
-
         return super.onCreateOptionsMenu(menu)
         }
         return false
     }
+
+
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
@@ -154,8 +168,6 @@ class FrontPage : AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
-
-
 
 
 }

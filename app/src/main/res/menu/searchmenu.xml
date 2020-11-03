@@ -3,7 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
-
+    <item
+        android:id="@+id/accountButton"
+        android:title="Account"
+        android:icon="@drawable/ic_account_knapp"
+        app:showAsAction="always|collapseActionView"
+        />
 
     <item
         android:id="@+id/locationButton"
