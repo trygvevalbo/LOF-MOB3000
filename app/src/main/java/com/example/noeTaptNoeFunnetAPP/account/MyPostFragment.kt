@@ -1,21 +1,19 @@
 package com.example.noeTaptNoeFunnetAPP.account
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.noeTaptNoeFunnetAPP.Item
 import com.example.noeTaptNoeFunnetAPP.ItemAdapter
 import com.example.noeTaptNoeFunnetAPP.R
-import com.example.noeTaptNoeFunnetAPP.databinding.ActivityMyAccountBinding
-import com.example.noeTaptNoeFunnetAPP.databinding.FragmentFormBinding
 import com.example.noeTaptNoeFunnetAPP.databinding.FragmentMyPostsBinding
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_my_posts.*
 
 
 class MyPostFragment : Fragment() {
@@ -48,8 +46,10 @@ class MyPostFragment : Fragment() {
 
 
         itemAdapter = ItemAdapter(firestoreRecyclerOptions)
-        hovedListe.layoutManager = LinearLayoutManager(requireContext())
-        hovedListe.adapter = itemAdapter
+        accountListe.layoutManager = LinearLayoutManager(context)
+        accountListe.adapter = itemAdapter
+
+
     }
 
     override fun onStart() {

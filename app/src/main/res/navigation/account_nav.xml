@@ -1,5 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/account_nav">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/account_nav"
+    app:startDestination="@id/accountPanelFragment">
 
+    <fragment
+        android:id="@+id/myPostFragment"
+        android:name="com.example.noeTaptNoeFunnetAPP.account.MyPostFragment"
+        android:label="MyPostFragment" >
+        <action
+            android:id="@+id/action_myPostFragment_to_accountPanelFragment"
+            app:destination="@id/accountPanelFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/accountPanelFragment"
+        android:name="com.example.noeTaptNoeFunnetAPP.account.AccountPanelFragment"
+        android:label="fragment_account_panel"
+        tools:layout="@layout/fragment_account_panel" >
+        <action
+            android:id="@+id/action_accountPanelFragment_to_myPostFragment"
+            app:destination="@id/myPostFragment" />
+    </fragment>
 </navigation>
