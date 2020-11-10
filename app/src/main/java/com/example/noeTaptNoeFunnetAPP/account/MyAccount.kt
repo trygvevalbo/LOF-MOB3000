@@ -19,6 +19,7 @@ class MyAccount : AppCompatActivity() {
 
     private var email : String? = null
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
