@@ -37,6 +37,8 @@ class ItemAdapter(options: FirestoreRecyclerOptions<Item>, val context: Context)
             var cTime  : String? = model.postTime
             var cType  : String? = model.postType
             var cImage : String? =  model.postImage
+            var cLat : String? =  model.itemLat
+            var cLng : String? =  model.itemLng
 
 
             val intent = Intent(context, ItemViewActivity::class.java)
@@ -46,6 +48,8 @@ class ItemAdapter(options: FirestoreRecyclerOptions<Item>, val context: Context)
             intent.putExtra("iColor", cColor)
             intent.putExtra("iDesk",  cDesk)
             intent.putExtra("iImage", cImage)
+            intent.putExtra("iLat", cLat)
+            intent.putExtra("iLng", cLng)
 
             context.startActivity(intent)
         }

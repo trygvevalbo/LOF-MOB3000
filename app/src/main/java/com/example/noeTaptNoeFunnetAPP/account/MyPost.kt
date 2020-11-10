@@ -1,46 +1,50 @@
 package com.example.noeTaptNoeFunnetAPP.account
 
-import android.app.Activity
+
+import androidx.appcompat.app.AppCompatActivity
+
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.noeTaptNoeFunnetAPP.FrontPage
 import com.example.noeTaptNoeFunnetAPP.Item
 import com.example.noeTaptNoeFunnetAPP.ItemAdapter
 import com.example.noeTaptNoeFunnetAPP.R
-import com.example.noeTaptNoeFunnetAPP.databinding.FragmentMyPostsBinding
-import com.firebase.ui.auth.AuthUI.getApplicationContext
+
+
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
-import kotlinx.android.synthetic.main.fragment_my_posts.*
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_my_post.*
+import kotlinx.android.synthetic.main.activity_my_post.accountListe
 
 
-class MyPostFragment : Fragment() {
+class MyPost : AppCompatActivity() {
+
+
+
+
+
+
     private var email : String? = null
+
     var itemAdapter : ItemAdapter? = null
     private val database : FirebaseFirestore = FirebaseFirestore.getInstance()
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val binding = DataBindingUtil.inflate<FragmentMyPostsBinding>(
-            inflater, R.layout.fragment_my_posts,
-            container, false
-        )
-
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_my_post)
 
         recyclerSetup()
-        return binding.root
     }
 
-    fun recyclerSetup(){
+
+    private fun recyclerSetup(){
+        var thisRef = database.collection("Posts")
+
+
+
 
         val user = Firebase.auth.currentUser
         user?.let {
@@ -50,15 +54,17 @@ class MyPostFragment : Fragment() {
         }
 
 
-        var myquery = database.collection("Posts").whereEqualTo("postEmail", user)
+        var myquery = database.collection("Posts").whereEqualTo("userEmail", email)
         val query = myquery
         val firestoreRecyclerOptions : FirestoreRecyclerOptions<Item> = FirestoreRecyclerOptions.Builder<Item>()
             .setQuery(query, Item::class.java)
             .build()
 
 
-        itemAdapter = ItemAdapter(firestoreRecyclerOptions, requireContext())
-        accountListe.layoutManager = LinearLayoutManager(context)
+
+        itemAdapter = ItemAdapter(firestoreRecyclerOptions,this)
+        accountListe.layoutManager = LinearLayoutManager(this)
+
         accountListe.adapter = itemAdapter
 
     }
@@ -72,6 +78,4 @@ class MyPostFragment : Fragment() {
         super.onDestroy()
         itemAdapter!!.stopListening()
     }
-
-
 }
