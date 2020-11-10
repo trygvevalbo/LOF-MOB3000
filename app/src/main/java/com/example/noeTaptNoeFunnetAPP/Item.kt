@@ -7,7 +7,7 @@ class Item {
     var itemDesk: String?= null
     var contact: String?= null
     var itemLat: String?= null
-    var itemLon: String?= null
+    var itemLng: String?= null
     var postTime: String?= null
     var postType: String?= null
     var postImage: String? =null

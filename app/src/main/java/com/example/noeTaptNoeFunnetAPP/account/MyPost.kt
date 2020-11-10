@@ -54,7 +54,7 @@ class MyPost : AppCompatActivity() {
         }
 
 
-        var myquery = database.collection("Posts").whereEqualTo("postEmail", email)
+        var myquery = database.collection("Posts").whereEqualTo("userEmail", email)
         val query = myquery
         val firestoreRecyclerOptions : FirestoreRecyclerOptions<Item> = FirestoreRecyclerOptions.Builder<Item>()
             .setQuery(query, Item::class.java)
