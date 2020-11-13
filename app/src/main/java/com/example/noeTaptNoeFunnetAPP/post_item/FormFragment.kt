@@ -30,6 +30,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.tasks.Continuation
 import com.google.android.gms.tasks.Task
+import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
@@ -321,6 +322,7 @@ class FormFragment : Fragment() {
 
     private fun uploadTextToDatabase(binding: FragmentFormBinding, model: FormViewModel?) {
         val postmap = HashMap<String, Any>()
+
         postmap["postImage"] = downloadUri.toString()
         postmap["itemName"] = binding.viewModel?.savedNameItem?.value.toString()
         postmap["itemDesk"] = binding.viewModel?.savedDescription?.value.toString()
@@ -332,13 +334,28 @@ class FormFragment : Fragment() {
         postmap["postContact"] = binding.viewModel?.savedContact?.value.toString()
         postmap["userEmail"]= binding.viewModel?.userEmail?.value.toString()
 
-        val array = arrayOf(binding.viewModel?.savedNameItem?.value.toString(),binding.viewModel?.savedDescription?.value.toString(), "Three")
+        val array = arrayOf(
+            binding.viewModel?.savedNameItem?.value.toString(),
+            binding.viewModel?.savedDescription?.value.toString(),
+            "Three"
+        )
         postmap["array"] = listOf(*array)
 
         val mFirestore: FirebaseFirestore = FirebaseFirestore.getInstance()
 
-        mFirestore.collection("Posts").add(postmap).addOnSuccessListener() {
+        mFirestore.collection("Posts").add(postmap).addOnSuccessListener() { documents ->
+
             Toast.makeText(requireContext(), "Data Stored", Toast.LENGTH_SHORT).show()
+
+
+            // få id fra opplastet post
+            mFirestore.collection("Posts")
+                .get()
+
+
+
+            // sett inn id på den posten man nettopp postet
+
         }.addOnFailureListener() {
             Toast.makeText(requireContext(), "Data Not Stored", Toast.LENGTH_SHORT).show()
         }

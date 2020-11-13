@@ -40,6 +40,7 @@ class ItemAdapter(options: FirestoreRecyclerOptions<Item>, val context: Context)
             var cLat : String? =  model.itemLat
             var cLng : String? =  model.itemLng
             var cEmail : String? = model.userEmail
+            var cId : String? = model.postId
 
 
             val intent = Intent(context, ItemViewActivity::class.java)
@@ -52,6 +53,7 @@ class ItemAdapter(options: FirestoreRecyclerOptions<Item>, val context: Context)
             intent.putExtra("iLat", cLat)
             intent.putExtra("iLng", cLng)
             intent.putExtra("iEmail", cEmail)
+            intent.putExtra("iId",cId)
 
             context.startActivity(intent)
         }

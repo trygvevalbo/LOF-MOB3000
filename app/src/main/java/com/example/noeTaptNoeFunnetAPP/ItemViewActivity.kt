@@ -51,6 +51,7 @@ class ItemViewActivity : AppCompatActivity() , OnMapReadyCallback {
         val aLat  = intent.getStringExtra("iLat")
         val aLng  = intent.getStringExtra("iLng")
         val aEmail = intent.getStringExtra("iEmail")
+        val aId = intent.getStringExtra("iId")
 
         actionBar.title = aName
         textIC_Navn.text  = aName
@@ -72,7 +73,9 @@ class ItemViewActivity : AppCompatActivity() , OnMapReadyCallback {
         if(aEmail.toString() == email){
             delete_post_button.visibility = View.VISIBLE;
             delete_post_button.setOnClickListener {
-               deleteItem()
+                if (aId != null) {
+                    deleteItem(aId)
+                }
 
             }
         } else{
@@ -90,9 +93,9 @@ class ItemViewActivity : AppCompatActivity() , OnMapReadyCallback {
 
     }
 
-    private fun deleteItem(){
-        
-        val docRef = database.collection("Posts").document("yi4wxVpkvDW60Jm0D2nR")
+    private fun deleteItem(aId : String){
+
+        val docRef = database.collection("Posts").document(aId)
             .delete()
             .addOnSuccessListener { Toast.makeText(this, "Posten er slettet", Toast.LENGTH_LONG).show()
                 val intent1 = Intent(this, FrontPage::class.java)
