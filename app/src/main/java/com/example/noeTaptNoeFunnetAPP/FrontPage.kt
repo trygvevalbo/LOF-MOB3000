@@ -148,6 +148,7 @@ class FrontPage : AppCompatActivity() {
     }
 
     fun sortAlle() {
+        myquery = postRef.orderBy("postTime")
         recyclerSetup()
         onStart()
     }
@@ -167,8 +168,33 @@ class FrontPage : AppCompatActivity() {
     // Search Menu Override
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val user = Firebase.auth.currentUser
-
         menuInflater.inflate(R.menu.searchmenu, menu)
+
+        val menuItem = menu!!.findItem(R.id.searchBar)
+
+        if (menuItem != null) {
+            val searchView = menuItem.actionView as SearchView
+
+
+
+            searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    recyclerSetup()
+                    onStart()
+                    return true
+                }
+
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    if (newText!!.isNotEmpty()) {
+                        myquery = database.collection("Posts").whereArrayContains("keyWords", newText)
+                    }
+                    return true
+                }
+
+            })
+        }
+
+
 
         val accountButton = menu!!.findItem(R.id.accountButton)
         accountButton.isVisible = user != null
@@ -180,6 +206,9 @@ class FrontPage : AppCompatActivity() {
         }
         return true
     }
+
+
+
 
 
     // Sorting Menu Override

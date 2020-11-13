@@ -11,6 +11,7 @@ class Item {
     var postTime: String?= null
     var postType: String?= null
     var postImage: String? =null
+    var postId: String? =null
 
     constructor()
 

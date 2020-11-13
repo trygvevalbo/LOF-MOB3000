@@ -130,7 +130,7 @@ class FormFragment : Fragment() {
         binding.postButtonFoundItem.setOnClickListener {
             if (model?.image?.value  != null) {  //last opp bilde til database
                 uploadImageToDatabase(binding, model)
-            }else{
+           }else{
                 uploadTextToDatabase(binding, model)
             }
 
@@ -320,6 +320,11 @@ class FormFragment : Fragment() {
     }
 
     private fun uploadTextToDatabase(binding: FragmentFormBinding, model: FormViewModel?) {
+        val keyWords = arrayOf(
+            binding.viewModel?.savedNameItem?.value.toString().trim().toLowerCase(Locale.getDefault()),
+            binding.viewModel?.savedDescription?.value.toString().trim().toLowerCase(Locale.getDefault()),
+            binding.viewModel?.savedColor?.value.toString().trim().toLowerCase(Locale.getDefault()),
+            binding.viewModel?.postType.toString().trim().toLowerCase(Locale.getDefault()))
         val postmap = HashMap<String, Any>()
         postmap["postImage"] = downloadUri.toString()
         postmap["itemName"] = binding.viewModel?.savedNameItem?.value.toString()
@@ -331,6 +336,10 @@ class FormFragment : Fragment() {
         postmap["postType"] = binding.viewModel?.postType.toString()
         postmap["postContact"] = binding.viewModel?.savedContact?.value.toString()
         postmap["userEmail"]= binding.viewModel?.userEmail?.value.toString()
+        postmap["keyWords"] = Arrays.asList(*keyWords)
+
+
+
 
         val mFirestore: FirebaseFirestore = FirebaseFirestore.getInstance()
 

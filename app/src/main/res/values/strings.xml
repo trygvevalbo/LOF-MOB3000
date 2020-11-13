@@ -29,4 +29,8 @@
     values-round/strings.xml for round devices.
     -->
     <string name="hello_world">Hello Square World!</string>
+    <string name="sorter">Sorter</string>
+    <string name="s_k">Søk</string>
+    <string name="lokasjon">Lokasjon</string>
+    <string name="konto">Konto</string>
 </resources>
