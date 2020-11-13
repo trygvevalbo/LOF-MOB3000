@@ -5,11 +5,14 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
+import com.example.noeTaptNoeFunnetAPP.FrontPage
 import com.example.noeTaptNoeFunnetAPP.R
 import com.example.noeTaptNoeFunnetAPP.databinding.ActivityMyAccountBinding
 import com.example.noeTaptNoeFunnetAPP.post_item.PostFoundItem
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import kotlinx.android.synthetic.main.activity_my_account.*
 
 
 class MyAccount : AppCompatActivity() {
@@ -43,6 +46,12 @@ class MyAccount : AppCompatActivity() {
 
         binding.myPostsButton.setOnClickListener{
             val intent1 = Intent(this, MyPost::class.java)
+            startActivity(intent1)
+        }
+
+        sign_out_button.setOnClickListener {
+            FirebaseAuth.getInstance().signOut();
+            val intent1 = Intent(this, FrontPage::class.java)
             startActivity(intent1)
         }
 

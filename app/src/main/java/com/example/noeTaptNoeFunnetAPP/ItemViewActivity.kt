@@ -91,7 +91,7 @@ class ItemViewActivity : AppCompatActivity() , OnMapReadyCallback {
     }
 
     private fun deleteItem(){
-
+        
         val docRef = database.collection("Posts").document("yi4wxVpkvDW60Jm0D2nR")
             .delete()
             .addOnSuccessListener { Toast.makeText(this, "Posten er slettet", Toast.LENGTH_LONG).show()

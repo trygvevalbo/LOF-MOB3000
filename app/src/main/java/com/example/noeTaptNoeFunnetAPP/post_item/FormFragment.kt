@@ -332,6 +332,9 @@ class FormFragment : Fragment() {
         postmap["postContact"] = binding.viewModel?.savedContact?.value.toString()
         postmap["userEmail"]= binding.viewModel?.userEmail?.value.toString()
 
+        val array = arrayOf(binding.viewModel?.savedNameItem?.value.toString(),binding.viewModel?.savedDescription?.value.toString(), "Three")
+        postmap["array"] = listOf(*array)
+
         val mFirestore: FirebaseFirestore = FirebaseFirestore.getInstance()
 
         mFirestore.collection("Posts").add(postmap).addOnSuccessListener() {
