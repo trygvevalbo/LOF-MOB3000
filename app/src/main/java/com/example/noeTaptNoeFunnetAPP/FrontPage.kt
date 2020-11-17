@@ -7,14 +7,12 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.animation.AnimationUtils
-import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.noeTaptNoeFunnetAPP.account.MyAccount
 import com.example.noeTaptNoeFunnetAPP.post_item.PostFoundItem
 import com.example.noeTaptNoeFunnetAPP.post_item.PostLostItem
@@ -22,19 +20,19 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
-
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.*
 
 
 class FrontPage : AppCompatActivity() {
-
+    // Lateinit and Vars needed later
     lateinit var preferences: SharedPreferences
     private lateinit var auth: FirebaseAuth
     private val database: FirebaseFirestore = FirebaseFirestore.getInstance()
     private var postRef = database.collection("Posts")
     private var itemAdapter: ItemAdapter? = null
-
+    // Query for database and isOpen for fob-button
     var myquery = postRef.orderBy("postTime")
     var isOpen = false
 
@@ -44,7 +42,7 @@ class FrontPage : AppCompatActivity() {
         ); setContentView(R.layout.activity_main)
         auth = FirebaseAuth.getInstance()
 
-
+        //sharedPrefs for sorting
         preferences = getSharedPreferences("My_Pref", Context.MODE_PRIVATE)
         val mSortSetting = preferences.getString("Sort", "Alle")
 
@@ -66,7 +64,7 @@ class FrontPage : AppCompatActivity() {
         preferancesSetup()
     }
 
-
+    //Main function for FirestoreDatabase
     fun recyclerSetup() {
         val firestoreRecyclerOptions: FirestoreRecyclerOptions<Item> =
             FirestoreRecyclerOptions.Builder<Item>()
@@ -80,7 +78,7 @@ class FrontPage : AppCompatActivity() {
         hovedListe.layoutManager = LinearLayoutManager(this)
         hovedListe.adapter = itemAdapter
     }
-
+    //Attach adapter
     override fun onStart() {
         super.onStart()
         itemAdapter!!.startListening()
@@ -171,13 +169,11 @@ class FrontPage : AppCompatActivity() {
         menuInflater.inflate(R.menu.searchmenu, menu)
 
         val menuItem = menu!!.findItem(R.id.searchBar)
-
+        //Check if searchbar is empty
         if (menuItem != null) {
             val searchView = menuItem.actionView as SearchView
 
-
-
-            searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String?): Boolean {
                     recyclerSetup()
                     onStart()
@@ -186,15 +182,19 @@ class FrontPage : AppCompatActivity() {
 
                 override fun onQueryTextChange(newText: String?): Boolean {
                     if (newText!!.isNotEmpty()) {
-                        myquery = database.collection("Posts").whereArrayContains("keyWords", newText)
+                        myquery = database.collection("Posts").whereArrayContains(
+                            "keyWords", newText.toString().trim().toLowerCase(
+                                Locale.getDefault()
+                            )
+                        )
                     }
                     return true
                 }
-
             })
+            searchView.setOnClickListener{
+
+            }
         }
-
-
 
         val accountButton = menu!!.findItem(R.id.accountButton)
         accountButton.isVisible = user != null

@@ -24,14 +24,14 @@
         android:id="@+id/searchBar"
         android:title="@string/s_k"
         android:icon="@drawable/ic_soke_knapp"
-        app:showAsAction="ifRoom|collapseActionView"
+        app:showAsAction="always|collapseActionView"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
         android:orderInCategory="1"
         />
     <item
         android:id="@+id/sorting"
         android:title="@string/sorter"
-        app:showAsAction="ifRoom|collapseActionView"
+        app:showAsAction="always|collapseActionView"
         android:icon="@drawable/ic_sort_knapp"
         android:orderInCategory="2"
         />
