@@ -55,6 +55,7 @@ class ItemAdapter(options: FirestoreRecyclerOptions<Item>, val context: Context)
             intent.putExtra("iEmail", cEmail)
             intent.putExtra("iId",cId)
 
+
             context.startActivity(intent)
         }
     }

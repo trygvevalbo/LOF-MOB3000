@@ -5,31 +5,35 @@
 
     <item
         android:id="@+id/accountButton"
-        android:title="Account"
+        android:title="@string/konto"
         android:icon="@drawable/ic_account_knapp"
-        app:showAsAction="always|collapseActionView"
+        app:showAsAction="ifRoom|collapseActionView"
+        android:orderInCategory="4"
         />
 
     <item
         android:id="@+id/locationButton"
-        android:title="GLocation"
+        android:title="@string/lokasjon"
         android:icon="@drawable/ic_lokasjon_knapp"
-        app:showAsAction="always|collapseActionView"
+        app:showAsAction="ifRoom|collapseActionView"
+        android:orderInCategory="3"
         />
 
 
     <item
         android:id="@+id/searchBar"
-        android:title="Search"
+        android:title="@string/s_k"
         android:icon="@drawable/ic_soke_knapp"
         app:showAsAction="always|collapseActionView"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
+        android:orderInCategory="1"
         />
     <item
         android:id="@+id/sorting"
-        android:title="Sorter"
+        android:title="@string/sorter"
         app:showAsAction="always|collapseActionView"
         android:icon="@drawable/ic_sort_knapp"
+        android:orderInCategory="2"
         />
 
 
