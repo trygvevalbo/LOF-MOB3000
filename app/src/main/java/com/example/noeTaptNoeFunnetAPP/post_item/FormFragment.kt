@@ -383,12 +383,8 @@ class FormFragment : Fragment() {
 
 
 
-        val array = arrayOf(
-            binding.viewModel?.savedNameItem?.value.toString(),
-            binding.viewModel?.savedDescription?.value.toString(),
-            "Three"
-        )
-        postmap["array"] = listOf(*array)
+
+        postmap["keyWords"] = listOf(*keyWords)
 
         val mFirestore: FirebaseFirestore = FirebaseFirestore.getInstance()
         if(checkForm(binding,model)){
