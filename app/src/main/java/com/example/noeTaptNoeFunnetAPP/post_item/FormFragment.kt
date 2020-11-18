@@ -358,9 +358,6 @@ class FormFragment : Fragment() {
 
 
             // få id fra opplastet post
-            mFirestore.collection("Posts")
-                .get()
-
 
 
             // sett inn id på den posten man nettopp postet
