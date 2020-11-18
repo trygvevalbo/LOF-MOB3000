@@ -17,9 +17,6 @@ import kotlinx.android.synthetic.main.activity_my_account.*
 
 class MyAccount : AppCompatActivity() {
 
-
-
-
     private var email : String? = null
 
 
@@ -31,6 +28,9 @@ class MyAccount : AppCompatActivity() {
 
 
         supportActionBar?.title = "Min konto"
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+
 
         // Inflate the layout for this fragment
 
@@ -55,6 +55,11 @@ class MyAccount : AppCompatActivity() {
             startActivity(intent1)
         }
 
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 
 

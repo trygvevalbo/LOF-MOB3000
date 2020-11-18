@@ -35,7 +35,7 @@ class ItemAdapter(options: FirestoreRecyclerOptions<Item>, val context: Context)
         holder.rpostTime.text = model.postTime
         holder.rpostType.text = model.postType
         Glide.with(holder.itemView.context).load(model.postImage).into(holder.rpostImage)
-        
+
 
         holder.itemView.setOnClickListener {
             var cName   : String? = model.itemName
@@ -55,7 +55,7 @@ class ItemAdapter(options: FirestoreRecyclerOptions<Item>, val context: Context)
 
 
             val intent = Intent(context, ItemViewActivity::class.java)
-            val snapshot = snapshots.getSnapshot(holder.adapterPosition)
+            val snapshot = snapshots.getSnapshot(holder.adapterPosition) // https://stackoverflow.com/questions/47986504/how-to-get-document-id-or-name-in-android-in-firestore-db-for-passing-on-to-anot
              var cDocumentId = snapshot.id
             intent.putExtra("iDocumentId", cDocumentId )
             intent.putExtra("iName", cName)

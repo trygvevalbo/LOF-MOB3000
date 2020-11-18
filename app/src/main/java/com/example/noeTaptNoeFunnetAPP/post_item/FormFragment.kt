@@ -36,6 +36,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.StorageTask
 import com.google.firebase.storage.UploadTask
+import kotlinx.android.synthetic.main.activity_signup.*
 import kotlinx.android.synthetic.main.fragment_form.*
 import java.util.*
 
@@ -130,14 +131,16 @@ class FormFragment : Fragment() {
 
         binding.postButtonFoundItem.setOnClickListener {
             if (model?.image?.value  != null) {  //last opp bilde til database
+
                 uploadImageToDatabase(binding, model)
            }else{
+
                 uploadTextToDatabase(binding, model)
+
             }
 
 
-            val intent1 = Intent(activity, FrontPage::class.java)
-            startActivity(intent1)
+
         }
 
 
@@ -155,6 +158,7 @@ class FormFragment : Fragment() {
             appNavigator.navigateToSelectDate()
         }
     }
+
 
 
 
@@ -283,6 +287,41 @@ class FormFragment : Fragment() {
         }
     }
 
+    private fun checkForm(binding: FragmentFormBinding, model: FormViewModel?): Boolean {
+        if (downloadUri.isNullOrEmpty()) {
+            binding.nameOfItem.error = "Venligst last opp et bilde av tingen"
+            binding.nameOfItem.requestFocus()
+            return false
+        } else if (binding.nameOfItem.text.toString().isNullOrEmpty()) {
+            binding.nameOfItem.error = "Venligst tast inn navnet på tingen"
+            binding.nameOfItem.requestFocus()
+            return false
+        } else if (binding.description.text.toString().isNullOrEmpty()) {
+            binding.description.error = "Venligst tast inn en beskrivelse"
+            binding.description.requestFocus()
+            return false
+        } else if (binding.colordescription.text.toString().isNullOrEmpty()) {
+            binding.colordescription.error = "Venligst tast inn en fargebeskrivelse på tingen"
+            binding.colordescription.requestFocus()
+            return false
+        }else if (binding.timewhenfound.text.toString().isNullOrEmpty()) {
+            binding.timewhenfound.error = "Venligst tast inn tidspunkt"
+            binding.timewhenfound.requestFocus()
+            return false
+        } else if (binding.contactinformation.text.toString().isNullOrEmpty()) {
+            binding.contactinformation.error = "Venligst tast inn mobilnummer eller E-post"
+            binding.contactinformation.requestFocus()
+            return false
+        } else if (selectedLocation == LatLng(59.913868, 10.752245)) {
+            binding.contactinformation.error = "Venligst velg hvor den var funnet"
+            binding.contactinformation.requestFocus()
+            return false
+        } else{
+            return true
+        }
+
+    }
+
     private fun uploadImageToDatabase(binding: FragmentFormBinding, model: FormViewModel?) {
         storageRef = FirebaseStorage.getInstance().reference.child("PostImages")
 
@@ -321,6 +360,7 @@ class FormFragment : Fragment() {
     }
 
     private fun uploadTextToDatabase(binding: FragmentFormBinding, model: FormViewModel?) {
+
         val keyWords = arrayOf(
             binding.viewModel?.savedNameItem?.value.toString().trim().toLowerCase(Locale.getDefault()),
             binding.viewModel?.savedDescription?.value.toString().trim().toLowerCase(Locale.getDefault()),
@@ -351,21 +391,19 @@ class FormFragment : Fragment() {
         postmap["array"] = listOf(*array)
 
         val mFirestore: FirebaseFirestore = FirebaseFirestore.getInstance()
-
+        if(checkForm(binding,model)){
         mFirestore.collection("Posts").add(postmap).addOnSuccessListener() { documents ->
 
-            Toast.makeText(requireContext(), "Data Stored", Toast.LENGTH_SHORT).show()
 
-
-            // få id fra opplastet post
-
-
-            // sett inn id på den posten man nettopp postet
+            Toast.makeText(requireContext(), "Post laget", Toast.LENGTH_SHORT).show()
+            val intent1 = Intent(activity, FrontPage::class.java)
+            startActivity(intent1)
 
         }.addOnFailureListener() {
-            Toast.makeText(requireContext(), "Data Not Stored", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Noe er feil! venligst prøv igjen", Toast.LENGTH_SHORT).show()
         }
 
+    }
     }
 
 }

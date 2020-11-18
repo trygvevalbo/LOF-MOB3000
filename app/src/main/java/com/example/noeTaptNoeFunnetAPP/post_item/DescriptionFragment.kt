@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.EditText
 import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
@@ -29,7 +30,14 @@ class DescriptionFragment : Fragment() {
         model!!.savedDescription.observe(viewLifecycleOwner,
             { o -> description?.setText(o!!.toString()) })
 
+        val doneButton = view?.findViewById(R.id.done_description_button) as? Button
+        doneButton?.setOnClickListener {
+            model= ViewModelProviders.of(requireActivity()).get(FormViewModel::class.java)
 
+            model!!.setDescription(description?.text.toString()) // set verdi
+
+            appNavigator.navigateToForm()
+        }
         val callback = requireActivity().onBackPressedDispatcher.addCallback(this) {
             model= ViewModelProviders.of(requireActivity()).get(FormViewModel::class.java)
 

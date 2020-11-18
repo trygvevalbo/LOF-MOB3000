@@ -48,6 +48,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
+
                     <ImageView
                         android:id="@+id/choose_image"
                         android:layout_width="77dp"
@@ -142,7 +143,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/description" />
 
-                    <EditText
+                    <TextView
                         android:id="@+id/timewhenfound"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
@@ -150,7 +151,6 @@
                         android:background="?attr/editTextBackground"
                         android:ems="10"
                         android:hint="@string/date_found"
-                        android:inputType="textPersonName"
                         android:text="@{viewModel.savedTime}"
                         android:textSize="18sp"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -186,7 +186,10 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_field_container" />
+                app:layout_constraintTop_toBottomOf="@+id/text_field_container"
+                >
+
+            </fragment>
 
 
             <Button

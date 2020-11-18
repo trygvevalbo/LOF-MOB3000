@@ -22,11 +22,6 @@ import kotlinx.android.synthetic.main.activity_my_post.accountListe
 
 class MyPost : AppCompatActivity() {
 
-
-
-
-
-
     private var email : String? = null
 
     var itemAdapter : ItemAdapter? = null
@@ -35,6 +30,8 @@ class MyPost : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_my_post)
+        supportActionBar?.title = "Mine poster"
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         recyclerSetup()
     }
@@ -77,5 +74,9 @@ class MyPost : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         itemAdapter!!.stopListening()
+    }
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 }
