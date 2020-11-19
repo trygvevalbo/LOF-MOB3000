@@ -62,8 +62,6 @@ class FrontPage : AppCompatActivity() {
 
         recyclerSetup()
         preferancesSetup()
-
-
     }
 
     //Main function for FirestoreDatabase

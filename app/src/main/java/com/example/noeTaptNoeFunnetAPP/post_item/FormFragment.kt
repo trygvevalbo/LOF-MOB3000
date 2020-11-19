@@ -287,6 +287,8 @@ class FormFragment : Fragment() {
         }
     }
 
+
+
     private fun checkForm(binding: FragmentFormBinding, model: FormViewModel?): Boolean {
         if (downloadUri.isNullOrEmpty()) {
             binding.nameOfItem.error = "Venligst last opp et bilde av tingen"

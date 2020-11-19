@@ -38,9 +38,10 @@ class ItemViewActivity : AppCompatActivity() , OnMapReadyCallback {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_item_view)
 
-        val actionBar : ActionBar? = supportActionBar
-        actionBar!!.setDisplayHomeAsUpEnabled(true)
-        actionBar.setDisplayShowHomeEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        //val actionBar : ActionBar? = supportActionBar
+        //actionBar!!.setDisplayHomeAsUpEnabled(true)
+       // actionBar.setDisplayShowHomeEnabled(true)
         var intent  = intent
         val aDocumentId = intent.getStringExtra("iDocumentId")
         val aName   = intent.getStringExtra("iName")
@@ -54,7 +55,7 @@ class ItemViewActivity : AppCompatActivity() , OnMapReadyCallback {
         val aEmail = intent.getStringExtra("iEmail")
 
 
-        actionBar.title = aName
+        supportActionBar?.title = aName
         textIC_Navn.text  = aName
         textIC_Type.text  = aType
         textIC_dato.text  = aTime
@@ -92,6 +93,11 @@ class ItemViewActivity : AppCompatActivity() , OnMapReadyCallback {
             supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment!!.getMapAsync(this)
 
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 
     private fun deleteItem(aDocumentId : String){

@@ -40,9 +40,6 @@ class MyPost : AppCompatActivity() {
     private fun recyclerSetup(){
         var thisRef = database.collection("Posts")
 
-
-
-
         val user = Firebase.auth.currentUser
         user?.let {
             for (profile in it.providerData) {
