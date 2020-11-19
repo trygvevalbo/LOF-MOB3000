@@ -67,6 +67,8 @@ class MapsFullScreenFragment : Fragment() {
 
         binding.viewModel = model//attach your viewModel to xml
 
+        getLastLocation()
+
 
         val mapFragment = childFragmentManager.findFragmentById(R.id.map_fragment) as SupportMapFragment?
         mapFragment?.getMapAsync(OnMapReadyCallback {
