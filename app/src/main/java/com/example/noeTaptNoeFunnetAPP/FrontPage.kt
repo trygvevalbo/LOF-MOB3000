@@ -170,31 +170,43 @@ class FrontPage : AppCompatActivity() {
 
         val menuItem = menu!!.findItem(R.id.searchBar)
         //Check if searchbar is empty
-        if (menuItem != null) {
+
             val searchView = menuItem.actionView as SearchView
 
-            searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-                override fun onQueryTextSubmit(query: String?): Boolean {
+
+            menuItem.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
+                override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
+                    searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                        override fun onQueryTextSubmit(query: String?): Boolean {
+                            recyclerSetup()
+                            onStart()
+                            return true
+                        }
+
+                        override fun onQueryTextChange(newText: String?): Boolean {
+                            if (newText!!.isNotEmpty()) {
+                                myquery = database.collection("Posts").whereArrayContains(
+                                    "keyWords", newText.toString().trim().toLowerCase(
+                                        Locale.getDefault()
+                                    )
+                                )
+                            }
+                            return true
+                        }
+                    })
+                    return true
+                }
+
+                override fun onMenuItemActionCollapse(item: MenuItem?): Boolean {
+                    sortAlle()
                     recyclerSetup()
                     onStart()
                     return true
                 }
-
-                override fun onQueryTextChange(newText: String?): Boolean {
-                    if (newText!!.isNotEmpty()) {
-                        myquery = database.collection("Posts").whereArrayContains(
-                            "keyWords", newText.toString().trim().toLowerCase(
-                                Locale.getDefault()
-                            )
-                        )
-                    }
-                    return true
-                }
             })
-            searchView.setOnClickListener{
 
-            }
-        }
+
+
 
         val accountButton = menu!!.findItem(R.id.accountButton)
         accountButton.isVisible = user != null
@@ -206,7 +218,6 @@ class FrontPage : AppCompatActivity() {
         }
         return true
     }
-
 
 
 
