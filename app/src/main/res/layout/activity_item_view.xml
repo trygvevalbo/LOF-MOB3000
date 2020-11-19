@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:fillViewport="true"
     >
-<androidx.constraintlayout.widget.ConstraintLayout
+<RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="16dp"
@@ -17,14 +17,12 @@
     <ImageView
         android:id="@+id/imageIC"
         android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_margin="10dp"
         android:src="@mipmap/ic_launcher_round"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+         />
 
     <TextView
         android:id="@+id/textIC_Navn"
@@ -38,68 +36,57 @@
         android:textColor="@color/LightGray"
         android:textSize="28sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageIC" />
+         />
 
 
     <TextView
         android:id="@+id/textIC_Type"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textIC_Navn"
-        android:layout_alignBottom="@+id/textIC_Navn"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="24dp"
-        android:text="TYPE"
+        android:text="@string/type"
         android:textColor="@color/LightGray"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.04"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textIC_Navn" />
+        android:layout_below="@+id/textIC_Navn"
+
+        />
 
     <TextView
         android:id="@+id/textIC_dato"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textIC_Navn"
         android:layout_marginTop="16dp"
-        android:text="DATO"
+        android:text="@string/dato"
         android:textColor="@color/LightGray"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.04"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textIC_Type" />
+        android:layout_below="@+id/textIC_Type"
+
+         />
 
     <TextView
         android:id="@+id/textIC_Farge"
-        android:layout_width="300dp"
-        android:layout_height="32dp"
-        android:layout_below="@id/textIC_Navn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:layout_marginTop="16dp"
         android:text="@string/Farge"
         android:textColor="@color/AlmostWhite"
         android:textSize="22sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.052"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textIC_dato" />
+        android:layout_below="@id/textIC_dato"
+         />
 
     <TextView
         android:id="@+id/textIC_Besk"
-        android:layout_width="492dp"
-        android:layout_height="42dp"
-        android:layout_below="@id/textIC_Farge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:layout_marginTop="16dp"
         android:text="@string/Besk"
         android:textColor="@color/AlmostWhite"
         android:textSize="22sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textIC_Farge" />
+        android:layout_below="@id/textIC_Farge"
+         />
 
     <!--  <com.google.android.gms.maps.MapView
         android:id="@+id/mapView"
@@ -125,24 +112,22 @@
         android:apiKey="@string/google_maps_key"
         android:clickable="true"
         android:enabled="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textIC_Besk" />
+         />
 
     <Button
         android:id="@+id/delete_post_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
-
         android:layout_marginTop="16dp"
         android:background="@color/red_button"
         android:text="Slett Denne posten"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/map" />
+        android:visibility="invisible"
+        android:layout_below="@id/map"
+        android:layout_centerHorizontal="true"
+         />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</RelativeLayout>
 
 </ScrollView>

@@ -32,6 +32,7 @@ class FrontPage : AppCompatActivity() {
     private val database: FirebaseFirestore = FirebaseFirestore.getInstance()
     private var postRef = database.collection("Posts")
     private var itemAdapter: ItemAdapter? = null
+
     // Query for database and isOpen for fob-button
     var myquery = postRef.orderBy("postTime")
     var isOpen = false
@@ -72,12 +73,12 @@ class FrontPage : AppCompatActivity() {
                 .build()
 
 
-
-
+        //Define adapter
         itemAdapter = ItemAdapter(firestoreRecyclerOptions, this)
         hovedListe.layoutManager = LinearLayoutManager(this)
         hovedListe.adapter = itemAdapter
     }
+
     //Attach adapter
     override fun onStart() {
         super.onStart()
@@ -144,7 +145,7 @@ class FrontPage : AppCompatActivity() {
             }
         }
     }
-
+    // Sorting functions. Ajusts Query to the relevant sorting
     fun sortAlle() {
         myquery = postRef.orderBy("postTime")
         recyclerSetup()
@@ -167,47 +168,47 @@ class FrontPage : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val user = Firebase.auth.currentUser
         menuInflater.inflate(R.menu.searchmenu, menu)
-
+        //Define searchbar
         val menuItem = menu!!.findItem(R.id.searchBar)
-        //Check if searchbar is empty
 
-            val searchView = menuItem.actionView as SearchView
+        //Second Def for ExpandListener
+        val searchView = menuItem.actionView as SearchView
 
-
-            menuItem.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
-                override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
-                    searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-                        override fun onQueryTextSubmit(query: String?): Boolean {
-                            recyclerSetup()
-                            onStart()
-                            return true
+        //Listener for searchView expand and collapse
+        menuItem.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
+            override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
+                searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                    //OnQueryTextSubmit runs recyclerSetup with new Query
+                    override fun onQueryTextSubmit(query: String?): Boolean {
+                        recyclerSetup()
+                        onStart()
+                        return true
+                    }
+                    //Ajust Query to search-value
+                    override fun onQueryTextChange(newText: String?): Boolean {
+                        if (newText!!.isNotEmpty()) {
+                            myquery = database
+                                .collection("Posts")
+                                .whereArrayContains("keyWords", newText.toString()
+                                    .trim().toLowerCase(Locale.getDefault()))
                         }
+                        return true
+                    }
+                })
+                return true
+            }
 
-                        override fun onQueryTextChange(newText: String?): Boolean {
-                            if (newText!!.isNotEmpty()) {
-                                myquery = database.collection("Posts").whereArrayContains(
-                                    "keyWords", newText.toString().trim().toLowerCase(
-                                        Locale.getDefault()
-                                    )
-                                )
-                            }
-                            return true
-                        }
-                    })
-                    return true
-                }
-
-                override fun onMenuItemActionCollapse(item: MenuItem?): Boolean {
-                    sortAlle()
-                    recyclerSetup()
-                    onStart()
-                    return true
-                }
-            })
+            // Listens on collapse and resets itemView
+            override fun onMenuItemActionCollapse(item: MenuItem?): Boolean {
+                sortAlle()
+                recyclerSetup()
+                onStart()
+                return true
+            }
+        })
 
 
-
-
+        //Account Button
         val accountButton = menu!!.findItem(R.id.accountButton)
         accountButton.isVisible = user != null
 
@@ -218,9 +219,6 @@ class FrontPage : AppCompatActivity() {
         }
         return true
     }
-
-
-
 
     // Sorting Menu Override
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

@@ -7,10 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.noeTaptNoeFunnetAPP.post_item.PostLostItem
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 class ItemAdapter(options: FirestoreRecyclerOptions<Item>, val context: Context) :
     FirestoreRecyclerAdapter<Item, ItemAdapter.ItemAdapterVH>(options) {
@@ -30,33 +34,42 @@ class ItemAdapter(options: FirestoreRecyclerOptions<Item>, val context: Context)
         Glide.with(holder.itemView.context).load(model.postImage).into(holder.rpostImage)
 
         holder.itemView.setOnClickListener {
-            var cName   : String? = model.itemName
-            var cColor  : String? = model.itemColor
-            //var iContact : String? = model.contact
-            var cDesk  : String? = model.itemDesk
-            var cTime  : String? = model.postTime
-            var cType  : String? = model.postType
-            var cImage : String? =  model.postImage
-            var cLat : String? =  model.itemLat
-            var cLng : String? =  model.itemLng
-            var cEmail : String? = model.userEmail
-            var cId : String? = model.postId
+            val user = Firebase.auth.currentUser
+
+            if (user != null) {
+                var cName   : String? = model.itemName
+                var cColor  : String? = model.itemColor
+                //var iContact : String? = model.contact
+                var cDesk  : String? = model.itemDesk
+                var cTime  : String? = model.postTime
+                var cType  : String? = model.postType
+                var cImage : String? =  model.postImage
+                var cLat : String? =  model.itemLat
+                var cLng : String? =  model.itemLng
+                var cEmail : String? = model.userEmail
+                var cId : String? = model.postId
 
 
-            val intent = Intent(context, ItemViewActivity::class.java)
-            intent.putExtra("iName",  cName)
-            intent.putExtra("iType",  cType)
-            intent.putExtra("iTime",  cTime)
-            intent.putExtra("iColor", cColor)
-            intent.putExtra("iDesk",  cDesk)
-            intent.putExtra("iImage", cImage)
-            intent.putExtra("iLat", cLat)
-            intent.putExtra("iLng", cLng)
-            intent.putExtra("iEmail", cEmail)
-            intent.putExtra("iId",cId)
+                val intent = Intent(context, ItemViewActivity::class.java)
+                intent.putExtra("iName",  cName)
+                intent.putExtra("iType",  cType)
+                intent.putExtra("iTime",  cTime)
+                intent.putExtra("iColor", cColor)
+                intent.putExtra("iDesk",  cDesk)
+                intent.putExtra("iImage", cImage)
+                intent.putExtra("iLat", cLat)
+                intent.putExtra("iLng", cLng)
+                intent.putExtra("iEmail", cEmail)
+                intent.putExtra("iId",cId)
 
 
-            context.startActivity(intent)
+                context.startActivity(intent)
+            } else {
+                val intent = Intent(context, LoginActivity::class.java)
+                context.startActivity(intent)
+            }
+
+
         }
     }
     class ItemAdapterVH(itemView: View) : RecyclerView.ViewHolder(itemView) {

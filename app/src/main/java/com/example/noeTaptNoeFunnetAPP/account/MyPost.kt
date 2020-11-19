@@ -23,10 +23,6 @@ import kotlinx.android.synthetic.main.activity_my_post.accountListe
 class MyPost : AppCompatActivity() {
 
 
-
-
-
-
     private var email : String? = null
 
     var itemAdapter : ItemAdapter? = null
