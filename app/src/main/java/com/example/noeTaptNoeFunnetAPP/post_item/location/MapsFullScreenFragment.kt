@@ -67,13 +67,19 @@ class MapsFullScreenFragment : Fragment() {
 
         binding.viewModel = model//attach your viewModel to xml
 
+        getLastLocation()
+
 
         val mapFragment = childFragmentManager.findFragmentById(R.id.map_fragment) as SupportMapFragment?
         mapFragment?.getMapAsync(OnMapReadyCallback {
             //https://stackoverflow.com/questions/41254834/add-marker-on-google-map-on-touching-the-screen-using-android/41254877
             mMap = it
+            val mapSettings = mMap?.uiSettings
+            mapSettings?.isZoomControlsEnabled = true
             mMap.setOnMapClickListener { latLng -> // Creating a marker
+
                 val markerOptions = MarkerOptions()
+
 
                 binding.viewModel?.setLocation(latLng.latitude, latLng.longitude)
 

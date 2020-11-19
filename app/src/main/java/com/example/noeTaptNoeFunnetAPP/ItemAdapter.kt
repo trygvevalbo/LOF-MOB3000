@@ -16,11 +16,18 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
+
 class ItemAdapter(options: FirestoreRecyclerOptions<Item>, val context: Context) :
     FirestoreRecyclerAdapter<Item, ItemAdapter.ItemAdapterVH>(options) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemAdapterVH {
-        return ItemAdapterVH(LayoutInflater.from(parent.context).inflate(R.layout.liste, parent, false))
+        return ItemAdapterVH(
+            LayoutInflater.from(parent.context).inflate(
+                R.layout.liste,
+                parent,
+                false
+            )
+        )
     }
 
     override fun onBindViewHolder(holder: ItemAdapterVH, position: Int, model: Item) {
@@ -32,6 +39,7 @@ class ItemAdapter(options: FirestoreRecyclerOptions<Item>, val context: Context)
         holder.rpostTime.text = model.postTime
         holder.rpostType.text = model.postType
         Glide.with(holder.itemView.context).load(model.postImage).into(holder.rpostImage)
+
 
         holder.itemView.setOnClickListener {
             val user = Firebase.auth.currentUser
@@ -50,20 +58,29 @@ class ItemAdapter(options: FirestoreRecyclerOptions<Item>, val context: Context)
                 var cId : String? = model.postId
 
 
-                val intent = Intent(context, ItemViewActivity::class.java)
-                intent.putExtra("iName",  cName)
-                intent.putExtra("iType",  cType)
-                intent.putExtra("iTime",  cTime)
-                intent.putExtra("iColor", cColor)
-                intent.putExtra("iDesk",  cDesk)
-                intent.putExtra("iImage", cImage)
-                intent.putExtra("iLat", cLat)
-                intent.putExtra("iLng", cLng)
-                intent.putExtra("iEmail", cEmail)
-                intent.putExtra("iId",cId)
 
 
-                context.startActivity(intent)
+
+            val intent = Intent(context, ItemViewActivity::class.java)
+            val snapshot = snapshots.getSnapshot(holder.adapterPosition) // https://stackoverflow.com/questions/47986504/how-to-get-document-id-or-name-in-android-in-firestore-db-for-passing-on-to-anot
+             var cDocumentId = snapshot.id
+            intent.putExtra("iDocumentId", cDocumentId )
+            intent.putExtra("iName", cName)
+            intent.putExtra("iType", cType)
+            intent.putExtra("iTime", cTime)
+            intent.putExtra("iColor", cColor)
+            intent.putExtra("iDesk", cDesk)
+            intent.putExtra("iImage", cImage)
+            intent.putExtra("iLat", cLat)
+            intent.putExtra("iLng", cLng)
+            intent.putExtra("iEmail", cEmail)
+            intent.putExtra("iId", cId)
+
+
+            context.startActivity(intent)
+
+
+     
             } else {
                 val intent = Intent(context, LoginActivity::class.java)
                 context.startActivity(intent)
@@ -71,6 +88,7 @@ class ItemAdapter(options: FirestoreRecyclerOptions<Item>, val context: Context)
 
 
         }
+
     }
     class ItemAdapterVH(itemView: View) : RecyclerView.ViewHolder(itemView) {
 

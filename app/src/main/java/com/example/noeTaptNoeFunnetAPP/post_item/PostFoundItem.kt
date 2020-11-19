@@ -1,11 +1,9 @@
 package com.example.noeTaptNoeFunnetAPP.post_item
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
-import com.example.noeTaptNoeFunnetAPP.FrontPage
 import com.example.noeTaptNoeFunnetAPP.R
 import com.example.noeTaptNoeFunnetAPP.post_item.location.MapsFullScreenFragmentDirections
 import com.google.firebase.auth.ktx.auth
@@ -66,9 +64,11 @@ class PostFoundItem : AppCompatActivity(), AppNavigator{
         findNavController(R.id.nav_host_fragment).navigate(action)
     }
 
-    override fun onSupportNavigateUp(): Boolean {
+   override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
     }
+
+
 
 }

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.databinding.DataBindingUtil
@@ -37,8 +38,15 @@ class dateFragment : Fragment() {
             container, false
         )
 
-            val callback = requireActivity().onBackPressedDispatcher.addCallback(this) {
 
+        binding.doneDateButton.setOnClickListener {
+            model= ViewModelProviders.of(requireActivity()).get(FormViewModel::class.java)
+            binding.viewModel = model//attach your viewModel to xml
+            binding.viewModel?.savedTime?.value = binding.datePicker.dayOfMonth.toString() +"/"+(binding.datePicker.month+1).toString() +"/"+ binding.datePicker.year.toString()
+            appNavigator.navigateFromDateToForm()
+        }
+
+            val callback = requireActivity().onBackPressedDispatcher.addCallback(this) {
             model= ViewModelProviders.of(requireActivity()).get(FormViewModel::class.java)
             binding.viewModel = model//attach your viewModel to xml
             binding.viewModel?.savedTime?.value = binding.datePicker.dayOfMonth.toString() +"/"+(binding.datePicker.month+1).toString() +"/"+ binding.datePicker.year.toString()
