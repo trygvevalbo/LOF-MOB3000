@@ -33,4 +33,6 @@
     <string name="s_k">Søk</string>
     <string name="lokasjon">Lokasjon</string>
     <string name="konto">Konto</string>
+    <string name="type">TYPE</string>
+    <string name="dato">DATO</string>
 </resources>
