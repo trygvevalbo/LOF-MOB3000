@@ -26,7 +26,7 @@
         android:gravity="top|left"
         android:lines="8"
         android:minLines="6"
-        android:text=""
+        android:hint="Skriv inn en beskrivelse på gjenstanden"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
