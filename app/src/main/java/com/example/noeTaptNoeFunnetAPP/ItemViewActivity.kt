@@ -93,6 +93,7 @@ class ItemViewActivity : AppCompatActivity() , OnMapReadyCallback {
                             startActivity(intent1)
                         }else{
                             val intent1 = Intent(this, PostLostItem::class.java)
+                            intent1.putExtras(intent)
                             startActivity(intent1)
                         }
                     }
