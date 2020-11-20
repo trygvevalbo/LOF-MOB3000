@@ -46,6 +46,10 @@ class PostLostItem : AppCompatActivity(), AppNavigator {
             }
         }
 
+        if(!intent.getStringExtra("iDocumentId").isNullOrEmpty()){
+            viewModel!!.setPostData(intent)
+        }
+
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = "Ny tapt annonse"
     }
