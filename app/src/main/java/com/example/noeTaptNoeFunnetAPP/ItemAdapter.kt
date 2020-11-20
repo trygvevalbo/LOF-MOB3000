@@ -47,7 +47,7 @@ class ItemAdapter(options: FirestoreRecyclerOptions<Item>, val context: Context)
             if (user != null) {
                 var cName   : String? = model.itemName
                 var cColor  : String? = model.itemColor
-                //var iContact : String? = model.contact
+                var cContact : String? = model.postContact
                 var cDesk  : String? = model.itemDesk
                 var cTime  : String? = model.postTime
                 var cType  : String? = model.postType
@@ -71,6 +71,7 @@ class ItemAdapter(options: FirestoreRecyclerOptions<Item>, val context: Context)
             intent.putExtra("iColor", cColor)
             intent.putExtra("iDesk", cDesk)
             intent.putExtra("iImage", cImage)
+                intent.putExtra("iContact", cContact)
             intent.putExtra("iLat", cLat)
             intent.putExtra("iLng", cLng)
             intent.putExtra("iEmail", cEmail)

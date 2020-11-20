@@ -88,19 +88,6 @@
         android:layout_below="@id/textIC_Farge"
          />
 
-    <!--  <com.google.android.gms.maps.MapView
-        android:id="@+id/mapView"
-        android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:layout_below="@id/textIC_Besk"
-        android:layout_marginTop="16dp"
-        android:apiKey="@string/google_maps_key"
-        android:clickable="true"
-        android:enabled="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textIC_Besk" />
-        -->
 
     <fragment
         android:id="@+id/map"
@@ -126,6 +113,15 @@
         android:layout_centerHorizontal="true"
          />
 
+    <Button
+        android:id="@+id/edit_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Endre post"
+        android:visibility="invisible"
+        android:layout_below="@id/delete_post_button"
+        android:layout_centerHorizontal="true"/>
 
 
 </RelativeLayout>

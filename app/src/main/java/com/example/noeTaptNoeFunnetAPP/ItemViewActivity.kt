@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import com.bumptech.glide.Glide
+import com.example.noeTaptNoeFunnetAPP.post_item.PostFoundItem
 import com.example.noeTaptNoeFunnetAPP.post_item.PostLostItem
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -50,6 +51,7 @@ class ItemViewActivity : AppCompatActivity() , OnMapReadyCallback {
         val aColor  = intent.getStringExtra("iColor")
         val aDesk   = intent.getStringExtra("iDesk")
         val aImage  = intent.getStringExtra("iImage")
+        val aContact = intent.getStringExtra("iContact")
         val aLat  = intent.getStringExtra("iLat")
         val aLng  = intent.getStringExtra("iLng")
         val aEmail = intent.getStringExtra("iEmail")
@@ -71,14 +73,30 @@ class ItemViewActivity : AppCompatActivity() , OnMapReadyCallback {
             }
         }
 
-        //slettknapp
+        //slettknapp & editknapp
         if(aEmail.toString() == email){
-            delete_post_button.visibility = View.VISIBLE;
+            delete_post_button.visibility = View.VISIBLE
+            edit_button.visibility = View.VISIBLE
+
             delete_post_button.setOnClickListener {
                 if (aDocumentId != null) {
                     deleteItem(aDocumentId)
                 }
+            }
+            edit_button.setOnClickListener {
+                if (aDocumentId != null){
+                    if (aType != null) {
+                        if(aType.contains("Funnet")) {
 
+                            val intent1 = Intent(this, PostFoundItem::class.java)
+                            intent1.putExtras(intent)
+                            startActivity(intent1)
+                        }else{
+                            val intent1 = Intent(this, PostLostItem::class.java)
+                            startActivity(intent1)
+                        }
+                    }
+                }
             }
         } else{
             delete_post_button.visibility = View.GONE;

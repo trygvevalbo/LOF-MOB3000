@@ -19,6 +19,7 @@ import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import com.bumptech.glide.Glide
 import com.example.noeTaptNoeFunnetAPP.FrontPage
 import com.example.noeTaptNoeFunnetAPP.R
 import com.example.noeTaptNoeFunnetAPP.databinding.FragmentFormBinding
@@ -38,6 +39,7 @@ import com.google.firebase.storage.StorageTask
 import com.google.firebase.storage.UploadTask
 import kotlinx.android.synthetic.main.activity_signup.*
 import kotlinx.android.synthetic.main.fragment_form.*
+import kotlinx.android.synthetic.main.liste.*
 import java.util.*
 
 
@@ -60,7 +62,7 @@ class FormFragment : Fragment() {
 
     private var primaryKey :String? =""
 
-    private var downloadUri : String? = null
+
 
 
     override fun onAttach(context: Context) { //få context til å senere kunne sende til deskription
@@ -109,6 +111,11 @@ class FormFragment : Fragment() {
 
         clickManager(binding)
 
+        if(model?.downloadUrl != null) {
+
+            activity?.let { Glide.with(it).load(model?.downloadUrl).into(binding.image) }
+
+        }
 
         return binding.root
     }
@@ -131,42 +138,24 @@ class FormFragment : Fragment() {
 
         binding.postButtonFoundItem.setOnClickListener {
             if (model?.image?.value  != null) {  //last opp bilde til database
-
                 uploadImageToDatabase(binding, model)
            }else{
-
                 uploadTextToDatabase(binding, model)
-
             }
-
-
-
         }
-
-
-
 
 
         binding.description.setOnClickListener {
-
             appNavigator.navigateToDescription() // naviger til fragmentDescription
-
         }
 
         binding.timewhenfound.setOnClickListener {
-
             appNavigator.navigateToSelectDate()
         }
     }
 
-
-
-
-
     private fun mapManager(model: FormViewModel?) {
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
-
-
 
         mapFragment?.getMapAsync(OnMapReadyCallback {
             googleMap = it
@@ -191,7 +180,6 @@ class FormFragment : Fragment() {
                 appNavigator.navigateToMapFullScreen()
 
             }
-
 
         })
     }
@@ -272,7 +260,6 @@ class FormFragment : Fragment() {
 
         if (resultCode == Activity.RESULT_OK) {
             //set image captured to image view
-
             image.setImageURI(image_uri)
             model!!.setImage(image_uri) // set verdi
 
@@ -285,12 +272,12 @@ class FormFragment : Fragment() {
             model!!.setImage(image_uri)
 
         }
+
+
     }
 
-
-
     private fun checkForm(binding: FragmentFormBinding, model: FormViewModel?): Boolean {
-        if (downloadUri.isNullOrEmpty()) {
+        if (model?.image?.value.toString().isNullOrEmpty()) {
             binding.nameOfItem.error = "Venligst last opp et bilde av tingen"
             binding.nameOfItem.requestFocus()
             return false
@@ -327,7 +314,7 @@ class FormFragment : Fragment() {
     private fun uploadImageToDatabase(binding: FragmentFormBinding, model: FormViewModel?) {
         storageRef = FirebaseStorage.getInstance().reference.child("PostImages")
 
-        if (model?.image?.value  != null) {
+        if (model?.image?.value  != null && !model?.image?.value.toString().contains("http")) { //dersom bruker ønsker å ikke endre bilde så laster vi ikke opp på nytt
              primaryKey =  UUID.randomUUID().toString()
             val fileRef = storageRef!!.child("$primaryKey.jpg")
             var uploadTask: StorageTask<*>
@@ -345,7 +332,7 @@ class FormFragment : Fragment() {
             }).addOnCompleteListener { task ->
                 if (task.isSuccessful) {
 
-                     downloadUri = task.result.toString()
+                     model?.downloadUrl = task.result.toString()
                     uploadTextToDatabase(binding, model)
 
                 }
@@ -358,6 +345,8 @@ class FormFragment : Fragment() {
                 }
 
             }
+        }else{
+            uploadTextToDatabase(binding, model)
         }
     }
 
@@ -370,7 +359,7 @@ class FormFragment : Fragment() {
             binding.viewModel?.postType.toString().trim().toLowerCase(Locale.getDefault()))
         val postmap = HashMap<String, Any>()
 
-        postmap["postImage"] = downloadUri.toString()
+        postmap["postImage"] = binding.viewModel?.downloadUrl.toString()
         postmap["itemName"] = binding.viewModel?.savedNameItem?.value.toString()
         postmap["itemDesk"] = binding.viewModel?.savedDescription?.value.toString()
         postmap["itemColor"] = binding.viewModel?.savedColor?.value.toString()
@@ -382,26 +371,45 @@ class FormFragment : Fragment() {
         postmap["userEmail"]= binding.viewModel?.userEmail?.value.toString()
         postmap["keyWords"] = Arrays.asList(*keyWords)
 
-
-
-
-
         postmap["keyWords"] = listOf(*keyWords)
 
         val mFirestore: FirebaseFirestore = FirebaseFirestore.getInstance()
         if(checkForm(binding,model)){
-        mFirestore.collection("Posts").add(postmap).addOnSuccessListener() { documents ->
+            if(model?.documentId.isNullOrEmpty()) {
+                mFirestore.collection("Posts").add(postmap).addOnSuccessListener() { documents ->
 
+                    Toast.makeText(requireContext(), "Post laget", Toast.LENGTH_SHORT).show()
+                    val intent1 = Intent(activity, FrontPage::class.java)
+                    startActivity(intent1)
 
-            Toast.makeText(requireContext(), "Post laget", Toast.LENGTH_SHORT).show()
-            val intent1 = Intent(activity, FrontPage::class.java)
-            startActivity(intent1)
+                }.addOnFailureListener() {
+                    Toast.makeText(
+                        requireContext(),
+                        "Noe er feil! venligst prøv igjen",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
 
-        }.addOnFailureListener() {
-            Toast.makeText(requireContext(), "Noe er feil! venligst prøv igjen", Toast.LENGTH_SHORT).show()
+            }else{
+                model?.documentId?.let {
+                    mFirestore.collection("Posts").document(it)
+                        .update(postmap)
+                }?.addOnSuccessListener() { documents ->
+
+                    Toast.makeText(requireContext(), "Post laget", Toast.LENGTH_SHORT).show()
+                    val intent1 = Intent(activity, FrontPage::class.java)
+                    startActivity(intent1)
+
+                }?.addOnFailureListener() {
+                    Toast.makeText(
+                        requireContext(),
+                        "Noe er feil! venligst prøv igjen",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+
         }
-
-    }
     }
 
 }
