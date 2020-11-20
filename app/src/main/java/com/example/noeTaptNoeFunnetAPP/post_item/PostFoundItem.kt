@@ -30,6 +30,10 @@ class PostFoundItem : AppCompatActivity(), AppNavigator{
             }
         }
 
+        if(!intent.getStringExtra("iDocumentId").isNullOrEmpty()){
+            viewModel!!.setPostData(intent)
+        }
+
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = "Ny funnet annonse"
     }
@@ -63,6 +67,8 @@ class PostFoundItem : AppCompatActivity(), AppNavigator{
         val action = MapsFullScreenFragmentDirections.actionMapsFullScreenFragmentToFormFragment()
         findNavController(R.id.nav_host_fragment).navigate(action)
     }
+
+
 
    override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
