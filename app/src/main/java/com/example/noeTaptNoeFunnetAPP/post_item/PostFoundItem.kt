@@ -16,7 +16,7 @@ class PostFoundItem : AppCompatActivity(), AppNavigator{
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_post_found_item)
+        setContentView(R.layout.activity_post_found_item) //setter sin egen layout og derretter formFragment i første omgang
 
         viewModel = ViewModelProviders.of(this)[FormViewModel::class.java]
         viewModel!!.postType = "Funnet"

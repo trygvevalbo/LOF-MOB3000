@@ -96,8 +96,8 @@ class FormFragment : Fragment() {
         model!!.savedDescription.observe(viewLifecycleOwner,
             { o -> binding.description.text = o!!.toString() }) //motta description
 
-        model!!.savedDescription.observe(viewLifecycleOwner,
-            { o -> binding.description.text = o!!.toString() })
+      /*  model!!.savedDescription.observe(viewLifecycleOwner,
+            { o -> binding.description.text = o!!.toString() })*/
 
         //set correct headings for type of post
         if(model!!.postType=="Funnet") {

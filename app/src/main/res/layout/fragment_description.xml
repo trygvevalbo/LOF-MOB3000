@@ -26,7 +26,7 @@
         android:gravity="top|left"
         android:lines="8"
         android:minLines="6"
-        android:hint="Skriv inn en beskrivelse på gjenstanden"
+        android:hint="@string/desc_hint"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -35,7 +35,7 @@
         android:id="@+id/done_description_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ferdig"
+        android:text="@string/done_description_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

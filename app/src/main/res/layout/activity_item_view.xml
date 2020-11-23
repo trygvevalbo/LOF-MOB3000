@@ -88,13 +88,25 @@
         android:layout_below="@id/textIC_Farge"
          />
 
+    <TextView
+        android:id="@+id/textIC_Cont"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/Cont"
+        android:textColor="@color/AlmostWhite"
+        android:textSize="22sp"
+        android:layout_below="@id/textIC_Besk"
+        />
+
 
     <fragment
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:layout_below="@id/textIC_Besk"
+        android:layout_below="@id/textIC_Cont"
         android:layout_marginTop="16dp"
         android:apiKey="@string/google_maps_key"
         android:clickable="true"

@@ -53,6 +53,8 @@ class MapsFullScreenFragment : Fragment() {
 
 
 
+
+    @SuppressLint("MissingPermission")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -72,23 +74,7 @@ class MapsFullScreenFragment : Fragment() {
             //https://stackoverflow.com/questions/41254834/add-marker-on-google-map-on-touching-the-screen-using-android/41254877
             mMap = it
             val mapSettings = mMap?.uiSettings
-            if (ActivityCompat.checkSelfPermission(
-                    requireContext(),
-                    Manifest.permission.ACCESS_FINE_LOCATION
-                ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                    requireContext(),
-                    Manifest.permission.ACCESS_COARSE_LOCATION
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
-                // TODO: Consider calling
-                //    ActivityCompat#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
 
-            }
             mMap.setMyLocationEnabled(true)
             mapSettings?.isZoomControlsEnabled = true
             mMap.setOnMapClickListener { latLng -> // Creating a marker

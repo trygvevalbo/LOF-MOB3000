@@ -10,6 +10,8 @@
     <string name="date_found">                      Når var den funnet?</string>
     <string name="contact_infromation">             Kontaktinfromasjon</string>
     <string name="post_found_button">               Post funnet gjenstand</string>
+    <string name="chooseImg">                       Velg bilde</string>
+    <string name="capture_btn">                     Ta et bilde</string>
     <string name="uploadBtnText">                   Last opp</string>
     <string name="header_make_post_lost_item">      Lag en kort beskrivelse av hva du har mistet</string>
     <string name="post_lost_button">                Post mistet gjenstand</string>
@@ -17,6 +19,12 @@
     <string name="Navn">                            Navn</string>
     <string name="Farge">                           Farge</string>
     <string name="Besk">                            Beskrivelse</string>
+    <string name="Cont">                            Kontaktinformasjon</string>
+    <string name="done_date_button">Ferdig</string>
+    <string name="desc_hint">Skriv inn en beskrivelse på gjenstanden</string>
+    <string name="done_description_button">Ferdig</string>
+
+
 
 
     <!-- TODO: Remove or change this placeholder text -->

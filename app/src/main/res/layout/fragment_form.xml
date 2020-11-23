@@ -59,7 +59,7 @@
 
                         android:layout_marginStart="86dp"
                         android:layout_marginEnd="45dp"
-                        android:text="Velg bilde"
+                        android:text="@string/chooseImg"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/capture_btn"
                         app:layout_constraintHorizontal_bias="0.0"
@@ -72,7 +72,7 @@
                         android:layout_width="77dp"
                         android:layout_height="55dp"
                         android:layout_marginEnd="86dp"
-                        android:text="Ta et bilde"
+                        android:text="@string/capture_btn"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/choose_image"
@@ -187,9 +187,9 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/text_field_container"
-                >
+                />
 
-            </fragment>
+
 
 
             <Button
