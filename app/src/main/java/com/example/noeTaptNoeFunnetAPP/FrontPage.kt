@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
+import android.location.Location
 import android.os.Bundle
 import android.os.Looper
 import android.view.Menu
@@ -29,6 +30,7 @@ import com.example.noeTaptNoeFunnetAPP.post_item.PostFoundItem
 import com.example.noeTaptNoeFunnetAPP.post_item.PostLostItem
 import com.example.noeTaptNoeFunnetAPP.post_item.location.LocationUtil
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
+import com.fonfon.kgeohash.GeoHash
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.auth.FirebaseAuth
@@ -115,15 +117,21 @@ class FrontPage : AppCompatActivity() {
             var lastLocation =p0.lastLocation
 
 
-           Toast.makeText(this@FrontPage,lastLocation.latitude.toString() + lastLocation.longitude.toString(),Toast.LENGTH_LONG).show()
+           //Toast.makeText(this@FrontPage,lastLocation.latitude.toString() + lastLocation.longitude.toString(),Toast.LENGTH_LONG).show()
+
+            val location = Location("geohash")
+            location.latitude = lastLocation.latitude
+            location.longitude = lastLocation.longitude
+
+            val geoHashLocation = GeoHash(location, 5)
+            Toast.makeText(this@FrontPage,geoHashLocation.toString(),Toast.LENGTH_LONG).show()
 
         }
     }
 
     //Main function for FirestoreDatabase
     fun recyclerSetup() {
-        val firestoreRecyclerOptions: FirestoreRecyclerOptions<Item> =
-            FirestoreRecyclerOptions.Builder<Item>()
+        val firestoreRecyclerOptions: FirestoreRecyclerOptions<Item> = FirestoreRecyclerOptions.Builder<Item>()
                 .setQuery(myquery, Item::class.java)
                 .build()
 
@@ -211,6 +219,8 @@ class FrontPage : AppCompatActivity() {
         myquery = postRef.orderBy("postTime")
         recyclerSetup()
         onStart()
+
+
     }
 
     fun sortTapt() {
@@ -225,6 +235,7 @@ class FrontPage : AppCompatActivity() {
         onStart()
     }
     fun sortLokasjon() {
+        
 
     }
 

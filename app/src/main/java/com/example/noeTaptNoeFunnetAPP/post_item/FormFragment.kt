@@ -1,15 +1,18 @@
 package com.example.noeTaptNoeFunnetAPP.post_item
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.ContentResolver
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.location.Location
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Looper
 import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
@@ -23,6 +26,11 @@ import com.bumptech.glide.Glide
 import com.example.noeTaptNoeFunnetAPP.FrontPage
 import com.example.noeTaptNoeFunnetAPP.R
 import com.example.noeTaptNoeFunnetAPP.databinding.FragmentFormBinding
+import com.fonfon.kgeohash.GeoHash
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationCallback
+import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationResult
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -48,6 +56,12 @@ class FormFragment : Fragment() {
     private lateinit var appNavigator: AppNavigator //interface til å sende til description fragment
 
     private var model: FormViewModel?=null
+
+    lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+    lateinit var locationRequest : LocationRequest
+    var geoHashLocation = GeoHash(59.412369, 9.067760, 5)
+
+
 
     lateinit var googleMap: GoogleMap
 
@@ -314,7 +328,6 @@ class FormFragment : Fragment() {
         } else{
             return true
         }
-
     }
 
     private fun uploadImageToDatabase(binding: FragmentFormBinding, model: FormViewModel?) {
@@ -356,8 +369,20 @@ class FormFragment : Fragment() {
         }
     }
 
-    private fun uploadTextToDatabase(binding: FragmentFormBinding, model: FormViewModel?) {
 
+    private fun getGeoHash () {
+
+            val location = Location("geohash")
+            location.latitude = model?.savedLatitude?.value!!
+            location.longitude = model?.savedLongitude?.value!!
+
+            geoHashLocation = GeoHash(location, 5)
+        }
+
+
+
+    private fun uploadTextToDatabase(binding: FragmentFormBinding, model: FormViewModel?) {
+        getGeoHash()
         val keyWords = arrayOf(
             binding.viewModel?.savedNameItem?.value.toString().trim().toLowerCase(Locale.getDefault()),
             binding.viewModel?.savedDescription?.value.toString().trim().toLowerCase(Locale.getDefault()),
@@ -376,8 +401,9 @@ class FormFragment : Fragment() {
         postmap["postContact"] = binding.viewModel?.savedContact?.value.toString()
         postmap["userEmail"]= binding.viewModel?.userEmail?.value.toString()
         postmap["keyWords"] = Arrays.asList(*keyWords)
-
         postmap["keyWords"] = listOf(*keyWords)
+        postmap["geoHash"] = geoHashLocation.toString()
+
 
         val mFirestore: FirebaseFirestore = FirebaseFirestore.getInstance()
         if(checkForm(binding,model)){
