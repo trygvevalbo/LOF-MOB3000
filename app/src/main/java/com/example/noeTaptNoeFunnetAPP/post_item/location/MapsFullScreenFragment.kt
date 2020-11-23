@@ -69,35 +69,41 @@ class MapsFullScreenFragment : Fragment() {
         binding.viewModel = model//attach your viewModel to xml
 
         val mapFragment = childFragmentManager.findFragmentById(R.id.map_fragment) as SupportMapFragment?
-        mapFragment?.getMapAsync(OnMapReadyCallback {
+        mapFragment?.getMapAsync {
             //https://stackoverflow.com/questions/41254834/add-marker-on-google-map-on-touching-the-screen-using-android/41254877
             mMap = it
             val mapSettings = mMap?.uiSettings
-            userLatLng = model!!.userLatitude?.let { it1 -> model!!.userLongitude?.let { it2 ->
-                LatLng(it1,
-                    it2
-                )
-            } }
-            if(model!!.savedLatitude.value != null){
+            userLatLng = model!!.userLatitude?.let { it1 ->
+                model!!.userLongitude?.let { it2 ->
+                    LatLng(
+                        it1,
+                        it2
+                    )
+                }
+            }
+            if (model!!.savedLatitude.value != null) {
                 selectedLocation = LatLng(
                     model!!.savedLatitude.value!!,
-                    model!!.savedLongitude.value!!)
-              mMap.addMarker(selectedLocation?.let { it1 ->
-                  MarkerOptions().position(it1)
-              })
+                    model!!.savedLongitude.value!!
+                )
+                mMap.addMarker(selectedLocation?.let { it1 ->
+                    MarkerOptions().position(it1)
+                })
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(selectedLocation, 10F))
-                if(userLatLng!= null) {
+                if (userLatLng != null) {
                     mMap.isMyLocationEnabled = true
                 }
-            }else if(userLatLng != null){
+            } else if (userLatLng != null) {
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLatLng, 10f))
                 mMap.isMyLocationEnabled = true
-            } else{
+            } else {
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(59.412369, 9.067760), 10F))
-                Toast.makeText(requireContext(), "Venligst godta deling av lokasjon", Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    requireContext(),
+                    "Venligst godta deling av lokasjon",
+                    Toast.LENGTH_LONG
+                ).show()
             }
-
-
 
 
             mapSettings?.isZoomControlsEnabled = true
@@ -109,7 +115,7 @@ class MapsFullScreenFragment : Fragment() {
                 binding.viewModel?.setLocation(latLng.latitude, latLng.longitude)
 
 
-                        // Setting the position for the marker
+                // Setting the position for the marker
                 markerOptions.position(latLng)
 
                 // Setting the title for the marker.
@@ -127,7 +133,7 @@ class MapsFullScreenFragment : Fragment() {
                 mMap.addMarker(markerOptions)
 
             }
-        })
+        }
 
         binding.locationDone.setOnClickListener {
             //itemLocation?.let { passData(it) }
@@ -141,100 +147,5 @@ class MapsFullScreenFragment : Fragment() {
         appNavigator = context as AppNavigator
 
     }
-/*
-
-    private fun checkPermission(): Boolean{
-            if(
-                ActivityCompat.checkSelfPermission(
-                    requireActivity(),
-                    android.Manifest.permission.ACCESS_FINE_LOCATION
-                ) == PackageManager.PERMISSION_GRANTED  ||
-                ActivityCompat.checkSelfPermission(
-                    requireActivity(),
-                    Manifest.permission.ACCESS_COARSE_LOCATION
-                ) == PackageManager.PERMISSION_GRANTED
-                    ) {
-                return true
-            }
-        return false
-    }
-
-    private fun requestPermission(){
-        ActivityCompat.requestPermissions(
-            requireActivity(),
-            arrayOf(
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ), PERMISSION_ID
-        )
-
-    }
-
-
-    private fun isLocationEnabeled(): Boolean{
-        var locationManager =  context?.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(
-            LocationManager.NETWORK_PROVIDER
-        )
-
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        if(requestCode== PERMISSION_ID){
-            if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                Log.d("Debug", "You have permission")
-            }
-        }
-
-    }
-
-    private fun getLastLocation(){
-        if(checkPermission()){
-            if(isLocationEnabeled()){
-                fusedLocationProviderClient.lastLocation.addOnCompleteListener {
-                    getNewLocation()
-
-                }
-            }else{
-                Toast.makeText(
-                    requireContext(),
-                    "vær så snill å godkjenn lokasjon",
-                    Toast.LENGTH_LONG
-                ).show()
-            }
-        }else{
-            requestPermission()
-            getNewLocation()
-        }
-    }
-
-    @SuppressLint("MissingPermission")
-    private fun getNewLocation(){
-        locationRequest = LocationRequest()
-        locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-        locationRequest.interval = 0
-        locationRequest.fastestInterval = 0
-        locationRequest.numUpdates = 2
-        fusedLocationProviderClient!!.requestLocationUpdates(
-            locationRequest, locationCallback, Looper.myLooper()
-        )
-    }
-    private val locationCallback = object : LocationCallback(){
-        override fun onLocationResult(p0: LocationResult){
-            var lastLocation =p0.lastLocation
-            val zoomLevel = 10
-            val latlng = LatLng(lastLocation.latitude, lastLocation.longitude)
-            val mapFragment = childFragmentManager.findFragmentById(R.id.map_fragment) as SupportMapFragment?
-            mapFragment?.getMapAsync(OnMapReadyCallback {
-                mMap = it
-
-                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latlng, zoomLevel.toFloat()))
-                })
-        }
-    }*/
 
 }

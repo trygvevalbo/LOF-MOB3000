@@ -3,12 +3,11 @@ package com.example.noeTaptNoeFunnetAPP.post_item
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.Looper
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
 import com.example.noeTaptNoeFunnetAPP.R
-import com.example.noeTaptNoeFunnetAPP.post_item.location.MapLocation
+import com.example.noeTaptNoeFunnetAPP.post_item.location.LocationUtil
 import com.example.noeTaptNoeFunnetAPP.post_item.location.MapsFullScreenFragmentDirections
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.model.LatLng
@@ -45,8 +44,8 @@ class PostFoundItem : AppCompatActivity(), AppNavigator{
         supportActionBar?.title = "Ny funnet annonse"
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
-        val mapLocation = MapLocation(this)
-          if(mapLocation.getUserLocation()){
+        val locationUtil = LocationUtil(this)
+          if(locationUtil.getUserLocation()){
               getNewLocation()
           }
 
@@ -70,7 +69,7 @@ class PostFoundItem : AppCompatActivity(), AppNavigator{
             val zoomLevel = 10
             val latlng = LatLng(lastLocation.latitude, lastLocation.longitude)
 
-            Toast.makeText(this@PostFoundItem, latlng.latitude.toString(), Toast.LENGTH_LONG).show()
+
             viewModel?.setUserLocation(lastLocation.latitude, lastLocation.longitude)
 
         }

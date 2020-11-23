@@ -23,7 +23,7 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 
-class MapLocation(private val context: Context) {
+class LocationUtil(private val context: Context) {
 
     private var PERMISSION_ID  : Int= 1000
 
