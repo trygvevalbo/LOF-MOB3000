@@ -1,11 +1,13 @@
 package com.example.noeTaptNoeFunnetAPP
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.os.Looper
 import android.view.Menu
 import android.view.MenuItem
 import android.view.animation.AnimationUtils
@@ -20,7 +22,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.noeTaptNoeFunnetAPP.account.MyAccount
 import com.example.noeTaptNoeFunnetAPP.post_item.PostFoundItem
 import com.example.noeTaptNoeFunnetAPP.post_item.PostLostItem
+import com.example.noeTaptNoeFunnetAPP.post_item.location.LocationUtil
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
+import com.google.android.gms.location.*
+import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -38,6 +43,9 @@ class FrontPage : AppCompatActivity() {
     private var itemAdapter: ItemAdapter? = null
 
     private var PERMISSION_ID  : Int= 1000
+    lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+    lateinit var locationRequest : LocationRequest
+
 
     // Query for database and isOpen for fob-button
     var myquery = postRef.orderBy("postTime")
@@ -70,6 +78,34 @@ class FrontPage : AppCompatActivity() {
         recyclerSetup()
         preferancesSetup()
         checkPermission()
+
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
+        val locationUtil = LocationUtil(this)
+        if(locationUtil.getUserLocation()){
+            getNewLocation()
+        }
+
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun getNewLocation(){
+        locationRequest = LocationRequest()
+        locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+        locationRequest.interval = 0
+        locationRequest.fastestInterval = 0
+        locationRequest.numUpdates = 2
+        fusedLocationProviderClient!!.requestLocationUpdates(
+            locationRequest, locationCallback, Looper.myLooper()
+        )
+    }
+    private val locationCallback = object : LocationCallback(){
+        override fun onLocationResult(p0: LocationResult) {
+            var lastLocation =p0.lastLocation
+
+
+           Toast.makeText(this@FrontPage,lastLocation.latitude.toString() + lastLocation.longitude.toString(),Toast.LENGTH_LONG).show()
+
+        }
     }
 
     //Main function for FirestoreDatabase
