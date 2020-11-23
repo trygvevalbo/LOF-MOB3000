@@ -96,8 +96,7 @@ class FormFragment : Fragment() {
         model!!.savedDescription.observe(viewLifecycleOwner,
             { o -> binding.description.text = o!!.toString() }) //motta description
 
-      /*  model!!.savedDescription.observe(viewLifecycleOwner,
-            { o -> binding.description.text = o!!.toString() })*/
+
 
         //set correct headings for type of post
         if(model!!.postType=="Funnet") {
@@ -169,6 +168,13 @@ class FormFragment : Fragment() {
                     googleMap.addMarker(selectedLocation?.let { it1 ->
                         MarkerOptions().position(it1)
                     })
+                } else if(model.userLatitude != null){
+                    selectedLocation = LatLng(
+                        model.userLatitude!!,
+                        model.userLongitude!!
+                    ) // hent det bruker har skrevet inn
+                    googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(selectedLocation, 10F))
+
                 } else {
                     selectedLocation = LatLng(59.412369, 9.067760) // bare bruk lokasjon til bruker
                 }

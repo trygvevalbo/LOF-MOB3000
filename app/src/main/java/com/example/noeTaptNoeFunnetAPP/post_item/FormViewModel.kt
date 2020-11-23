@@ -23,6 +23,8 @@ class FormViewModel : ViewModel() {
     var savedColor = MutableLiveData<String>()
     var savedLatitude = MutableLiveData<Double>()
     var savedLongitude = MutableLiveData<Double>()
+    var userLatitude : Double?= null
+    var userLongitude : Double?= null
     var savedTime = MutableLiveData<String>()
     var savedContact = MutableLiveData<String>()
      var image = MutableLiveData<Uri>()
@@ -54,6 +56,12 @@ class FormViewModel : ViewModel() {
 
         savedLatitude.value = latitude
          savedLongitude.value  = longitude
+    }
+
+    fun setUserLocation(latitude: Double, longitude: Double) {
+
+        userLatitude = latitude
+        userLongitude  = longitude
     }
 
     fun setContact(s: CharSequence, start: Int, before: Int, count: Int) {
