@@ -12,15 +12,6 @@
         />
 
     <item
-        android:id="@+id/locationButton"
-        android:title="@string/lokasjon"
-        android:icon="@drawable/ic_lokasjon_knapp"
-        app:showAsAction="ifRoom|collapseActionView"
-        android:orderInCategory="3"
-        />
-
-
-    <item
         android:id="@+id/searchBar"
         android:title="@string/s_k"
         android:icon="@drawable/ic_soke_knapp"
@@ -35,7 +26,5 @@
         android:icon="@drawable/ic_sort_knapp"
         android:orderInCategory="2"
         />
-
-
 
 </menu>

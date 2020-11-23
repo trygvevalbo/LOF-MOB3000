@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context="com.example.noeTaptNoeFunnetAPP.account.MyAccount">
@@ -12,37 +12,36 @@
 
         <TextView
             android:id="@+id/username"
-            android:layout_width="290dp"
-            android:layout_height="47dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
+            android:layout_marginBottom="100dp"
             android:gravity="center"
             android:textSize="30sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.495"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+             />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/my_posts_button"
-            android:layout_width="197dp"
-            android:layout_height="46dp"
-            android:text="Mine poster"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/sign_out_button" />
-
-        <Button
-            android:id="@+id/sign_out_button"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="64dp"
+            android:layout_marginTop="100dp"
+            android:layout_margin="10dp"
+            android:text="Mine poster"
+            android:background="@color/colorAccent"
+            android:layout_below="@+id/username"
+             />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/sign_out_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
             android:text="Logg ut"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/username" />
+            android:background="@color/AlmostRead"
+            android:layout_below="@+id/my_posts_button"
+             />
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </RelativeLayout>
 
 </layout>

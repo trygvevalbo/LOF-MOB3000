@@ -10,7 +10,11 @@ import android.os.Bundle
 import android.os.Looper
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.animation.AnimationUtils
+import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -18,6 +22,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.SearchView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.noeTaptNoeFunnetAPP.account.MyAccount
 import com.example.noeTaptNoeFunnetAPP.post_item.PostFoundItem
@@ -31,6 +36,10 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.view.*
+import java.time.LocalDate
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 
@@ -73,7 +82,10 @@ class FrontPage : AppCompatActivity() {
 
         } else if (mSortSetting == "Alle") {
             sortAlle()
-        }
+
+        } else if (mSortSetting == "Lokasjon") {
+        sortLokasjon()
+    }
 
         recyclerSetup()
         preferancesSetup()
@@ -153,14 +165,20 @@ class FrontPage : AppCompatActivity() {
                 funnetKnapp.startAnimation(fobClose)
                 submitButton.startAnimation(fobClockwise)
 
+                taptKnapp.visibility = View.GONE
+                funnetKnapp.visibility = View.GONE
+                taptKnapp.isEnabled = false
+                funnetKnapp.isEnabled = false
+
                 isOpen = false
             } else {
                 taptKnapp.startAnimation(fobOpen)
                 funnetKnapp.startAnimation(fobOpen)
                 submitButton.startAnimation(fobCounterclockwise)
 
-                taptKnapp.isClickable
-                funnetKnapp.isClickable
+                taptKnapp.isEnabled = true
+                funnetKnapp.isEnabled = true
+
 
                 isOpen = true
             }
@@ -206,6 +224,10 @@ class FrontPage : AppCompatActivity() {
         recyclerSetup()
         onStart()
     }
+    fun sortLokasjon() {
+
+    }
+
 
     // Search Menu Override
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -276,7 +298,7 @@ class FrontPage : AppCompatActivity() {
 
     // Sorting Dialog handler
     private fun sortDialog() {
-        val options = arrayOf("Alle", "Funnet", "Tapt")
+        val options = arrayOf("Alle", "Funnet", "Tapt", "Lokasjon")
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Vis")
         builder.setItems(options) { dialog, wich ->
@@ -300,6 +322,13 @@ class FrontPage : AppCompatActivity() {
                 editor.apply()
                 sortTapt()
                 Toast.makeText(this@FrontPage, "Tapt", Toast.LENGTH_LONG).show()
+            }
+            if (wich == 3) {
+                val editor: SharedPreferences.Editor = preferences.edit()
+                editor.putString("Vis", "Lokasjon")
+                editor.apply()
+                sortLokasjon()
+                Toast.makeText(this@FrontPage, "Nærmeste Annonser", Toast.LENGTH_LONG).show()
             }
         }
         builder.create().show()
