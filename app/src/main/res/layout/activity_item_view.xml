@@ -118,7 +118,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:background="@color/red_button"
+        android:background="@color/AlmostRead"
         android:text="Slett Denne posten"
         android:visibility="invisible"
         android:layout_below="@id/map"
