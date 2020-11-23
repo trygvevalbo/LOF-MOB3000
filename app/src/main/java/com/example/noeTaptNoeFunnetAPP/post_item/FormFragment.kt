@@ -96,8 +96,7 @@ class FormFragment : Fragment() {
         model!!.savedDescription.observe(viewLifecycleOwner,
             { o -> binding.description.text = o!!.toString() }) //motta description
 
-        model!!.savedDescription.observe(viewLifecycleOwner,
-            { o -> binding.description.text = o!!.toString() })
+
 
         //set correct headings for type of post
         if(model!!.postType=="Funnet") {
@@ -157,6 +156,7 @@ class FormFragment : Fragment() {
     private fun mapManager(model: FormViewModel?) {
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
 
+
         mapFragment?.getMapAsync(OnMapReadyCallback {
             googleMap = it
             if (model != null) {
@@ -165,15 +165,21 @@ class FormFragment : Fragment() {
                         model.savedLatitude.value!!,
                         model.savedLongitude.value!!
                     ) // hent det bruker har skrevet inn
+                    googleMap.addMarker(selectedLocation?.let { it1 ->
+                        MarkerOptions().position(it1)
+                    })
+                } else if(model.userLatitude != null){
+                    selectedLocation = LatLng(
+                        model.userLatitude!!,
+                        model.userLongitude!!
+                    ) // hent det bruker har skrevet inn
+                    googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(selectedLocation, 10F))
+
                 } else {
-                    selectedLocation = LatLng(59.913868, 10.752245) // bare bruk lokasjon til bruker
+                    selectedLocation = LatLng(59.412369, 9.067760) // bare bruk lokasjon til bruker
                 }
             }
-            googleMap.addMarker(selectedLocation?.let { it1 ->
-                MarkerOptions().position(it1).title(
-                    "My location"
-                )
-            })
+
             googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(selectedLocation, 10f))
 
             googleMap.setOnMapClickListener {
@@ -301,7 +307,7 @@ class FormFragment : Fragment() {
             binding.contactinformation.error = "Venligst tast inn mobilnummer eller E-post"
             binding.contactinformation.requestFocus()
             return false
-        } else if (selectedLocation == LatLng(59.913868, 10.752245)) {
+        } else if (selectedLocation == LatLng(59.412369, 9.067760)) {
             binding.contactinformation.error = "Venligst velg hvor den var funnet"
             binding.contactinformation.requestFocus()
             return false

@@ -37,6 +37,7 @@ class MapsFullScreenFragment : Fragment() {
     lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     lateinit var locationRequest : LocationRequest
     private var itemLocation : LatLng? = null
+    var selectedLocation: LatLng? = null
 
     private lateinit var mMap: GoogleMap
     private var PERMISSION_ID  : Int= 1000
@@ -44,6 +45,7 @@ class MapsFullScreenFragment : Fragment() {
     private lateinit var appNavigator: AppNavigator
 
     private var model: FormViewModel?=null
+    var userLatLng: LatLng? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,13 +55,12 @@ class MapsFullScreenFragment : Fragment() {
 
 
 
+
+    @SuppressLint("MissingPermission")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-
-        getLastLocation() // https://www.youtube.com/watch?v=vard0CUTLbA
         val binding = DataBindingUtil.inflate<FragmentMapsFullScreenBinding>(inflater, R.layout.fragment_maps_full_screen,
             container, false)
         model= ViewModelProviders.of(requireActivity()).get(FormViewModel::class.java)
@@ -67,18 +68,42 @@ class MapsFullScreenFragment : Fragment() {
 
         binding.viewModel = model//attach your viewModel to xml
 
-        getLastLocation()
-
-
         val mapFragment = childFragmentManager.findFragmentById(R.id.map_fragment) as SupportMapFragment?
         mapFragment?.getMapAsync(OnMapReadyCallback {
             //https://stackoverflow.com/questions/41254834/add-marker-on-google-map-on-touching-the-screen-using-android/41254877
             mMap = it
             val mapSettings = mMap?.uiSettings
+            userLatLng = model!!.userLatitude?.let { it1 -> model!!.userLongitude?.let { it2 ->
+                LatLng(it1,
+                    it2
+                )
+            } }
+            if(model!!.savedLatitude.value != null){
+                selectedLocation = LatLng(
+                    model!!.savedLatitude.value!!,
+                    model!!.savedLongitude.value!!)
+              mMap.addMarker(selectedLocation?.let { it1 ->
+                  MarkerOptions().position(it1)
+              })
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(selectedLocation, 10F))
+                if(userLatLng!= null) {
+                    mMap.isMyLocationEnabled = true
+                }
+            }else if(userLatLng != null){
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLatLng, 10f))
+                mMap.isMyLocationEnabled = true
+            } else{
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(59.412369, 9.067760), 10F))
+                Toast.makeText(requireContext(), "Venligst godta deling av lokasjon", Toast.LENGTH_LONG).show()
+            }
+
+
+
+
             mapSettings?.isZoomControlsEnabled = true
             mMap.setOnMapClickListener { latLng -> // Creating a marker
-
                 val markerOptions = MarkerOptions()
+
 
 
                 binding.viewModel?.setLocation(latLng.latitude, latLng.longitude)
@@ -98,6 +123,7 @@ class MapsFullScreenFragment : Fragment() {
                 mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng))
 
                 // Placing a marker on the touched position
+
                 mMap.addMarker(markerOptions)
 
             }
@@ -115,7 +141,7 @@ class MapsFullScreenFragment : Fragment() {
         appNavigator = context as AppNavigator
 
     }
-
+/*
 
     private fun checkPermission(): Boolean{
             if(
@@ -209,6 +235,6 @@ class MapsFullScreenFragment : Fragment() {
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latlng, zoomLevel.toFloat()))
                 })
         }
-    }
+    }*/
 
 }

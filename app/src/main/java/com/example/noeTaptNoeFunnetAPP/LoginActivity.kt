@@ -80,8 +80,8 @@ class LoginActivity: AppCompatActivity() {
         super.onStart()
         checkIfUserIsLoggedIn()
         //Is User signed in check
-        val currentUser = auth.currentUser
-        updateUI(currentUser)
+      //  val currentUser = auth.currentUser
+    //    updateUI(currentUser)
     }
 
     fun updateUI(currentUser : FirebaseUser?) {

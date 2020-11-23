@@ -1,8 +1,10 @@
 package com.example.noeTaptNoeFunnetAPP
 
+import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -12,6 +14,8 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.SearchView
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.noeTaptNoeFunnetAPP.account.MyAccount
 import com.example.noeTaptNoeFunnetAPP.post_item.PostFoundItem
@@ -32,6 +36,8 @@ class FrontPage : AppCompatActivity() {
     private val database: FirebaseFirestore = FirebaseFirestore.getInstance()
     private var postRef = database.collection("Posts")
     private var itemAdapter: ItemAdapter? = null
+
+    private var PERMISSION_ID  : Int= 1000
 
     // Query for database and isOpen for fob-button
     var myquery = postRef.orderBy("postTime")
@@ -63,6 +69,7 @@ class FrontPage : AppCompatActivity() {
 
         recyclerSetup()
         preferancesSetup()
+        checkPermission()
     }
 
     //Main function for FirestoreDatabase
@@ -261,6 +268,37 @@ class FrontPage : AppCompatActivity() {
         }
         builder.create().show()
     }
+
+
+
+    private fun requestPermission(){
+        ActivityCompat.requestPermissions(
+            this,
+            arrayOf(
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ), PERMISSION_ID
+        )
+
+    }
+
+    private fun checkPermission(){
+        if(
+            ActivityCompat.checkSelfPermission(
+                this,
+                android.Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED  ||
+            ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+           requestPermission()
+        }
+
+    }
+
+
 
 
 }
