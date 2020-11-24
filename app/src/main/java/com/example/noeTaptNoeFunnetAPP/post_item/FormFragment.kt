@@ -287,9 +287,13 @@ class FormFragment : Fragment() {
 
         }
 
-        if (RequestCode == RequestCode && resultCode == Activity.RESULT_OK && data!!.data != null) run {
-            image_uri = data.data
-            model?.image?.value = data.data
+        if (RequestCode == RequestCode && resultCode == Activity.RESULT_OK ) run {
+            if (data != null) {
+                image_uri = data.data
+            }
+            if (data != null) {
+                model?.image?.value = data.data
+            }
             image.setImageURI(image_uri)
             model!!.setImage(image_uri)
 
