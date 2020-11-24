@@ -23,23 +23,28 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/my_posts_button"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:layout_marginTop="100dp"
             android:layout_margin="10dp"
             android:text="Mine poster"
-            android:background="@color/colorAccent"
             android:layout_below="@+id/username"
-             />
+            android:theme="@style/Materialtheme"
+            android:outlineAmbientShadowColor="@color/SecondaryAccent"
+
+            />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/sign_out_button"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:layout_margin="10dp"
             android:text="Logg ut"
-            android:background="@color/AlmostRead"
             android:layout_below="@+id/my_posts_button"
-             />
+            android:theme="@style/Materialtheme"
+            android:outlineAmbientShadowColor="@color/SecondaryAccent"
+            android:backgroundTint="@color/AlmostRead"
+
+            />
 
 
     </RelativeLayout>

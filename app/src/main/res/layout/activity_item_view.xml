@@ -113,27 +113,34 @@
         android:enabled="true"
          />
 
-    <Button
-        android:id="@+id/delete_post_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:background="@color/AlmostRead"
-        android:text="Slett Denne posten"
-        android:visibility="invisible"
-        android:layout_below="@id/map"
-        android:layout_centerHorizontal="true"
-         />
 
-    <Button
+
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/edit_button"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Endre post"
-        android:visibility="invisible"
-        android:layout_below="@id/delete_post_button"
-        android:layout_centerHorizontal="true"/>
+        android:visibility="visible"
+        android:layout_below="@id/map"
+        android:layout_centerHorizontal="true"
+        android:theme="@style/Materialtheme"
+        android:outlineAmbientShadowColor="@color/SecondaryAccent"
+        android:backgroundTint="@color/SecondaryAccent"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/delete_post_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Slett Denne posten"
+        android:visibility="visible"
+        android:layout_below="@id/edit_button"
+        android:layout_centerHorizontal="true"
+        android:theme="@style/Materialtheme"
+        android:outlineAmbientShadowColor="@color/SecondaryAccent"
+        android:backgroundTint="@color/AlmostRead"
+        />
 
 
 </RelativeLayout>

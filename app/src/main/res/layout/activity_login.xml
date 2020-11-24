@@ -30,7 +30,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/transparent"
-                android:hint="Email"
+                android:hint="Epost"
                 android:inputType="textEmailAddress"
                 tools:ignore="Autofill"
                 android:padding="8dp"
@@ -41,27 +41,35 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/transparent"
-                android:hint="Password"
+                android:hint="Passord"
                 android:padding="8dp"
                 android:inputType="textPassword"
                 tools:ignore="Autofill" />
 
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/login_btn"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
             android:layout_marginBottom="24dp"
             android:padding="12dp"
-            android:text="Login" />
+            android:text="Logg inn"
+            android:theme="@style/Materialtheme"
+            android:outlineAmbientShadowColor="@color/SecondaryAccent"
+            android:backgroundTint="@color/MainAccent"
+            />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/signup_btn"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="No account yet? Create one" />
+            android:text="Opprett konto"
+            android:theme="@style/Materialtheme"
+            android:outlineAmbientShadowColor="@color/SecondaryAccent"
+            android:backgroundTint="@color/SecondaryAccent"
+            />
 
     </LinearLayout>
 </LinearLayout>
