@@ -27,7 +27,7 @@
         android:gravity="top|left"
         android:lines="20"
         android:minLines="6"
-        android:inputType="text"
+        android:inputType="textMultiLine"
         android:hint="@string/desc_hint"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
