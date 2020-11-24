@@ -23,7 +23,7 @@
             android:src="@drawable/ic_tapt"
             android:text="Tapt Noe?"
             android:theme="@style/Materialtheme"
-            android:visibility="invisible"
+            android:visibility="gone"
             android:clickable="false"
             app:backgroundTint="@color/SecondaryAccent"
             app:elevation="6dp"
@@ -42,7 +42,7 @@
             android:src="@drawable/ic_funnet"
             android:text="Funnet Noe?"
             app:icon="@drawable/ic_funnet"
-            android:visibility="invisible"
+            android:visibility="gone"
             android:theme="@style/Materialtheme"
             />
 

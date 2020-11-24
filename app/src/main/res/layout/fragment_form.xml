@@ -192,16 +192,20 @@
 
 
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/post_button_found_item"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="10dp"
                 android:layout_marginTop="32dp"
                 android:text="@string/post_found_button"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/map" />
+                app:layout_constraintTop_toBottomOf="@+id/map"
+                android:theme="@style/Materialtheme"
+                android:outlineAmbientShadowColor="@color/SecondaryAccent"
+                android:backgroundTint="@color/MainAccent"/>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

@@ -13,6 +13,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Looper
+import android.os.SystemClock
 import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
@@ -49,6 +50,7 @@ import com.google.firebase.storage.UploadTask
 import kotlinx.android.synthetic.main.activity_signup.*
 import kotlinx.android.synthetic.main.fragment_form.*
 import kotlinx.android.synthetic.main.liste.*
+import java.sql.Timestamp
 import java.util.*
 
 
@@ -58,10 +60,10 @@ class FormFragment : Fragment() {
 
     private var model: FormViewModel?=null
 
-    lateinit var fusedLocationProviderClient: FusedLocationProviderClient
-    lateinit var locationRequest : LocationRequest
+
     var geoHashLocation = GeoHash(59.412369, 9.067760, 5)
     var geoPoint = GeoPoint(59.412369, 9.067760)
+    var currentTimeStamp = System.currentTimeMillis() / 1000L
 
 
 
@@ -208,28 +210,23 @@ class FormFragment : Fragment() {
 
 
     private fun cameraManager() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA)
-                == PackageManager.PERMISSION_DENIED ||
-                ActivityCompat.checkSelfPermission(
-                    requireContext(),
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE
-                )
-                == PackageManager.PERMISSION_DENIED
-            ) {
-                //Permission was not enabled
-                val permission = arrayOf(
-                    Manifest.permission.CAMERA,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE
-                )
-                //show popup ti request permission
-                requestPermissions(permission, PERMISSION_CODE)
-            } else {
-                //Permission already granted
-                openCamera()
-            }
+        if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA)
+            == PackageManager.PERMISSION_DENIED ||
+            ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            )
+            == PackageManager.PERMISSION_DENIED
+        ) {
+            //Permission was not enabled
+            val permission = arrayOf(
+                Manifest.permission.CAMERA,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            )
+            //show popup ti request permission
+            requestPermissions(permission, PERMISSION_CODE)
         } else {
-            //systen is us <marhmallow
+            //Permission already granted
             openCamera()
         }
     }
@@ -386,11 +383,14 @@ class FormFragment : Fragment() {
 
             geoPoint = GeoPoint(location.latitude, location.longitude)
         }
-
+    private fun getCurrentUnixTime () {
+        currentTimeStamp = System.currentTimeMillis() / 1000L
+    }
 
 
     private fun uploadTextToDatabase(binding: FragmentFormBinding, model: FormViewModel?) {
         getGeoLocation()
+        getCurrentUnixTime()
         val keyWords = arrayOf(
             binding.viewModel?.savedNameItem?.value.toString().trim().toLowerCase(Locale.getDefault()),
             binding.viewModel?.savedDescription?.value.toString().trim().toLowerCase(Locale.getDefault()),
@@ -402,7 +402,7 @@ class FormFragment : Fragment() {
         postmap["itemName"] = binding.viewModel?.savedNameItem?.value.toString()
         postmap["itemDesk"] = binding.viewModel?.savedDescription?.value.toString()
         postmap["itemColor"] = binding.viewModel?.savedColor?.value.toString()
-        postmap["postTime"] = binding.viewModel?.savedTime?.value.toString()
+        postmap["postTime"] = binding.viewModel?.savedTime?.value!!
         postmap["itemLat"] = binding.viewModel?.savedLatitude?.value.toString()
         postmap["itemLng"] = binding.viewModel?.savedLongitude?.value.toString()
         postmap["postType"] = binding.viewModel?.postType.toString()
@@ -412,6 +412,7 @@ class FormFragment : Fragment() {
         postmap["keyWords"] = listOf(*keyWords)
         postmap["geoHash"] = geoHashLocation.toString()
         postmap["geopoint"] = geoPoint
+        postmap["timeStamp"] = currentTimeStamp.toString()
 
 
         val mFirestore: FirebaseFirestore = FirebaseFirestore.getInstance()

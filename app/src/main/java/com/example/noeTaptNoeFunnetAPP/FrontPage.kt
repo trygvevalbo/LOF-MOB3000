@@ -2,7 +2,6 @@ package com.example.noeTaptNoeFunnetAPP
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -10,12 +9,10 @@ import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
 import android.os.Looper
-import android.util.Log
+import android.system.Os.remove
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.view.View.GONE
-import android.view.View.VISIBLE
 import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.Toast
@@ -24,8 +21,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.SearchView
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.noeTaptNoeFunnetAPP.account.MyAccount
 import com.example.noeTaptNoeFunnetAPP.post_item.PostFoundItem
@@ -34,22 +29,14 @@ import com.example.noeTaptNoeFunnetAPP.post_item.location.LocationUtil
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.fonfon.kgeohash.GeoHash
 import com.google.android.gms.location.*
-import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.GeoPoint
+import com.google.firebase.firestore.Query
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.view.*
-import org.imperiumlabs.geofirestore.GeoFirestore
-import org.imperiumlabs.geofirestore.GeoQuery
-import org.imperiumlabs.geofirestore.extension.getAtLocation
-import org.imperiumlabs.geofirestore.listeners.GeoQueryDataEventListener
-import java.time.LocalDate
-import java.time.ZoneId
-import java.time.format.DateTimeFormatter
 import java.util.*
 
 
@@ -59,7 +46,6 @@ class FrontPage : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private val database: FirebaseFirestore = FirebaseFirestore.getInstance()
     private val postRef = database.collection("Posts")
-    private val geoFirestore = GeoFirestore(postRef)
 
     private var itemAdapter: ItemAdapter? = null
     private var PERMISSION_ID  : Int= 1000
@@ -71,8 +57,8 @@ class FrontPage : AppCompatActivity() {
     // Query for database and isOpen for fob-button
     var myquery = postRef.orderBy("postTime")
     var isOpen = false
-    var currentGeoPoint = GeoPoint(1.1,1.1)
-    var geoHashLocation = GeoHash(1.1, 1.1, 5)
+    var currentGeoPoint = GeoPoint(59.412369, 9.067760)
+    var geoHashLocation = GeoHash(1.1, 9.067760, 5)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState); setTheme(R.style.AppTheme); AppCompatDelegate.setDefaultNightMode(
@@ -138,7 +124,11 @@ class FrontPage : AppCompatActivity() {
             geoHashLocation = GeoHash(location, 5)
 
             currentGeoPoint = GeoPoint(lastLocation.latitude, lastLocation.longitude)
-            Toast.makeText(this@FrontPage,"Location " + geoHashLocation.toString(),Toast.LENGTH_LONG).show()
+            Toast.makeText(
+                this@FrontPage,
+                "Location " + geoHashLocation.toString(),
+                Toast.LENGTH_LONG
+            ).show()
 
         }
     }
@@ -191,6 +181,8 @@ class FrontPage : AppCompatActivity() {
                 funnetKnapp.visibility = View.GONE
                 taptKnapp.isEnabled = false
                 funnetKnapp.isEnabled = false
+                taptKnapp.isClickable = false
+                funnetKnapp.isClickable = false
 
                 isOpen = false
             } else {
@@ -200,6 +192,8 @@ class FrontPage : AppCompatActivity() {
 
                 taptKnapp.isEnabled = true
                 funnetKnapp.isEnabled = true
+                taptKnapp.visibility = View.VISIBLE
+                funnetKnapp.visibility = View.VISIBLE
 
 
                 isOpen = true
@@ -230,7 +224,7 @@ class FrontPage : AppCompatActivity() {
     }
     // Sorting functions. Ajusts Query to the relevant sorting
     fun sortAlle() {
-        myquery = postRef.orderBy("postTime")
+        myquery = postRef.orderBy("timeStamp", Query.Direction.DESCENDING)
         recyclerSetup()
         onStart()
 
@@ -250,7 +244,9 @@ class FrontPage : AppCompatActivity() {
     }
     fun sortLokasjon() {
         getNewLocation()
-        myquery = database.collection("Posts").whereEqualTo("geoHash", geoHashLocation)
+        myquery = database.collection("Posts").whereEqualTo("geoHash", geoHashLocation.toString())
+        recyclerSetup()
+        onStart()
 
     }
 
@@ -275,13 +271,16 @@ class FrontPage : AppCompatActivity() {
                         onStart()
                         return true
                     }
+
                     //Ajust Query to search-value
                     override fun onQueryTextChange(newText: String?): Boolean {
                         if (newText!!.isNotEmpty()) {
                             myquery = database
                                 .collection("Posts")
-                                .whereArrayContains("keyWords", newText.toString()
-                                    .trim().toLowerCase(Locale.getDefault()))
+                                .whereArrayContains(
+                                    "keyWords", newText.toString()
+                                        .trim().toLowerCase(Locale.getDefault())
+                                )
                         }
                         return true
                     }
@@ -301,11 +300,18 @@ class FrontPage : AppCompatActivity() {
 
         //Account Button
         val accountButton = menu!!.findItem(R.id.accountButton)
-        accountButton.isVisible = user != null
+
 
         accountButton.setOnMenuItemClickListener {
-            val intent1 = Intent(this, MyAccount::class.java)
-            startActivity(intent1)
+            val user = Firebase.auth.currentUser
+            if (user != null) {
+                val intent1 = Intent(this, MyAccount::class.java)
+                startActivity(intent1)
+            } else {
+                val intent1 = Intent(this, LoginActivity::class.java)
+                startActivity(intent1)
+
+            }
             return@setOnMenuItemClickListener false
         }
         return true
