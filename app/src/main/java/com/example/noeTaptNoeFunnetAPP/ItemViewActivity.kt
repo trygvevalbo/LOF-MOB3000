@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.ActionBar
+import androidx.appcompat.app.AlertDialog
 import com.bumptech.glide.Glide
 import com.example.noeTaptNoeFunnetAPP.post_item.PostFoundItem
 import com.example.noeTaptNoeFunnetAPP.post_item.PostLostItem
@@ -122,12 +123,25 @@ class ItemViewActivity : AppCompatActivity() , OnMapReadyCallback {
 
     private fun deleteItem(aDocumentId : String){
 
-        val docRef = database.collection("Posts").document(aDocumentId)
-            .delete()
-            .addOnSuccessListener { Toast.makeText(this, "Posten er slettet", Toast.LENGTH_LONG).show()
-                val intent1 = Intent(this, FrontPage::class.java)
-                startActivity(intent1)}
-            .addOnFailureListener { Toast.makeText(this, "klate ikke å slette post", Toast.LENGTH_LONG).show() }
+
+        val builder = AlertDialog.Builder(this@ItemViewActivity)
+        builder.setMessage("Er du sikker på at du vil slette denne posten?")
+            .setCancelable(false)
+            .setPositiveButton("Yes") { dialog, id ->
+                val docRef = database.collection("Posts").document(aDocumentId).delete()
+                    .addOnSuccessListener { Toast.makeText(this, "Posten er slettet", Toast.LENGTH_LONG).show()
+                        val intent1 = Intent(this, FrontPage::class.java)
+                        startActivity(intent1)}
+                    .addOnFailureListener { Toast.makeText(this, "klate ikke å slette post", Toast.LENGTH_LONG).show() }
+            }
+            .setNegativeButton("No") { dialog, id ->
+                // Dismiss the dialog
+                dialog.dismiss()
+            }
+        val alert = builder.create()
+        alert.show()
+
+
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
