@@ -41,6 +41,7 @@ import com.google.android.gms.tasks.Continuation
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.GeoPoint
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.StorageTask
@@ -60,6 +61,7 @@ class FormFragment : Fragment() {
     lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     lateinit var locationRequest : LocationRequest
     var geoHashLocation = GeoHash(59.412369, 9.067760, 5)
+    var geoPoint = GeoPoint(59.412369, 9.067760)
 
 
 
@@ -370,19 +372,21 @@ class FormFragment : Fragment() {
     }
 
 
-    private fun getGeoHash () {
+    private fun getGeoLocation () {
 
             val location = Location("geohash")
             location.latitude = model?.savedLatitude?.value!!
             location.longitude = model?.savedLongitude?.value!!
 
             geoHashLocation = GeoHash(location, 5)
+
+            geoPoint = GeoPoint(location.latitude, location.longitude)
         }
 
 
 
     private fun uploadTextToDatabase(binding: FragmentFormBinding, model: FormViewModel?) {
-        getGeoHash()
+        getGeoLocation()
         val keyWords = arrayOf(
             binding.viewModel?.savedNameItem?.value.toString().trim().toLowerCase(Locale.getDefault()),
             binding.viewModel?.savedDescription?.value.toString().trim().toLowerCase(Locale.getDefault()),
@@ -403,6 +407,7 @@ class FormFragment : Fragment() {
         postmap["keyWords"] = Arrays.asList(*keyWords)
         postmap["keyWords"] = listOf(*keyWords)
         postmap["geoHash"] = geoHashLocation.toString()
+        postmap["geopoint"] = geoPoint
 
 
         val mFirestore: FirebaseFirestore = FirebaseFirestore.getInstance()

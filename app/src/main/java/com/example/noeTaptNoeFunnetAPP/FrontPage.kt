@@ -2,6 +2,7 @@ package com.example.noeTaptNoeFunnetAPP
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -9,6 +10,7 @@ import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
 import android.os.Looper
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -35,10 +37,16 @@ import com.google.android.gms.location.*
 import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.GeoPoint
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.view.*
+import org.imperiumlabs.geofirestore.GeoFirestore
+import org.imperiumlabs.geofirestore.GeoQuery
+import org.imperiumlabs.geofirestore.extension.getAtLocation
+import org.imperiumlabs.geofirestore.listeners.GeoQueryDataEventListener
 import java.time.LocalDate
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
@@ -50,17 +58,21 @@ class FrontPage : AppCompatActivity() {
     lateinit var preferences: SharedPreferences
     private lateinit var auth: FirebaseAuth
     private val database: FirebaseFirestore = FirebaseFirestore.getInstance()
-    private var postRef = database.collection("Posts")
-    private var itemAdapter: ItemAdapter? = null
+    private val postRef = database.collection("Posts")
+    private val geoFirestore = GeoFirestore(postRef)
 
+    private var itemAdapter: ItemAdapter? = null
     private var PERMISSION_ID  : Int= 1000
     lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     lateinit var locationRequest : LocationRequest
 
 
+
     // Query for database and isOpen for fob-button
     var myquery = postRef.orderBy("postTime")
     var isOpen = false
+    var currentGeoPoint = GeoPoint(1.1,1.1)
+    var geoHashLocation = GeoHash(1.1, 1.1, 5)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState); setTheme(R.style.AppTheme); AppCompatDelegate.setDefaultNightMode(
@@ -123,8 +135,10 @@ class FrontPage : AppCompatActivity() {
             location.latitude = lastLocation.latitude
             location.longitude = lastLocation.longitude
 
-            val geoHashLocation = GeoHash(location, 5)
-            Toast.makeText(this@FrontPage,geoHashLocation.toString(),Toast.LENGTH_LONG).show()
+            geoHashLocation = GeoHash(location, 5)
+
+            currentGeoPoint = GeoPoint(lastLocation.latitude, lastLocation.longitude)
+            Toast.makeText(this@FrontPage,"Location " + geoHashLocation.toString(),Toast.LENGTH_LONG).show()
 
         }
     }
@@ -235,7 +249,8 @@ class FrontPage : AppCompatActivity() {
         onStart()
     }
     fun sortLokasjon() {
-        
+        getNewLocation()
+        myquery = database.collection("Posts").whereEqualTo("geoHash", geoHashLocation)
 
     }
 
