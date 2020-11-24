@@ -42,8 +42,10 @@
         <activity
             android:name=".ItemViewActivity"
             android:parentActivityName=".FrontPage" />
-        <activity android:name=".post_item.PostLostItem" />
-        <activity android:name=".post_item.PostFoundItem" />
+        <activity android:name=".post_item.PostLostItem"
+            android:windowSoftInputMode="stateHidden"/>
+        <activity android:name=".post_item.PostFoundItem"
+            android:windowSoftInputMode="stateHidden"/>
         <activity android:name=".LoginActivity" />
         <activity android:name=".SignupActivity" />
         <activity
