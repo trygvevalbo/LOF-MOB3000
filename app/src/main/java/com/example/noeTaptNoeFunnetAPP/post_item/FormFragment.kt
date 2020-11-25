@@ -1,25 +1,22 @@
 package com.example.noeTaptNoeFunnetAPP.post_item
 
-import android.Manifest
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.ContentResolver
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.BitmapFactory
 import android.location.Location
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
-import android.os.Looper
-import android.os.SystemClock
+import android.os.Environment
 import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.app.ActivityCompat
+import androidx.core.content.FileProvider
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
@@ -28,10 +25,6 @@ import com.example.noeTaptNoeFunnetAPP.FrontPage
 import com.example.noeTaptNoeFunnetAPP.R
 import com.example.noeTaptNoeFunnetAPP.databinding.FragmentFormBinding
 import com.fonfon.kgeohash.GeoHash
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationCallback
-import com.google.android.gms.location.LocationRequest
-import com.google.android.gms.location.LocationResult
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -40,7 +33,6 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.tasks.Continuation
 import com.google.android.gms.tasks.Task
-import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.GeoPoint
 import com.google.firebase.storage.FirebaseStorage
@@ -50,7 +42,7 @@ import com.google.firebase.storage.UploadTask
 import kotlinx.android.synthetic.main.activity_signup.*
 import kotlinx.android.synthetic.main.fragment_form.*
 import kotlinx.android.synthetic.main.liste.*
-import java.sql.Timestamp
+import java.io.File
 import java.util.*
 
 
@@ -64,17 +56,19 @@ class FormFragment : Fragment() {
     var geoHashLocation = GeoHash(59.412369, 9.067760, 5)
     var geoPoint = GeoPoint(59.412369, 9.067760)
     var currentTimeStamp = System.currentTimeMillis() / 1000L
-
+    var selectedLocation: LatLng = LatLng(59.412369, 9.067760)
 
 
     lateinit var googleMap: GoogleMap
+    private val FILE_NAME = "photo.jpg"
+    private lateinit var photoFile: File
 
-    var selectedLocation: LatLng? = null
+
 
     private val IMAGE_CAPTURE_CODE = 1001 // camera funksjon https://www.youtube.com/watch?v=3gkAoF90RZ4
     private val PERMISSION_CODE = 1000
-    private val RequestCode = 438
-    var image_uri: Uri? = null
+    private val RequestCode = 42
+    var image_uri: Uri = Uri.EMPTY
     private var storageRef: StorageReference? = null
     private var coverChecker: String? = ""
 
@@ -98,7 +92,7 @@ class FormFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
 
         val binding = DataBindingUtil.inflate<FragmentFormBinding>(
@@ -188,7 +182,7 @@ class FormFragment : Fragment() {
                     googleMap.addMarker(selectedLocation?.let { it1 ->
                         MarkerOptions().position(it1)
                     })
-                } else if(model.userLatitude != null){
+                } else if (model.userLatitude != null) {
                     selectedLocation = LatLng(
                         model.userLatitude!!,
                         model.userLongitude!!
@@ -212,26 +206,26 @@ class FormFragment : Fragment() {
 
 
     private fun cameraManager() {
-        if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA)
-            == PackageManager.PERMISSION_DENIED ||
-            ActivityCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
-            )
-            == PackageManager.PERMISSION_DENIED
-        ) {
-            //Permission was not enabled
-            val permission = arrayOf(
-                Manifest.permission.CAMERA,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
-            )
-            //show popup ti request permission
-            requestPermissions(permission, PERMISSION_CODE)
-        } else {
-            //Permission already granted
-            openCamera()
+        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        photoFile = photoFile(FILE_NAME)
+        val context: Context? = activity
+        val packageManager = context!!.packageManager
+
+       // takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoFile)
+        val fileProvider = FileProvider.getUriForFile(context, "com.example.noeTaptNoeFunnetAPP.fileprovider", photoFile)
+        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, fileProvider)
+        if (packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
+            startActivityForResult(takePictureIntent, RequestCode)
+        }else {
+            Toast.makeText(activity, "This device does not have a camera.", Toast.LENGTH_SHORT).show()
         }
     }
+
+    private fun photoFile(fileName: String): File {
+        val storeageDirectory = context?.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        return File.createTempFile(fileName, ".jpg", storeageDirectory)
+    }
+
 
     private fun pickImage() {
         val intent = Intent()
@@ -245,7 +239,7 @@ class FormFragment : Fragment() {
         values.put(MediaStore.Images.Media.TITLE, "New picture")
         values.put(MediaStore.Images.Media.TITLE, "From the Camera")
         val resolver: ContentResolver = requireActivity().contentResolver
-        image_uri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
+        image_uri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)!!
 
         //camera intent
         val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
@@ -277,32 +271,23 @@ class FormFragment : Fragment() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (resultCode == Activity.RESULT_OK) {
+        if (requestCode == RequestCode && resultCode == Activity.RESULT_OK) {
             //set image captured to image view
-            image.setImageURI(image_uri)
-            model!!.setImage(image_uri) // set verdi
+                image_uri = Uri.fromFile(photoFile)
 
-        }
-
-        if (RequestCode == RequestCode && resultCode == Activity.RESULT_OK ) run {
-            if (data != null) {
-                image_uri = data.data
-            }
             if (data != null) {
                 model?.image?.value = data.data
             }
-            image.setImageURI(image_uri)
-            model!!.setImage(image_uri)
-
+                image.setImageURI(image_uri)
+                model!!.setImage(image_uri) // set verdi
+        }else {
+            super.onActivityResult(requestCode, resultCode, data)
         }
-
 
     }
 
     private fun checkForm(binding: FragmentFormBinding, model: FormViewModel?): Boolean {
-        if (model?.image?.value.toString().isNullOrEmpty()) {
+        if (model!!.image.equals(Uri.EMPTY)) {
             binding.nameOfItem.error = "Venligst last opp et bilde av tingen"
             binding.nameOfItem.requestFocus()
             return false
@@ -318,15 +303,15 @@ class FormFragment : Fragment() {
             binding.colordescription.error = "Venligst tast inn en fargebeskrivelse på tingen"
             binding.colordescription.requestFocus()
             return false
-        }else if (binding.timewhenfound.text.toString().isNullOrEmpty()) {
+        }else if (binding.timewhenfound.text.toString().isEmpty()) {
             binding.timewhenfound.error = "Venligst tast inn tidspunkt"
             binding.timewhenfound.requestFocus()
             return false
-        } else if (binding.contactinformation.text.toString().isNullOrEmpty()) {
-            binding.contactinformation.error = "Venligst tast inn mobilnummer eller E-post"
-            binding.contactinformation.requestFocus()
-            return false
-        } else if (selectedLocation == LatLng(59.412369, 9.067760)) {
+        }  else if (selectedLocation == LatLng(59.412369, 9.067760) && geoHashLocation == GeoHash(
+                59.412369,
+                9.067760,
+                5
+            ) &&  geoPoint == GeoPoint(59.412369, 9.067760)) {
             binding.contactinformation.error = "Venligst velg hvor den var funnet"
             binding.contactinformation.requestFocus()
             return false
@@ -356,7 +341,7 @@ class FormFragment : Fragment() {
             }).addOnCompleteListener { task ->
                 if (task.isSuccessful) {
 
-                     model?.downloadUrl = task.result.toString()
+                     model.downloadUrl = task.result.toString()
                     uploadTextToDatabase(binding, model)
 
                 }
@@ -378,8 +363,8 @@ class FormFragment : Fragment() {
     private fun getGeoLocation () {
 
             val location = Location("geohash")
-            location.latitude = model?.savedLatitude?.value!!
-            location.longitude = model?.savedLongitude?.value!!
+            location.latitude =  selectedLocation.latitude
+            location.longitude = selectedLocation.longitude
 
             geoHashLocation = GeoHash(location, 5)
 
@@ -394,17 +379,20 @@ class FormFragment : Fragment() {
         getGeoLocation()
         getCurrentUnixTime()
         val keyWords = arrayOf(
-            binding.viewModel?.savedNameItem?.value.toString().trim().toLowerCase(Locale.getDefault()),
-            binding.viewModel?.savedDescription?.value.toString().trim().toLowerCase(Locale.getDefault()),
+            binding.viewModel?.savedNameItem?.value.toString().trim()
+                .toLowerCase(Locale.getDefault()),
+            binding.viewModel?.savedDescription?.value.toString().trim()
+                .toLowerCase(Locale.getDefault()),
             binding.viewModel?.savedColor?.value.toString().trim().toLowerCase(Locale.getDefault()),
-            binding.viewModel?.postType.toString().trim().toLowerCase(Locale.getDefault()))
+            binding.viewModel?.postType.toString().trim().toLowerCase(Locale.getDefault())
+        )
         val postmap = HashMap<String, Any>()
 
         postmap["postImage"] = binding.viewModel?.downloadUrl.toString()
         postmap["itemName"] = binding.viewModel?.savedNameItem?.value.toString()
         postmap["itemDesk"] = binding.viewModel?.savedDescription?.value.toString()
         postmap["itemColor"] = binding.viewModel?.savedColor?.value.toString()
-        postmap["postTime"] = binding.viewModel?.savedTime?.value!!
+        postmap["postTime"] = binding.viewModel?.savedTime?.value.toString()
         postmap["itemLat"] = binding.viewModel?.savedLatitude?.value.toString()
         postmap["itemLng"] = binding.viewModel?.savedLongitude?.value.toString()
         postmap["postType"] = binding.viewModel?.postType.toString()
@@ -418,7 +406,7 @@ class FormFragment : Fragment() {
 
 
         val mFirestore: FirebaseFirestore = FirebaseFirestore.getInstance()
-        if(checkForm(binding,model)){
+        if(checkForm(binding, model)){
             if(model?.documentId.isNullOrEmpty()) {
                 mFirestore.collection("Posts").add(postmap).addOnSuccessListener() { documents ->
 

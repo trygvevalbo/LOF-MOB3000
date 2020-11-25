@@ -34,7 +34,6 @@ class ItemAdapter(options: FirestoreRecyclerOptions<Item>, val context: Context)
 
         holder.ritemName.text = model.itemName
         holder.ritemColor.text = model.itemColor
-        //holder.rContact.text = model.contact
         holder.ritemDesk.text = model.itemDesk
         holder.rpostTime.text = model.postTime
         holder.rpostType.text = model.postType
@@ -56,9 +55,6 @@ class ItemAdapter(options: FirestoreRecyclerOptions<Item>, val context: Context)
                 var cLng : String? =  model.itemLng
                 var cEmail : String? = model.userEmail
                 var cId : String? = model.postId
-
-
-
 
 
             val intent = Intent(context, ItemViewActivity::class.java)

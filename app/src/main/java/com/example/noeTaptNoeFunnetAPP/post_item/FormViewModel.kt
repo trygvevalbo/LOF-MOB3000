@@ -27,7 +27,7 @@ class FormViewModel : ViewModel() {
     var userLongitude : Double?= null
     var savedTime = MutableLiveData<String>()
     var savedContact = MutableLiveData<String>()
-     var image = MutableLiveData<Uri>()
+    var image = MutableLiveData<Uri>()
     var imageUrl :String? = null
     var downloadUrl: String? = null
 

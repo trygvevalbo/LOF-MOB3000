@@ -161,6 +161,7 @@
         android:apiKey="@string/google_maps_key"
         android:clickable="true"
         android:enabled="true"
+        tools:context=".ItemViewActivity"
          />
 
 

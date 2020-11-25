@@ -15,6 +15,7 @@
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    
 
     <application
         android:allowBackup="true"
@@ -25,6 +26,17 @@
         android:usesCleartextTraffic="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        
+        <provider
+            android:authorities="com.example.noeTaptNoeFunnetAPP.fileprovider"
+            android:name="androidx.core.content.FileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+                <meta-data
+                    android:name="android.support.FILE_PROVIDER_PATHS"
+                    android:resource="@xml/fileprovider" />
+            </provider>
+        
         <activity android:name=".account.MyPost">
         </activity>
         <activity android:name=".account.MyAccount" />
