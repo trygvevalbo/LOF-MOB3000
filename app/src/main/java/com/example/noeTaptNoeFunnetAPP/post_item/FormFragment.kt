@@ -284,6 +284,10 @@ class FormFragment : Fragment() {
             super.onActivityResult(requestCode, resultCode, data)
         }
 
+            image.setImageURI(image_uri)
+            model!!.setImage(image_uri) // set verdi
+
+        }
     }
 
     private fun checkForm(binding: FragmentFormBinding, model: FormViewModel?): Boolean {
