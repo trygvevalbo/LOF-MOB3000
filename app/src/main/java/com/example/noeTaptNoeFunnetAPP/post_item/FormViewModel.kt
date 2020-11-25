@@ -37,7 +37,7 @@ class FormViewModel : ViewModel() {
 
     @JvmName("setImage1")
     fun setImage(image: Uri?) {
-        this.image.value = image
+        this.image.value = image!!
     }
 
     fun setNameItem(s: CharSequence, start: Int, before: Int, count: Int) {
@@ -92,7 +92,7 @@ class FormViewModel : ViewModel() {
             savedLatitude.value = aLat.toDouble()
         }
         if (aLng != null) {
-            savedLongitude.value = aLng.toDouble()!!
+            savedLongitude.value = aLng.toDouble()
         }
          savedTime.value =aTime!!
          savedContact.value = aContact!!
