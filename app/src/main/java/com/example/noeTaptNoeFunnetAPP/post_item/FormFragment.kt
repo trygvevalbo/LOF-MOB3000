@@ -119,8 +119,10 @@ class FormFragment : Fragment() {
         //set correct headings for type of post
         if(model!!.postType=="Funnet") {
             binding.timewhenfound.hint ="Når var den funnet"
+            binding.postButtonFoundItem.text="Post funnet gjenstand"
         }else{
             binding.timewhenfound.hint ="Når var den mistet"
+            binding.postButtonFoundItem.text="Post tapt gjenstand"
         }
 
         mapManager(model)

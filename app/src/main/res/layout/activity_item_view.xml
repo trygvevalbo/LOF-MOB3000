@@ -51,17 +51,24 @@
         android:layout_below="@+id/textIC_Navn"
 
         />
-
+    <RelativeLayout
+        android:id="@+id/text_field_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="16dp"
+        android:layout_below="@+id/textIC_Type"
+        android:background="@color/ContainerPostDark"
+        app:layout_constraintTop_toBottomOf="@+id/image_button_container">
     <TextView
         android:id="@+id/textIC_dato"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:layout_margin="5dp"
         android:text="@string/dato"
         android:textColor="@color/LightGray"
         android:textStyle="bold"
-        android:layout_below="@+id/textIC_Type"
-
          />
 
     <TextView
@@ -99,14 +106,14 @@
         android:textSize="22sp"
         android:layout_below="@id/textIC_Besk"
         />
-
+    </RelativeLayout>
 
     <fragment
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:layout_below="@id/textIC_Cont"
+        android:layout_below="@id/text_field_container"
         android:layout_marginTop="16dp"
         android:apiKey="@string/google_maps_key"
         android:clickable="true"
