@@ -41,7 +41,7 @@
         app:layout_constraintVertical_bias="0.0"
         android:theme="@style/Materialtheme"
         android:outlineAmbientShadowColor="@color/SecondaryAccent"
-        android:backgroundTint="@color/MainAccent"
+        android:backgroundTint="@color/Tetryary"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

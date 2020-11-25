@@ -33,15 +33,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/done_description_button"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:text="@string/done_description_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/description" />
+        app:layout_constraintTop_toBottomOf="@+id/description"
+        android:theme="@style/Materialtheme"
+        android:outlineAmbientShadowColor="@color/SecondaryAccent"
+        android:backgroundTint="@color/Tetryary"
+        />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

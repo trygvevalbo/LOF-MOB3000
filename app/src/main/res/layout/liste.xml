@@ -24,14 +24,18 @@
         >
 
 
-        <ImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/imageIC"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:scaleType="fitXY"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
             android:src="@mipmap/ic_launcher"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
+            android:theme="@style/Materialtheme"
+            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize10Percent"
+
             />
 
         <TextView

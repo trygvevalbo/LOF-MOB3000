@@ -68,7 +68,7 @@
             android:text="Opprett konto"
             android:theme="@style/Materialtheme"
             android:outlineAmbientShadowColor="@color/SecondaryAccent"
-            android:backgroundTint="@color/SecondaryAccent"
+            android:backgroundTint="@color/Tetryary"
             />
 
     </LinearLayout>

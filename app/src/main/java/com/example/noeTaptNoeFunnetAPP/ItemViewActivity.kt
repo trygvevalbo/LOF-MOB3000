@@ -64,7 +64,7 @@ class ItemViewActivity : AppCompatActivity() , OnMapReadyCallback {
         textIC_dato.text  = aTime
         textIC_Farge.text = aColor
         textIC_Besk.text  = aDesk
-        textIC_Cont.text = aContact
+        textIC_Cont.text =  aContact
         Glide.with(this).load(aImage).into(imageIC)
 
 //hent brukernavn av bruker som er logget inn

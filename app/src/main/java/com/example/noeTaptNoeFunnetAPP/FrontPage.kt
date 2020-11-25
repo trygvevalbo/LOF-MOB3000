@@ -29,6 +29,7 @@ import com.example.noeTaptNoeFunnetAPP.post_item.location.LocationUtil
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.fonfon.kgeohash.GeoHash
 import com.google.android.gms.location.*
+import com.google.android.material.imageview.ShapeableImageView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -48,7 +49,6 @@ class FrontPage : AppCompatActivity() {
     private val postRef = database.collection("Posts")
 
     private var itemAdapter: ItemAdapter? = null
-    private var PERMISSION_ID  : Int= 1000
     lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     lateinit var locationRequest : LocationRequest
 
@@ -89,7 +89,6 @@ class FrontPage : AppCompatActivity() {
 
         recyclerSetup()
         preferancesSetup()
-        checkPermission()
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
         val locationUtil = LocationUtil(this)
@@ -113,22 +112,12 @@ class FrontPage : AppCompatActivity() {
     private val locationCallback = object : LocationCallback(){
         override fun onLocationResult(p0: LocationResult) {
             var lastLocation =p0.lastLocation
-
-
-           //Toast.makeText(this@FrontPage,lastLocation.latitude.toString() + lastLocation.longitude.toString(),Toast.LENGTH_LONG).show()
-
             val location = Location("geohash")
             location.latitude = lastLocation.latitude
             location.longitude = lastLocation.longitude
 
             geoHashLocation = GeoHash(location, 5)
-
             currentGeoPoint = GeoPoint(lastLocation.latitude, lastLocation.longitude)
-            Toast.makeText(
-                this@FrontPage,
-                "Location " + geoHashLocation.toString(),
-                Toast.LENGTH_LONG
-            ).show()
 
         }
     }
@@ -253,7 +242,6 @@ class FrontPage : AppCompatActivity() {
 
     // Search Menu Override
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        val user = Firebase.auth.currentUser
         menuInflater.inflate(R.menu.searchmenu, menu)
         //Define searchbar
         val menuItem = menu!!.findItem(R.id.searchBar)
@@ -365,37 +353,4 @@ class FrontPage : AppCompatActivity() {
         }
         builder.create().show()
     }
-
-
-
-    private fun requestPermission(){
-        ActivityCompat.requestPermissions(
-            this,
-            arrayOf(
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ), PERMISSION_ID
-        )
-
-    }
-
-    private fun checkPermission(){
-        if(
-            ActivityCompat.checkSelfPermission(
-                this,
-                android.Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED  ||
-            ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-           requestPermission()
-        }
-
-    }
-
-
-
-
 }
