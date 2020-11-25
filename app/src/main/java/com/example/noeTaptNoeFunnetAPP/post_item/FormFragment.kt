@@ -285,20 +285,6 @@ class FormFragment : Fragment() {
             model!!.setImage(image_uri) // set verdi
 
         }
-
-        if (RequestCode == RequestCode && resultCode == Activity.RESULT_OK ) run {
-            if (data != null) {
-                image_uri = data.data
-            }
-            if (data != null) {
-                model?.image?.value = data.data
-            }
-            image.setImageURI(image_uri)
-            model!!.setImage(image_uri)
-
-        }
-
-
     }
 
     private fun checkForm(binding: FragmentFormBinding, model: FormViewModel?): Boolean {
