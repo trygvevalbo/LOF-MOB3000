@@ -10,7 +10,7 @@
     </style>
 
     <style name="SplashTheme" parent="AppTheme">
-        <item name="android:windowBackground">@drawable/thonking</item>
+        <item name="android:windowBackground">@drawable/splash</item>
     </style>
 
     <style name="Materialtheme" parent="Theme.MaterialComponents">
