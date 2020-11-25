@@ -25,7 +25,8 @@
         android:usesCleartextTraffic="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".account.MyPost"></activity>
+        <activity android:name=".account.MyPost">
+        </activity>
         <activity android:name=".account.MyAccount" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -36,7 +37,7 @@
              You can define the keys for the debug and release targets in src/debug/ and src/release/.
         -->
         <meta-data
-            android:name="com.google.android.geo.API_KEY"
+            android:name="com.google.android.maps.v2.API_KEY"
             android:value="@string/google_maps_key" />
 
         <activity
