@@ -64,7 +64,13 @@ class ItemViewActivity : AppCompatActivity() , OnMapReadyCallback {
         textIC_dato.text  = aTime
         textIC_Farge.text = aColor
         textIC_Besk.text  = aDesk
-        textIC_Cont.text =  aContact
+        if (aContact != "null") {
+                textIC_Cont.text =  aContact
+            }else{
+            textIC_Cont.visibility = View.GONE
+            textIC_OVKontakt.visibility = View.GONE
+        }
+
         Glide.with(this).load(aImage).into(imageIC)
 
 //hent brukernavn av bruker som er logget inn

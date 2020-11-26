@@ -67,6 +67,7 @@ class FormFragment : Fragment() {
     var currentGeoPoint = GeoPoint(59.412369, 9.067760)
     var currentTimeStamp = System.currentTimeMillis() / 1000L
     var selectedLocation: LatLng = LatLng(59.412369, 9.067760)
+    var userLocation: LatLng? = null
 
     lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     lateinit var locationRequest : LocationRequest
@@ -194,11 +195,11 @@ class FormFragment : Fragment() {
                         MarkerOptions().position(it1)
                     })
                 } else if (model.userLatitude != null) {
-                    selectedLocation = LatLng(
+                    userLocation = LatLng(
                         model.userLatitude!!,
                         model.userLongitude!!
                     ) // hent det bruker har skrevet inn
-                    googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(selectedLocation, 10F))
+                    googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 10F))
 
                 } else {
                     getNewLocation()
@@ -434,7 +435,7 @@ class FormFragment : Fragment() {
     }
 
     private fun checkForm(binding: FragmentFormBinding, model: FormViewModel?): Boolean {
-        if (model!!.image.equals(Uri.EMPTY)) {
+        if (model!!.image.value== null) {
             binding.nameOfItem.error = "Venligst last opp et bilde av tingen"
             binding.nameOfItem.requestFocus()
             return false
