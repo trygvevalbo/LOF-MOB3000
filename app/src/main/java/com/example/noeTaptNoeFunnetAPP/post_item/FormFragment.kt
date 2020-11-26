@@ -64,8 +64,8 @@ class FormFragment : Fragment() {
     private lateinit var photoFile: File
 
 
-
-    private val IMAGE_CAPTURE_CODE = 1001 // camera funksjon https://www.youtube.com/watch?v=3gkAoF90RZ4
+    private val PICK_IMAGE = 1
+    private val IMAGE_CAPTURE_CODE = 1001
     private val PERMISSION_CODE = 1000
     private val RequestCode = 42
     var image_uri: Uri = Uri.EMPTY
@@ -179,7 +179,7 @@ class FormFragment : Fragment() {
                         model.savedLatitude.value!!,
                         model.savedLongitude.value!!
                     ) // hent det bruker har skrevet inn
-                    googleMap.addMarker(selectedLocation?.let { it1 ->
+                    googleMap.addMarker(selectedLocation.let { it1 ->
                         MarkerOptions().position(it1)
                     })
                 } else if (model.userLatitude != null) {
@@ -206,19 +206,34 @@ class FormFragment : Fragment() {
 
 
     private fun cameraManager() {
-        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        photoFile = photoFile(FILE_NAME)
-        val context: Context? = activity
-        val packageManager = context!!.packageManager
 
-       // takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoFile)
-        val fileProvider = FileProvider.getUriForFile(context, "com.example.noeTaptNoeFunnetAPP.fileprovider", photoFile)
-        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, fileProvider)
-        if (packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
-            startActivityForResult(takePictureIntent, RequestCode)
+        if (android.os.Build.VERSION.SDK_INT > android.os.Build.VERSION_CODES.P){
+            val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+            photoFile = photoFile(FILE_NAME)
+            val context: Context? = activity
+            val packageManager = context!!.packageManager
+
+            // takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoFile)
+            val fileProvider = FileProvider.getUriForFile(context, "com.example.noeTaptNoeFunnetAPP.fileprovider", photoFile)
+            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, fileProvider)
+            if (packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
+                startActivityForResult(takePictureIntent, RequestCode)
+            }else {
+                Toast.makeText(activity, "This device does not have a camera.", Toast.LENGTH_SHORT).show()
+            }
         }else {
-            Toast.makeText(activity, "This device does not have a camera.", Toast.LENGTH_SHORT).show()
+            val values = ContentValues()
+            values.put(MediaStore.Images.Media.TITLE, "New picture")
+            values.put(MediaStore.Images.Media.TITLE, "From the Camera")
+            val resolver: ContentResolver = requireActivity().contentResolver
+            image_uri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)!!
+
+            //camera intent
+            val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+            cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, image_uri)
+            startActivityForResult(cameraIntent, IMAGE_CAPTURE_CODE)
         }
+
     }
 
     private fun photoFile(fileName: String): File {
@@ -228,10 +243,18 @@ class FormFragment : Fragment() {
 
 
     private fun pickImage() {
-        val intent = Intent()
+        //Intent to pick image
+        val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
-        intent.action = Intent.ACTION_GET_CONTENT
-        startActivityForResult(intent, RequestCode)
+        startActivityForResult(intent, IMAGE_PICK_CODE)
+    }
+
+    companion object {
+        //image pick code
+        private val IMAGE_PICK_CODE = 1000;
+        //Permission code
+        private val PERMISSION_CODE = 1001;
+
     }
 
     private fun openCamera() {
@@ -271,18 +294,39 @@ class FormFragment : Fragment() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == RequestCode && resultCode == Activity.RESULT_OK) {
-            //set image captured to image view
+
+        if (android.os.Build.VERSION.SDK_INT > android.os.Build.VERSION_CODES.P){
+            if (requestCode == RequestCode && resultCode == Activity.RESULT_OK) {
                 image_uri = Uri.fromFile(photoFile)
 
-            if (data != null) {
-                model?.image?.value = data.data
-            }
+                if (data != null) {
+                    model?.image?.value = data.data
+                }
                 image.setImageURI(image_uri)
                 model!!.setImage(image_uri) // set verdi
+
+            } else if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE) {
+                if (data != null) {
+                    image_uri = data.data!!
+                    model?.image?.value = data.data
+                }
+                image.setImageURI(image_uri)
+                model!!.setImage(image_uri) // set verdi
+
+            }
+            else {
+                super.onActivityResult(requestCode, resultCode, data)
+            }
         }else {
             super.onActivityResult(requestCode, resultCode, data)
+            if (resultCode == Activity.RESULT_OK) {
+                //set image captured to image view
+                image.setImageURI(image_uri)
+                model!!.setImage(image_uri) // set verdi
+
+            }
         }
+
 
     }
 
