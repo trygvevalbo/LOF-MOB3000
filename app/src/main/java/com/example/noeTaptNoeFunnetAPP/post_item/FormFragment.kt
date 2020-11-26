@@ -71,7 +71,7 @@ class FormFragment : Fragment() {
     private val IMAGE_CAPTURE_CODE = 1001
     private val PERMISSION_CODE = 2000
     private val RequestCode = 42
-    var image_uri: Uri = Uri.EMPTY
+    var image_uri: Uri? = Uri.EMPTY
     private var storageRef: StorageReference? = null
     private var coverChecker: String? = ""
 
@@ -279,7 +279,6 @@ class FormFragment : Fragment() {
 
     private fun pickImage() {
         //Intent to pick image
-
         if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
             == PackageManager.PERMISSION_DENIED ||
             ActivityCompat.checkSelfPermission(
@@ -351,8 +350,8 @@ class FormFragment : Fragment() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-
         if (android.os.Build.VERSION.SDK_INT > android.os.Build.VERSION_CODES.P){
+
             if (requestCode == RequestCode && resultCode == Activity.RESULT_OK) {
                 image_uri = Uri.fromFile(photoFile)
 
@@ -374,17 +373,23 @@ class FormFragment : Fragment() {
             else {
                 super.onActivityResult(requestCode, resultCode, data)
             }
+        }else if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_CAPTURE_CODE) {
+            if (data != null) {
+                model?.image?.value = data.data
+            }
+            image.setImageURI(image_uri)
+            model!!.setImage(image_uri)
+        } else if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE) {
+            if (data != null) {
+                image_uri = data.data
+                model?.image?.value = data.data
+            }
+
+            image.setImageURI(image_uri)
+            model!!.setImage(image_uri)
         }else {
             super.onActivityResult(requestCode, resultCode, data)
-            if (resultCode == Activity.RESULT_OK) {
-                //set image captured to image view
-                image.setImageURI(image_uri)
-                model!!.setImage(image_uri) // set verdi
-
-            }
         }
-
-
     }
 
     private fun checkForm(binding: FragmentFormBinding, model: FormViewModel?): Boolean {
