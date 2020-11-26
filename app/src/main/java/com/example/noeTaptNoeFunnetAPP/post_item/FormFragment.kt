@@ -1,5 +1,6 @@
 package com.example.noeTaptNoeFunnetAPP.post_item
 
+import android.Manifest
 import android.app.Activity
 import android.content.ContentResolver
 import android.content.ContentValues
@@ -16,6 +17,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -66,7 +69,7 @@ class FormFragment : Fragment() {
 
     private val PICK_IMAGE = 1
     private val IMAGE_CAPTURE_CODE = 1001
-    private val PERMISSION_CODE = 1000
+    private val PERMISSION_CODE = 2000
     private val RequestCode = 42
     var image_uri: Uri = Uri.EMPTY
     private var storageRef: StorageReference? = null
@@ -207,21 +210,52 @@ class FormFragment : Fragment() {
 
     private fun cameraManager() {
 
-        if (android.os.Build.VERSION.SDK_INT > android.os.Build.VERSION_CODES.P){
+
+        if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA)
+            == PackageManager.PERMISSION_DENIED ||
+            ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            )
+            == PackageManager.PERMISSION_DENIED
+        ) {
+            //Permission was not enabled
+            val permission = arrayOf(
+                Manifest.permission.CAMERA
+            )
+            //show popup ti request permission
+            requestPermissions(permission, PERMISSION_CODE)
+        } else {
+            //Permission already granted
+            openCamera()
+        }
+
+        }
+
+    private fun openCamera(){
+        if (android.os.Build.VERSION.SDK_INT > android.os.Build.VERSION_CODES.P) {
             val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
             photoFile = photoFile(FILE_NAME)
             val context: Context? = activity
             val packageManager = context!!.packageManager
 
             // takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoFile)
-            val fileProvider = FileProvider.getUriForFile(context, "com.example.noeTaptNoeFunnetAPP.fileprovider", photoFile)
+            val fileProvider = FileProvider.getUriForFile(
+                context,
+                "com.example.noeTaptNoeFunnetAPP.fileprovider",
+                photoFile
+            )
             takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, fileProvider)
             if (packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
                 startActivityForResult(takePictureIntent, RequestCode)
-            }else {
-                Toast.makeText(activity, "This device does not have a camera.", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(
+                    activity,
+                    "This device does not have a camera.",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
-        }else {
+        } else {
             val values = ContentValues()
             values.put(MediaStore.Images.Media.TITLE, "New picture")
             values.put(MediaStore.Images.Media.TITLE, "From the Camera")
@@ -233,8 +267,9 @@ class FormFragment : Fragment() {
             cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, image_uri)
             startActivityForResult(cameraIntent, IMAGE_CAPTURE_CODE)
         }
-
     }
+
+
 
     private fun photoFile(fileName: String): File {
         val storeageDirectory = context?.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
@@ -244,32 +279,36 @@ class FormFragment : Fragment() {
 
     private fun pickImage() {
         //Intent to pick image
+
+        if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            == PackageManager.PERMISSION_DENIED ||
+            ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            )
+            == PackageManager.PERMISSION_DENIED
+        ) {
+            //Permission was not enabled
+            val permission = arrayOf(
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            )
+            //show popup ti request permission
+            requestPermissions(permission, IMAGE_PICK_CODE)
+        } else {
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
         startActivityForResult(intent, IMAGE_PICK_CODE)
+        }
     }
 
     companion object {
         //image pick code
         private val IMAGE_PICK_CODE = 1000;
         //Permission code
-        private val PERMISSION_CODE = 1001;
+
 
     }
 
-    private fun openCamera() {
-        val values = ContentValues()
-        values.put(MediaStore.Images.Media.TITLE, "New picture")
-        values.put(MediaStore.Images.Media.TITLE, "From the Camera")
-        val resolver: ContentResolver = requireActivity().contentResolver
-        image_uri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)!!
-
-        //camera intent
-        val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, image_uri)
-        startActivityForResult(cameraIntent, IMAGE_CAPTURE_CODE)
-
-    }
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -277,18 +316,36 @@ class FormFragment : Fragment() {
         grantResults: IntArray
     ) {
         // called when user presses ALLOW or DENY from Permission Request Popup
-        when (requestCode) {
-            PERMISSION_CODE -> {
-                if (grantResults.isNotEmpty() && grantResults[0] ==
-                    PackageManager.PERMISSION_GRANTED
-                ) {
-                    //permission from popup was granted
-                    openCamera()
-                } else {
-                    //permission from popup was denied
-                    Toast.makeText(requireContext(), "Permission denied", Toast.LENGTH_SHORT).show()
+        if (requestCode === PERMISSION_CODE) {
+
+                        if (grantResults.isNotEmpty() && grantResults[0] ==
+                            PackageManager.PERMISSION_GRANTED
+                        ) {
+                            //permission from popup was granted
+                            openCamera()
+                        } else {
+                            //permission from popup was denied
+                            Toast.makeText(requireContext(), "Permission denied", Toast.LENGTH_SHORT).show()
+                        }
+
                 }
+            else if (requestCode === IMAGE_PICK_CODE ) {
+
+
+                        if (grantResults.isNotEmpty() && grantResults[0] ==
+                            PackageManager.PERMISSION_GRANTED
+                        ) {
+                            //permission from popup was granted
+                            pickImage();
+                        } else {
+                            //permission from popup was denied
+                            Toast.makeText(requireContext(), "Permission denied", Toast.LENGTH_SHORT).show()
+                        }
+
             }
+            else  {
+                Toast.makeText(requireContext(), "Permission denied", Toast.LENGTH_SHORT).show()
+
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
