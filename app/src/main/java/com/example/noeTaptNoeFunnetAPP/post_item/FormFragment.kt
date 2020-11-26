@@ -1,6 +1,7 @@
 package com.example.noeTaptNoeFunnetAPP.post_item
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.ContentResolver
 import android.content.ContentValues
@@ -12,6 +13,7 @@ import android.location.Location
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
+import android.os.Looper
 import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
@@ -28,6 +30,10 @@ import com.example.noeTaptNoeFunnetAPP.FrontPage
 import com.example.noeTaptNoeFunnetAPP.R
 import com.example.noeTaptNoeFunnetAPP.databinding.FragmentFormBinding
 import com.fonfon.kgeohash.GeoHash
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationCallback
+import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationResult
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -58,11 +64,13 @@ class FormFragment : Fragment() {
 
     var geoHashLocation = GeoHash(59.412369, 9.067760, 5)
     var geoPoint = GeoPoint(59.412369, 9.067760)
+    var currentGeoPoint = GeoPoint(59.412369, 9.067760)
     var currentTimeStamp = System.currentTimeMillis() / 1000L
     var selectedLocation: LatLng = LatLng(59.412369, 9.067760)
     var userLocation: LatLng? = null
 
-
+    lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+    lateinit var locationRequest : LocationRequest
     lateinit var googleMap: GoogleMap
     private val FILE_NAME = "photo.jpg"
     private lateinit var photoFile: File
@@ -194,7 +202,8 @@ class FormFragment : Fragment() {
                     googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 10F))
 
                 } else {
-                    selectedLocation = LatLng(59.412369, 9.067760) // bare bruk lokasjon til bruker
+                    getNewLocation()
+                    selectedLocation = LatLng(currentGeoPoint.latitude, currentGeoPoint.latitude)  // bare bruk lokasjon til bruker
                 }
             }
 
@@ -208,10 +217,42 @@ class FormFragment : Fragment() {
         })
     }
 
+    private fun getGeoLocation () {
+
+        val location = Location("geohash")
+        location.latitude =  selectedLocation.latitude
+        location.longitude = selectedLocation.longitude
+
+        geoHashLocation = GeoHash(location, 5)
+
+        geoPoint = GeoPoint(location.latitude, location.longitude)
+    }
+    @SuppressLint("MissingPermission")
+    private fun getNewLocation(){
+        locationRequest = LocationRequest()
+        locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+        locationRequest.interval = 0
+        locationRequest.fastestInterval = 0
+        locationRequest.numUpdates = 2
+        fusedLocationProviderClient!!.requestLocationUpdates(
+            locationRequest, locationCallback, Looper.myLooper()
+        )
+    }
+    private val locationCallback = object : LocationCallback(){
+        override fun onLocationResult(p0: LocationResult) {
+            var lastLocation =p0.lastLocation
+            val location = Location("geohash")
+            location.latitude = lastLocation.latitude
+            location.longitude = lastLocation.longitude
+
+            geoHashLocation = GeoHash(location, 5)
+            currentGeoPoint = GeoPoint(lastLocation.latitude, lastLocation.longitude)
+
+        }
+    }
+
 
     private fun cameraManager() {
-
-
         if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA)
             == PackageManager.PERMISSION_DENIED ||
             ActivityCompat.checkSelfPermission(
@@ -414,13 +455,10 @@ class FormFragment : Fragment() {
             binding.timewhenfound.error = "Venligst tast inn tidspunkt"
             binding.timewhenfound.requestFocus()
             return false
-        }  else if (selectedLocation == LatLng(59.412369, 9.067760) && geoHashLocation == GeoHash(
-                59.412369,
-                9.067760,
-                5
-            ) &&  geoPoint == GeoPoint(59.412369, 9.067760)) {
+        }  else if (selectedLocation == LatLng(59.412369, 9.067760) && geoHashLocation == GeoHash(59.412369, 9.067760, 5) &&  geoPoint == GeoPoint(59.412369, 9.067760) || selectedLocation == null) {
             binding.contactinformation.error = "Venligst velg hvor den var funnet"
             binding.contactinformation.requestFocus()
+
             return false
         } else{
             return true
@@ -467,16 +505,8 @@ class FormFragment : Fragment() {
     }
 
 
-    private fun getGeoLocation () {
 
-            val location = Location("geohash")
-            location.latitude =  selectedLocation.latitude
-            location.longitude = selectedLocation.longitude
 
-            geoHashLocation = GeoHash(location, 5)
-
-            geoPoint = GeoPoint(location.latitude, location.longitude)
-        }
     private fun getCurrentUnixTime () {
         currentTimeStamp = System.currentTimeMillis() / 1000L
     }
