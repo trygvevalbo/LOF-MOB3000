@@ -1,17 +1,9 @@
 package com.example.noeTaptNoeFunnetAPP.post_item
 
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.net.Uri
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import java.io.BufferedInputStream
-import java.io.IOException
-import java.io.InputStream
-import java.net.URL
-import java.net.URLConnection
 
 
 class FormViewModel : ViewModel() {
@@ -99,7 +91,6 @@ class FormViewModel : ViewModel() {
 
 
             downloadUrl=aImage
-            //image.value =  Uri.parse(aImage)
 
 
     }

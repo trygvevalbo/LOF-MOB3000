@@ -1,25 +1,19 @@
 package com.example.noeTaptNoeFunnetAPP.account
 
 
-import androidx.appcompat.app.AppCompatActivity
-
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.noeTaptNoeFunnetAPP.FrontPage
 import com.example.noeTaptNoeFunnetAPP.Item
 import com.example.noeTaptNoeFunnetAPP.ItemAdapter
 import com.example.noeTaptNoeFunnetAPP.R
-
-
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_my_post.*
-import kotlinx.android.synthetic.main.activity_my_post.accountListe
 
-
+// Nesten samme som FrontPage
 class MyPost : AppCompatActivity() {
 
     private var email : String? = null

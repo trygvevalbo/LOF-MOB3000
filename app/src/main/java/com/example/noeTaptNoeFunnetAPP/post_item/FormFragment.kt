@@ -8,7 +8,6 @@ import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.BitmapFactory
 import android.location.Location
 import android.net.Uri
 import android.os.Bundle
@@ -20,7 +19,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -76,7 +74,6 @@ class FormFragment : Fragment() {
     private lateinit var photoFile: File
 
 
-    private val PICK_IMAGE = 1
     private val IMAGE_CAPTURE_CODE = 1001
     private val PERMISSION_CODE = 2000
     private val RequestCode = 42
@@ -114,7 +111,7 @@ class FormFragment : Fragment() {
         model= ViewModelProviders.of(requireActivity()).get(FormViewModel::class.java)
         binding.lifecycleOwner = activity
 
-       binding.viewModel = model//attach viewModel to xml
+       binding.viewModel = model//koble ViewModel Til fragment_form.xml
 
 
         model!!.savedDescription.observe(viewLifecycleOwner,
@@ -122,7 +119,7 @@ class FormFragment : Fragment() {
 
 
 
-        //set correct headings for type of post
+        //set Headers
         if(model!!.postType=="Funnet") {
             binding.timewhenfound.hint ="Når var den funnet"
             binding.postButtonFoundItem.text="Post funnet gjenstand"
@@ -216,7 +213,7 @@ class FormFragment : Fragment() {
 
         })
     }
-
+    // Få inn lokasjon for GeoPoint og GeoHash
     private fun getGeoLocation () {
 
         val location = Location("geohash")
@@ -251,7 +248,7 @@ class FormFragment : Fragment() {
         }
     }
 
-
+    // Permission sjekk
     private fun cameraManager() {
         if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA)
             == PackageManager.PERMISSION_DENIED ||
@@ -273,7 +270,7 @@ class FormFragment : Fragment() {
         }
 
         }
-
+    // Kamera funksjon med versjonssjekk
     private fun openCamera(){
         if (android.os.Build.VERSION.SDK_INT > android.os.Build.VERSION_CODES.P) {
             val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
@@ -281,7 +278,6 @@ class FormFragment : Fragment() {
             val context: Context? = activity
             val packageManager = context!!.packageManager
 
-            // takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoFile)
             val fileProvider = FileProvider.getUriForFile(
                 context,
                 "com.example.noeTaptNoeFunnetAPP.fileprovider",
@@ -312,7 +308,7 @@ class FormFragment : Fragment() {
     }
 
 
-
+    // PhotoFile Definisjon
     private fun photoFile(fileName: String): File {
         val storeageDirectory = context?.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         return File.createTempFile(fileName, ".jpg", storeageDirectory)
@@ -347,9 +343,7 @@ class FormFragment : Fragment() {
         private val IMAGE_PICK_CODE = 1000;
         //Permission code
 
-
     }
-
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -390,7 +384,7 @@ class FormFragment : Fragment() {
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
-
+    // Resultatsfunksjon
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (android.os.Build.VERSION.SDK_INT > android.os.Build.VERSION_CODES.P){
 

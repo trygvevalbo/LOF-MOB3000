@@ -1,33 +1,18 @@
 package com.example.noeTaptNoeFunnetAPP.post_item.location
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.pm.PackageManager
 import android.location.LocationManager
-import android.os.Looper
-import android.util.Log
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
-import com.example.noeTaptNoeFunnetAPP.R
-import com.example.noeTaptNoeFunnetAPP.post_item.FormViewModel
-import com.example.noeTaptNoeFunnetAPP.post_item.PostFoundItem
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationCallback
-import com.google.android.gms.location.LocationRequest
-import com.google.android.gms.location.LocationResult
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
 
 class LocationUtil(private val context: Context) {
 
     private var PERMISSION_ID  : Int= 1000
 
-
+// Permission sjekk
     private fun checkPermission(): Boolean{
         if(
             ActivityCompat.checkSelfPermission(

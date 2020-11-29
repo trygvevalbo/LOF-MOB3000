@@ -4,17 +4,15 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.navigation.findNavController
 import com.example.noeTaptNoeFunnetAPP.FrontPage
 import com.example.noeTaptNoeFunnetAPP.R
 import com.example.noeTaptNoeFunnetAPP.databinding.ActivityMyAccountBinding
-import com.example.noeTaptNoeFunnetAPP.post_item.PostFoundItem
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_my_account.*
 
-
+//Oppsett av Min-Side
 class MyAccount : AppCompatActivity() {
 
     private var email : String? = null
@@ -32,7 +30,6 @@ class MyAccount : AppCompatActivity() {
 
 
 
-        // Inflate the layout for this fragment
 
         val user = Firebase.auth.currentUser
         user?.let {

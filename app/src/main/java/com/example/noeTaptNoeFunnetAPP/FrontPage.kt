@@ -1,26 +1,21 @@
 package com.example.noeTaptNoeFunnetAPP
 
-import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
 import android.os.Looper
-import android.system.Os.remove
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.animation.AnimationUtils
-import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.SearchView
-import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.noeTaptNoeFunnetAPP.account.MyAccount
 import com.example.noeTaptNoeFunnetAPP.post_item.PostFoundItem
@@ -29,7 +24,6 @@ import com.example.noeTaptNoeFunnetAPP.post_item.location.LocationUtil
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.fonfon.kgeohash.GeoHash
 import com.google.android.gms.location.*
-import com.google.android.material.imageview.ShapeableImageView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -216,8 +210,6 @@ class FrontPage : AppCompatActivity() {
         myquery = postRef.orderBy("timeStamp", Query.Direction.DESCENDING)
         recyclerSetup()
         onStart()
-
-
     }
 
     fun sortTapt() {
@@ -236,7 +228,6 @@ class FrontPage : AppCompatActivity() {
         myquery = database.collection("Posts").whereEqualTo("geoHash", geoHashLocation.toString())
         recyclerSetup()
         onStart()
-
     }
 
 
@@ -288,7 +279,6 @@ class FrontPage : AppCompatActivity() {
 
         //Account Button
         val accountButton = menu!!.findItem(R.id.accountButton)
-
 
         accountButton.setOnMenuItemClickListener {
             val user = Firebase.auth.currentUser

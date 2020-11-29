@@ -1,51 +1,41 @@
 package com.example.noeTaptNoeFunnetAPP.post_item.location
 
-import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.pm.PackageManager
-import android.location.LocationManager
 import android.os.Bundle
-import android.os.Looper
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.example.noeTaptNoeFunnetAPP.R
-import com.example.noeTaptNoeFunnetAPP.databinding.FragmentFormBinding
 import com.example.noeTaptNoeFunnetAPP.databinding.FragmentMapsFullScreenBinding
 import com.example.noeTaptNoeFunnetAPP.post_item.AppNavigator
 import com.example.noeTaptNoeFunnetAPP.post_item.FormViewModel
-import com.google.android.gms.location.*
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.MapFragment
-import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import kotlinx.android.synthetic.main.fragment_description.view.*
 
 
 class MapsFullScreenFragment : Fragment() {
 
-    lateinit var fusedLocationProviderClient: FusedLocationProviderClient
-    lateinit var locationRequest : LocationRequest
-    private var itemLocation : LatLng? = null
-    var selectedLocation: LatLng? = null
 
+
+    //Location Variabler
     private lateinit var mMap: GoogleMap
-    private var PERMISSION_ID  : Int= 1000
-
     private lateinit var appNavigator: AppNavigator
+    var selectedLocation: LatLng? = null
+    lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+    var userLatLng: LatLng? = null
 
     private var model: FormViewModel?=null
-    var userLatLng: LatLng? = null
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -66,11 +56,10 @@ class MapsFullScreenFragment : Fragment() {
         model= ViewModelProviders.of(requireActivity()).get(FormViewModel::class.java)
         binding.lifecycleOwner = activity
 
-        binding.viewModel = model//attach your viewModel to xml
+        binding.viewModel = model
 
         val mapFragment = childFragmentManager.findFragmentById(R.id.map_fragment) as SupportMapFragment?
         mapFragment?.getMapAsync {
-            //https://stackoverflow.com/questions/41254834/add-marker-on-google-map-on-touching-the-screen-using-android/41254877
             mMap = it
             val mapSettings = mMap?.uiSettings
             userLatLng = model!!.userLatitude?.let { it1 ->
@@ -107,7 +96,7 @@ class MapsFullScreenFragment : Fragment() {
 
 
             mapSettings?.isZoomControlsEnabled = true
-            mMap.setOnMapClickListener { latLng -> // Creating a marker
+            mMap.setOnMapClickListener { latLng -> // Marker
                 val markerOptions = MarkerOptions()
 
 
@@ -115,20 +104,20 @@ class MapsFullScreenFragment : Fragment() {
                 binding.viewModel?.setLocation(latLng.latitude, latLng.longitude)
 
 
-                // Setting the position for the marker
+                // Sett markeren for lokasjonen
                 markerOptions.position(latLng)
 
-                // Setting the title for the marker.
-                // This will be displayed on taping the marker
+                // Sett tittel
+                // Kommer opp når brukeren 'tapper' på en lokasjon på kartet
                 markerOptions.title(latLng.latitude.toString() + " : " + latLng.longitude)
 
-                // Clears the previously touched position
+                // sletter forrige lokasjon
                 mMap.clear()
 
-                // Animating to the touched position
+                // Animerer trykket på lokasjon
                 mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng))
 
-                // Placing a marker on the touched position
+                // Plaserer markør på trykket på lokasjon
 
                 mMap.addMarker(markerOptions)
 
@@ -136,7 +125,6 @@ class MapsFullScreenFragment : Fragment() {
         }
 
         binding.locationDone.setOnClickListener {
-            //itemLocation?.let { passData(it) }
             appNavigator.navigateFromMapToForm()
         }
         return binding.root

@@ -11,9 +11,8 @@ import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.example.noeTaptNoeFunnetAPP.R
-import kotlinx.android.synthetic.main.fragment_description.view.*
 
-
+// Tar imot input fra bruker og sender det til ViewModel
 class DescriptionFragment : Fragment() {
     private lateinit var appNavigator: AppNavigator
     private var model: FormViewModel?=null
