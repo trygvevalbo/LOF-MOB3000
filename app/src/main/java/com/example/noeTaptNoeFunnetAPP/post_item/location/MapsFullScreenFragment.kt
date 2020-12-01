@@ -22,6 +22,10 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 
+/*
+    Kilder:
+    Get marker https://stackoverflow.com/questions/41254834/add-marker-on-google-map-on-touching-the-screen-using-android
+ */
 
 class MapsFullScreenFragment : Fragment() {
 

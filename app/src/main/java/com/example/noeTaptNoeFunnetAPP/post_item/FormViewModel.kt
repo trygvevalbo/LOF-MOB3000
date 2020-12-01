@@ -5,6 +5,10 @@ import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
+/*
+    Kilder:
+    Architecture Components https://www.youtube.com/watch?v=f8sBujQmEIw&t=3989s
+ */
 
 class FormViewModel : ViewModel() {
 

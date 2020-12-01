@@ -8,6 +8,11 @@ import android.location.LocationManager
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 
+/*
+    Kilder:
+    Get current location https://www.youtube.com/watch?v=vard0CUTLbA
+ */
+
 class LocationUtil(private val context: Context) {
 
     private var PERMISSION_ID  : Int= 1000

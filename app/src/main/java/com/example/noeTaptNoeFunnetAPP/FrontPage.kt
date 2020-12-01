@@ -34,7 +34,11 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.view.*
 import java.util.*
 
+/*
+    Kilder: RecyclerView, søk og sortering inspirert av mange videoer fra https://www.youtube.com/c/AndroidWorldClub og https://www.youtube.com/watch?v=c8lfcBYlaC4
+    Shared preferences https://www.youtube.com/watch?v=dJOEmnaiP9U
 
+ */
 class FrontPage : AppCompatActivity() {
     // Lateinit and Vars needed later
     lateinit var preferences: SharedPreferences

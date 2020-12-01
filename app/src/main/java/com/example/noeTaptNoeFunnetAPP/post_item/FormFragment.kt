@@ -52,6 +52,14 @@ import kotlinx.android.synthetic.main.liste.*
 import java.io.File
 import java.util.*
 
+/*
+    Kilder:
+    Kamera og PickImage https://www.youtube.com/watch?v=DPHkhamDoyc og https://www.youtube.com/watch?v=LpL9akTG4hI
+    GeoPoint og GeoHash https://www.youtube.com/watch?v=mx1mMdHBi5Q&t og https://github.com/drfonfon/android-kotlin-geohash
+    Opplasting av bilde og data https://www.youtube.com/watch?v=BJpxsxCBkcQ&list og https://firebase.google.com/docs/firestore/manage-data/add-data
+    Marker https://stackoverflow.com/questions/41254834/add-marker-on-google-map-on-touching-the-screen-using-android
+    Lokasjon https://www.youtube.com/watch?v=vard0CUTLbA
+ */
 
 class FormFragment : Fragment() {
 

@@ -14,6 +14,12 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
+/*
+    Kilder:
+    Fra linje 58, lokasjon https://www.youtube.com/watch?v=vard0CUTLbA
+    Navigation Arkitecture https://www.youtube.com/watch?v=f8sBujQmEIw&t=3989s
+
+ */
 
 class PostLostItem : AppCompatActivity(), AppNavigator {
     private var viewModel: FormViewModel? = null

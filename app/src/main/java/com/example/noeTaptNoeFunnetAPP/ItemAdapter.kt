@@ -14,6 +14,11 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
+/*
+    Kilder:
+    Slett og endre funksjon  https://stackoverflow.com/questions/47986504/how-to-get-document-id-or-name-in-android-in-firestore-db-for-passing-on-to-anot
+    Pass Data with intent https://www.youtube.com/watch?v=MJ-4QMUqLEc
+ */
 
 class ItemAdapter(options: FirestoreRecyclerOptions<Item>, val context: Context) :
     FirestoreRecyclerAdapter<Item, ItemAdapter.ItemAdapterVH>(options) {
@@ -56,7 +61,7 @@ class ItemAdapter(options: FirestoreRecyclerOptions<Item>, val context: Context)
 
 
             val intent = Intent(context, ItemViewActivity::class.java)
-            val snapshot = snapshots.getSnapshot(holder.adapterPosition) // https://stackoverflow.com/questions/47986504/how-to-get-document-id-or-name-in-android-in-firestore-db-for-passing-on-to-anot
+            val snapshot = snapshots.getSnapshot(holder.adapterPosition)
              var cDocumentId = snapshot.id
             intent.putExtra("iDocumentId", cDocumentId )
             intent.putExtra("iName", cName)

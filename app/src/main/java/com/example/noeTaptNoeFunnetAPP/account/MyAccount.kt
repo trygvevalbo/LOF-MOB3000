@@ -12,6 +12,8 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_my_account.*
 
+
+
 //Oppsett av Min-Side
 class MyAccount : AppCompatActivity() {
 

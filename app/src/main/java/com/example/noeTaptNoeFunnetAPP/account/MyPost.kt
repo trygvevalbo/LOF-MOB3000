@@ -13,6 +13,11 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_my_post.*
 
+/*
+    Kilder: RecyclerView, søk og sortering inspirert av mange videoer fra https://www.youtube.com/c/AndroidWorldClub
+    Shared preferences https://www.youtube.com/watch?v=dJOEmnaiP9U
+ */
+
 // Nesten samme som FrontPage
 class MyPost : AppCompatActivity() {
 

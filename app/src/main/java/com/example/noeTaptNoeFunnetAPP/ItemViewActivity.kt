@@ -28,6 +28,11 @@ import kotlinx.android.synthetic.main.liste.textIC_Navn
 import kotlinx.android.synthetic.main.liste.textIC_Type
 import kotlinx.android.synthetic.main.liste.textIC_dato
 
+/*
+    Kilder: RecyclerView, søk og sortering inspirert av mange videoer fra https://www.youtube.com/c/AndroidWorldClub og https://www.youtube.com/watch?v=c8lfcBYlaC4
+    Shared preferences https://www.youtube.com/watch?v=dJOEmnaiP9U
+ */
+
 class ItemViewActivity : AppCompatActivity() , OnMapReadyCallback {
     private var email : String? = null
     private var itemLocation :  LatLng? = null
