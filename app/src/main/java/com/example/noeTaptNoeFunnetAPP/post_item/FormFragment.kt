@@ -28,10 +28,7 @@ import com.example.noeTaptNoeFunnetAPP.FrontPage
 import com.example.noeTaptNoeFunnetAPP.R
 import com.example.noeTaptNoeFunnetAPP.databinding.FragmentFormBinding
 import com.fonfon.kgeohash.GeoHash
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationCallback
-import com.google.android.gms.location.LocationRequest
-import com.google.android.gms.location.LocationResult
+import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -101,6 +98,7 @@ class FormFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireActivity())
         model = activity?.run {
             ViewModelProviders.of(this)[FormViewModel::class.java]
         } ?: throw Exception("Invalid Activity")
@@ -239,7 +237,7 @@ class FormFragment : Fragment() {
         locationRequest.interval = 0
         locationRequest.fastestInterval = 0
         locationRequest.numUpdates = 2
-        fusedLocationProviderClient!!.requestLocationUpdates(
+        fusedLocationProviderClient.requestLocationUpdates(
             locationRequest, locationCallback, Looper.myLooper()
         )
     }

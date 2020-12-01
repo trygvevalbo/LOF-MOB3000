@@ -18,16 +18,16 @@ import com.google.firebase.ktx.Firebase
     Kilder:
     Fra linje 58, lokasjon https://www.youtube.com/watch?v=vard0CUTLbA
     Navigation Arkitecture https://www.youtube.com/watch?v=f8sBujQmEIw&t=3989s
-
  */
 
 class PostFoundItem : AppCompatActivity(), AppNavigator{
 
     private var viewModel: FormViewModel? = null
-    lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     lateinit var locationRequest : LocationRequest
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
         setContentView(R.layout.activity_post_found_item) //setter sin egen layout og derretter formFragment i første omgang
 
         viewModel = ViewModelProviders.of(this)[FormViewModel::class.java]
@@ -49,7 +49,6 @@ class PostFoundItem : AppCompatActivity(), AppNavigator{
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = "Ny funnet annonse"
 
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
         val locationUtil = LocationUtil(this)
           if(locationUtil.getUserLocation()){
               getNewLocation()

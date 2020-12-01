@@ -28,6 +28,7 @@ class PostLostItem : AppCompatActivity(), AppNavigator {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
         setContentView(R.layout.activity_post_lost_item)
 
         viewModel = ViewModelProviders.of(this)[FormViewModel::class.java]
